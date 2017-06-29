@@ -1,23 +1,9 @@
 {
-  "name": "opinionated",
-  "version": "1.0.0",
-  "description": "The updated and opinionated React boilerplate",
-  "main": "index.js",
   "scripts": {
     "dev": "next",
     "build": "next build",
     "start": "next start"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/khanglu/opinionated.js.git"
-  },
-  "author": "Khang Lu",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/khanglu/opinionated.js/issues"
-  },
-  "homepage": "https://github.com/khanglu/opinionated.js#readme",
   "dependencies": {
     "next": "^2.4.6",
     "react": "^15.6.1",
