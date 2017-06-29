@@ -10,7 +10,7 @@ Handle all these buzzwords without you making a decision:
 - Code splitting
 - ES6(+), ES2015(+) support
 
-So you can focus on writting app.
+So you can focus on writting modern and production ready web app.
 
 ## What's inside
 - [**Next.js**](https://github.com/zeit/next.js) v2.4
