@@ -5,6 +5,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "babel-preset-stage-2": "^6.24.1",
     "next": "^2.4.6",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
