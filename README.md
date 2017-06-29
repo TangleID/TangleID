@@ -1,7 +1,7 @@
 # Opinionated
 Opinionated React boilerplate with Next.js and styled-components.
 
-Handle all these buzzwords without you making a decision
+Handle all these buzzwords without you making a decision:
 - Server-side rendering
 - Routing library
 - Styling library
@@ -10,20 +10,22 @@ Handle all these buzzwords without you making a decision
 - Code splitting
 - ES6(+), ES2015(+) support
 
+So you can focus on writting app.
+
 ## What's inside
-- Next.js v2.4
-- React v15.6
-- Styled-components v2.1
-- Babel stage-2 preset
+- [**Next.js**](https://github.com/zeit/next.js) v2.4
+- [**React**](https://facebook.github.io/react/) v15.6
+- [**Styled-components**](https://www.styled-components.com/) v2.1
+- [**Babel**](https://babeljs.io/) stage-2 preset
 
 ## Why
-- Next.js
+#### Next.js
   - Configuration abstraction.
   - Server-side rendering, code splitting, bundling assets.
-- Styled-components
+#### Styled-components
   - Clean, matured and most popular styling library for React components.
   - Support server-side rendering.
-- Babel stage-2
+#### Babel stage-2
   - Safe enough and cover all widely-used ES6+ features.
 
 ## How to structure project
