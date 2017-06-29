@@ -28,8 +28,23 @@ So you can focus on writting app.
 #### Babel stage-2
   - Safe enough and cover all widely-used ES6+ features.
 
+## How to use
+
+In your command line tool
+
+1. Clone this repo:
+```
+git clone https://github.com/khanglu/opinionated.js
+```
+2. Install and run
+```
+npm install
+npm run dev
+```
+A dev server will be served at `http://localhost:3000`
+
 ## How to structure project
-- Put pages/routes in `pages` folder.
+- Put pages/routes components in `pages` folder.
 - Put react components in `components` folder.
 - Put static assets in `static` folder.
 
