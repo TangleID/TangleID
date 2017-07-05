@@ -12,7 +12,9 @@
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "sjcl": "^1.0.6",
-    "styled-components": "^2.1.0"
+    "styled-components": "^2.1.0",
+    "tweetnacl": "^1.0.0",
+    "tweetnacl-util": "^0.15.0"
   },
   "devDependencies": {
     "babel-preset-stage-2": "^6.24.1"
