@@ -1,15 +1,18 @@
+import Iota from "./iota";
 var nacl = require("tweetnacl");
 nacl.util = require("tweetnacl-util");
 
 class TangleCerts {
   // Generate a keypair
   static generate = () => {
-    var pair = nacl.sign.keyPair();
-    console.log(pair);
-    this.setState({ pair: pair });
+    var keys = nacl.sign.keyPair();
+    return {
+      publicKey: nacl.util.encodeBase64(keys.publicKey),
+      secretKey: nacl.util.encodeBase64(keys.secretKey)
+    };
   };
-  // Generate a 13 byte  uuid
-  uuid = () => {
+  // Generate a 13 byte uuid
+  static uuid = () => {
     var ALPHABET =
       "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     var ID_LENGTH = 13;
@@ -17,36 +20,53 @@ class TangleCerts {
     for (var i = 0; i < ID_LENGTH; i++) {
       rtn += ALPHABET.charAt(Math.floor(Math.random() * ALPHABET.length));
     }
-    console.log(rtn);
-    this.setState({ uuid: rtn });
+    return rtn;
   };
   // Create a signature for data
   static sign = (msg, sk) => {
-    var sig = nacl.sign.detached(nacl.util.decodeUTF8(msg), sk);
-    console.log(sig);
-    this.setState({ sig: sig });
-    this.generatePacket(msg, sig);
+    return e64(nacl.sign.detached(dUTF(msg), d64(sk)));
   };
 
-  // Creat 
-  static generatePacket = (uuid, msg, sig) => {
-    this.setState({
-      packet: JSON.stringify({
-        cert: msg,
-        signature: nacl.util.encodeBase64(sig),
-        issuer: "jeff"
-      })
-    });
+  // Create
+  static generatePacket = (issuerID, msg, sig) => {
+    return {
+      claim: msg,
+      signature: sig,
+      issuer: issuerID
+    };
   };
 
-  static verify = (sig, pk) => {
-    var message = nacl.sign.open(
-      nacl.util.decodeBase64(sig),
-      nacl.util.decodeBase64(pk)
-    );
-    console.log(message);
-    this.setState({ verified: message });
+  // Create
+  static generateInitalPacket = (uuid, msg, sig, pk) => {
+    return {
+      claim: msg,
+      signature: sig,
+      pk: pk,
+      id: uuid
+    };
   };
+
+  static verify = (msg, sig, pk) => {
+    return nacl.sign.detached.verify(dUTF(msg), d64(sig), d64(pk));
+  };
+
+  static iota = Iota;
 }
 
 export default TangleCerts;
+
+const d64 = data => {
+  return nacl.util.decodeBase64(data);
+};
+
+const e64 = data => {
+  return nacl.util.encodeBase64(data);
+};
+
+const dUTF = data => {
+  return nacl.util.decodeUTF8(data);
+};
+
+const eUTF = data => {
+  return nacl.util.encodeUTF8(data);
+};

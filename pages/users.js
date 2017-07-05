@@ -1,9 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import Link from "next/link";
-import { retrieve } from "../libs/network";
-var nacl = require("tweetnacl");
-nacl.util = require("tweetnacl-util");
+import { webReceieve } from "../libs/network";
+import Certs from "../libs/tanglecerts";
 
 export default class extends React.Component {
   state = {
@@ -15,43 +14,60 @@ export default class extends React.Component {
   }
 
   getData = async () => {
-    var users = await retrieve(
+    var users = await webReceieve(
       "https://tangleidentity.firebaseio.com/users.json"
     );
     var arr = [];
+    var keys = [];
     Object.keys(users).map(key => {
       var user = users[key];
       user.id = key;
-      arr.push(user);
+      keys.push(user.id);
     });
-    this.setState({ users: arr });
-    console.log(arr);
+
+    console.log(keys);
+    keys.map(key =>
+      Certs.iota.getBundles(key).then(data => {
+        var state = this.state.users;
+        console.log(data);
+        if (data[0]) state.push(data[0].message);
+        this.setState({ users: state });
+      })
+    );
   };
 
   render() {
     var { users } = this.state;
     return (
       <div>
-        Hello
+        List of user IDs from the internet & then all data fetched from the
+        tangle.
         {users[0] &&
           users.map((c, index) =>
-            <div key={index}>
-              <div>
-                {JSON.parse(c.assertion.message).firstName}{" "}
-                {JSON.parse(c.assertion.message).lastName}
-              </div>
-              <div>
-                Public Key: {c.pk}
-              </div>
+            <UserBox key={index}>
               <div>
                 User ID: {c.id}
               </div>
-            </div>
+              <div>
+                Claim: {c.claim}
+              </div>
+              <div>
+                Claim Sig.: {c.signature}
+              </div>
+              <div>
+                Verified:{" "}
+                {Certs.verify(c.claim, c.signature, c.pk)
+                  ? "Success"
+                  : "Failed"}
+              </div>
+            </UserBox>
           )}
       </div>
     );
   }
 }
+
+const UserBox = styled.div`padding: 20px;`;
 
 const Title = styled.h1`
   color: palevioletred;

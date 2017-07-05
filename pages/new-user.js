@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import Link from "next/link";
-import { attach } from "../libs/network";
-var nacl = require("tweetnacl");
-nacl.util = require("tweetnacl-util");
+import { webAttach } from "../libs/network";
+import Certs from "../libs/tanglecerts";
+import Iota from "../libs/tanglecerts/iota";
 
 export default class extends React.Component {
   state = {
@@ -11,51 +11,39 @@ export default class extends React.Component {
     uuid: "",
     sig: "",
     first: "",
-    last: ""
+    last: "",
+    packet: {}
   };
 
   componentDidMount() {
-    this.generate();
-    this.uuid();
+    this.initialise();
   }
 
-  generate = () => {
-    var pair = nacl.sign.keyPair();
-    console.log(pair);
-    this.setState({ pair: pair });
-  };
-
-  uuid = () => {
-    var ALPHABET =
-      "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    var ID_LENGTH = 13;
-    var rtn = "";
-    for (var i = 0; i < ID_LENGTH; i++) {
-      rtn += ALPHABET.charAt(Math.floor(Math.random() * ALPHABET.length));
-    }
-    console.log(rtn);
-    this.setState({ uuid: rtn });
+  initialise = () => {
+    const pair = Certs.generate();
+    const uuid = Certs.uuid();
+    this.setState({ pair: pair, uuid: uuid });
   };
 
   sign = (msg, sk) => {
-    var sig = nacl.sign.detached(nacl.util.decodeUTF8(msg), sk);
-    console.log(sig);
-    this.setState({ sig: sig, msg: msg });
+    var sig = Certs.sign(msg, sk);
+    var packet = Certs.generateInitalPacket(
+      this.state.uuid,
+      msg,
+      sig,
+      this.state.pair.publicKey
+    );
+    this.setState({ sig: sig, packet: packet, msg: msg });
+    this.save(packet, this.state.uuid);
   };
 
-  save = () => {
-    const url =
-      "https://tangleidentity.firebaseio.com/users/" +
-      this.state.uuid +
-      ".json";
-    const user = {
-      assertion: {
-        message: this.state.msg,
-        signature: nacl.util.encodeBase64(this.state.sig)
-      },
-      pk: nacl.util.encodeBase64(this.state.pair.publicKey)
-    };
-    attach(url, user);
+  save = (user, uuid) => {
+    const url = "https://tangleidentity.firebaseio.com/users/" + uuid + ".json";
+    webAttach(url, user);
+    Iota.attach(user, uuid).then(data => {
+      alert("Attached");
+      console.log(data);
+    });
   };
 
   render() {
@@ -64,15 +52,20 @@ export default class extends React.Component {
       <div>
         <Title>User details:</Title>
         <div>
+          In this example a user generates their keyPair, signs a claim about
+          their name, and then attaches it to the tangle.
+        </div>
+        <div>It also saves the packet to a webDB for testing/inspection</div>
+        <button onClick={() => this.initialise()}>Generate Again</button>
+        <div>
           UUID: {uuid}
         </div>
         <div>
-          Priv: {pair.secretKey && nacl.util.encodeBase64(pair.secretKey)}
+          Priv: {pair.secretKey && pair.secretKey}
         </div>
         <div>
-          Pub: {pair.publicKey && nacl.util.encodeBase64(pair.publicKey)}
+          Pub: {pair.publicKey && pair.publicKey}
         </div>
-        <button onClick={() => this.generate()}>Generate</button>
 
         <div>
           <input
@@ -96,11 +89,8 @@ export default class extends React.Component {
                 pair.secretKey
               )}
           >
-            Sign
+            Save user
           </button>
-        </div>
-        <div>
-          <button onClick={() => this.save()}>Save user</button>
         </div>
       </div>
     );
