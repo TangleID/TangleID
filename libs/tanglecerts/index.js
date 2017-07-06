@@ -1,4 +1,6 @@
 import Iota from "./iota";
+import Verify from "./verify";
+
 var nacl = require("tweetnacl");
 nacl.util = require("tweetnacl-util");
 
@@ -28,11 +30,12 @@ class TangleCerts {
   };
 
   // Create
-  static generatePacket = (issuerID, msg, sig) => {
+  static generatePacket = (issuerID, msg, sig, receiverID) => {
     return {
       claim: msg,
       signature: sig,
-      issuer: issuerID
+      issuer: issuerID,
+      id: receiverID
     };
   };
 
@@ -46,9 +49,7 @@ class TangleCerts {
     };
   };
 
-  static verify = (msg, sig, pk) => {
-    return nacl.sign.detached.verify(dUTF(msg), d64(sig), d64(pk));
-  };
+  static verify = Verify;
 
   static iota = Iota;
 }

@@ -8,19 +8,21 @@ export var iota = new IOTA({
 
 class Iota {
   //// Attach certificate to the tangle
-  static attach = async (packet, uuid, seed) => {
+  static attach = async (packet, uuid, type, seed) => {
+    var tag = type
+      ? iota.utils.toTrytes(uuid) + type
+      : iota.utils.toTrytes(uuid);
+    console.log(tag);
     // Create random seed
     const transSeed = seed || seedGen(81);
-    console.log(transSeed);
     // Generate address for the seed
     const address = await generateAddress(transSeed);
-    console.log(address);
     // Attach the address / send the signed packet.
     const transfer = [
       {
         address: address,
         value: 0,
-        tag: iota.utils.toTrytes(uuid),
+        tag: tag,
         message: iota.utils.toTrytes(JSON.stringify(packet))
       }
     ];
@@ -29,9 +31,12 @@ class Iota {
   };
 
   //// Find and decode tagged transactions
-  static getBundles = async uuid => {
+  static getBundles = async (uuid, type) => {
+    var tag = type
+      ? iota.utils.toTrytes(uuid) + type
+      : iota.utils.toTrytes(uuid);
     // construct query
-    const query = { tags: [iota.utils.toTrytes(uuid)] };
+    const query = { tags: [tag] };
     // Find transactions
     const hashes = await find(query);
     // Decode Trytes
