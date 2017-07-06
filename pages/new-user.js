@@ -40,7 +40,7 @@ export default class extends React.Component {
   save = (user, uuid) => {
     const url = "https://tangleidentity.firebaseio.com/users/" + uuid + ".json";
     webAttach(url, user);
-    Iota.attach(user, uuid).then(data => {
+    Iota.attach(user, uuid, "I").then(data => {
       alert("Attached");
       console.log(data);
     });

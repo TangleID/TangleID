@@ -22,6 +22,9 @@ export default class extends React.Component {
           <Link href="/new-user">Create user</Link>
         </div>
         <div>
+          <Link href="/claim">Make claim </Link>
+        </div>
+        <div>
           <Link href="/users">View users</Link>
         </div>
       </div>

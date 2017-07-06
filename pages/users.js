@@ -27,11 +27,14 @@ export default class extends React.Component {
 
     console.log(keys);
     keys.map(key =>
-      Certs.iota.getBundles(key).then(data => {
+      Certs.iota.getBundles(key, "I").then(data => {
         var state = this.state.users;
         console.log(data);
-        if (data[0]) state.push(data[0].message);
-        this.setState({ users: state });
+        data.map(item => {
+          console.log(item.message);
+          state.push(item.message);
+        });
+        if (data[0]) this.setState({ users: state });
       })
     );
   };
@@ -43,7 +46,7 @@ export default class extends React.Component {
         List of user IDs from the internet & then all data fetched from the
         tangle.
         {users[0] &&
-          users.map((c, index) =>
+          users.map((c, index) => (
             <UserBox key={index}>
               <div>
                 User ID: {c.id}
@@ -55,13 +58,14 @@ export default class extends React.Component {
                 Claim Sig.: {c.signature}
               </div>
               <div>
+                {console.log(c.pk)}
                 Verified:{" "}
-                {Certs.verify(c.claim, c.signature, c.pk)
+                {Certs.verify.initial(c.claim, c.signature, c.pk)
                   ? "Success"
                   : "Failed"}
               </div>
             </UserBox>
-          )}
+          ))}
       </div>
     );
   }

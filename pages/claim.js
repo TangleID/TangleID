@@ -16,7 +16,7 @@ export default class extends React.Component {
 
   sign = (issuerID, issuerSK, receiverID, message) => {
     var signature = Certs.sign(message, issuerSK);
-    var packet = Certs.generatePacket(issuerID, message, signature);
+    var packet = Certs.generatePacket(issuerID, message, signature, receiverID);
     console.log(packet);
     Iota.attach(packet, receiverID).then(data => {
       alert("Attached");
