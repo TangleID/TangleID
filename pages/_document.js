@@ -11,6 +11,12 @@ export default class MyDocument extends Document {
         <Head>
           <title>My page</title>
           {styleTags}
+          <style
+            dangerouslySetInnerHTML={{
+              __html: `
+          body {font-family: helvetica}`
+            }}
+          />
         </Head>
         <body>
           <div className="root">
