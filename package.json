@@ -9,6 +9,7 @@
   "dependencies": {
     "iota.lib.js": "git+https://github.com/l3wi/iota.lib.js.git",
     "next": "^2.4.6",
+    "qrcode.react": "^0.7.1",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "styled-components": "^2.1.0",
