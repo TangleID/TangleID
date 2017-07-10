@@ -20,9 +20,7 @@ export default class extends React.Component {
     var arr = [];
     var keys = [];
     Object.keys(users).map(key => {
-      var user = users[key];
-      user.id = key;
-      keys.push(user.id);
+      keys.push(key);
     });
 
     console.log(keys);
@@ -46,26 +44,27 @@ export default class extends React.Component {
         List of user IDs from the internet & then all data fetched from the
         tangle.
         {users[0] &&
-          users.map((c, index) => (
-            <UserBox key={index}>
-              <div>
-                User ID: {c.id}
-              </div>
-              <div>
-                Claim: {c.claim}
-              </div>
-              <div>
-                Claim Sig.: {c.signature}
-              </div>
-              <div>
-                {console.log(c.pk)}
-                Verified:{" "}
-                {Certs.verify.initial(c.claim, c.signature, c.pk)
-                  ? "Success"
-                  : "Failed"}
-              </div>
-            </UserBox>
-          ))}
+          users.map((c, index) =>
+            <Link href={{ pathname: "user", query: { user: c.id } }}>
+              <UserBox key={index}>
+                <div>
+                  User ID: {c.id}
+                </div>
+                <div>
+                  Claim: {c.claim}
+                </div>
+                <div>
+                  Claim Sig.: {c.signature}
+                </div>
+                <div>
+                  Verified:{" "}
+                  {Certs.verify.initial(c.claim, c.signature, c.pk)
+                    ? "Success"
+                    : "Failed"}
+                </div>
+              </UserBox>
+            </Link>
+          )}
       </div>
     );
   }
