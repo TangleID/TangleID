@@ -1,5 +1,5 @@
 import Document, { Head, Main, NextScript } from "next/document";
-import { ServerStyleSheet } from "styled-components";
+import { ServerStyleSheet, injectGlobal } from "styled-components";
 
 export default class MyDocument extends Document {
   render() {
@@ -9,14 +9,8 @@ export default class MyDocument extends Document {
     return (
       <html>
         <Head>
-          <title>My page</title>
+          <title>Tangle Certs - Demo</title>
           {styleTags}
-          <style
-            dangerouslySetInnerHTML={{
-              __html: `
-          body {font-family: helvetica}`
-            }}
-          />
         </Head>
         <body>
           <div className="root">
@@ -28,3 +22,23 @@ export default class MyDocument extends Document {
     );
   }
 }
+
+injectGlobal`
+  body {
+    margin: 0;
+    color: #131515;
+    font-family: AvenirLight;
+    -webkit-font-smoothing: antialiased;
+    word-break: normal;
+
+  }
+
+  @font-face {
+    font-family: 'Avenir';
+    src: url('/static/fonts/avenir-roman.woff');
+  }
+    @font-face {
+    font-family: 'AvenirLight';
+    src: url('/static/fonts/avenir-light.woff');
+  }
+`;
