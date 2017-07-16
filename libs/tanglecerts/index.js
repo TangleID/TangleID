@@ -13,11 +13,10 @@ class TangleCerts {
       secretKey: nacl.util.encodeBase64(keys.secretKey)
     };
   };
-  // Generate a 13 byte uuid
+  // Generate a 26 tryte uuid
   static uuid = () => {
-    var ALPHABET =
-      "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    var ID_LENGTH = 13;
+    var ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ9";
+    var ID_LENGTH = 26;
     var rtn = "";
     for (var i = 0; i < ID_LENGTH; i++) {
       rtn += ALPHABET.charAt(Math.floor(Math.random() * ALPHABET.length));
