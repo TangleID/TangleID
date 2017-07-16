@@ -1,6 +1,6 @@
 import IOTA from "iota.lib.js";
 
-var defaultNode = "http://node.tangle.works:14265/";
+var defaultNode = "https://node.tangle.works";
 
 export var iota = new IOTA({
   provider: defaultNode
@@ -18,7 +18,7 @@ class Iota {
       {
         address: address,
         value: 0,
-        tag: iota.utils.toTrytes(uuid) + type,
+        tag: uuid + type,
         message: iota.utils.toTrytes(JSON.stringify(packet))
       }
     ];
@@ -29,13 +29,11 @@ class Iota {
   //// Find and decode tagged transactions
   static getBundles = async (uuid, type) => {
     // construct query
-    const query = { tags: [iota.utils.toTrytes(uuid) + type] };
-    console.log(query);
+    const query = { tags: [uuid + type] };
 
     // Find transactions
     const hashes = await find(query);
     // Decode Trytes
-    console.log(hashes);
     const bundles = await getTransactions(hashes);
     // Take messages and prettyfy them.
     const messages = Object.assign(
@@ -71,6 +69,7 @@ const generateAddress = async seed => {
 // IOTA - Attach your transfer to the tangle
 const sendTransfer = async (seed, transfers) => {
   var p = new Promise((res, rej) => {
+    console.log("Attaching to Tangle");
     iota.api.sendTransfer(seed, 6, 15, transfers, (e, s) => {
       if (e) return rej(e);
       res(s);
