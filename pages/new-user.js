@@ -3,7 +3,9 @@ import styled from "styled-components";
 import Link from "next/link";
 import { webAttach } from "../libs/network";
 import Certs from "../libs/tanglecerts";
-import Iota from "../libs/tanglecerts/iota";
+import QRcode from "qrcode.react";
+
+import Layout from "../components/layout";
 
 export default class extends React.Component {
   state = {
@@ -12,7 +14,8 @@ export default class extends React.Component {
     sig: "",
     first: "",
     last: "",
-    packet: {}
+    packet: {},
+    loading: false
   };
 
   componentDidMount() {
@@ -38,9 +41,9 @@ export default class extends React.Component {
   };
 
   save = (user, uuid) => {
-    Iota.attach(user, uuid, "I").then(data => {
-      alert("Attached");
-      console.log(data);
+    this.setState({ loading: true });
+    Certs.iota.attach(user, uuid, "I").then(data => {
+      this.setState({ loading: false });
     });
     user.sk = this.state.pair.secretKey;
     const url = "https://tangleidentity.firebaseio.com/users/" + uuid + ".json";
@@ -48,52 +51,96 @@ export default class extends React.Component {
   };
 
   render() {
-    var { pair, sig, first, last, uuid } = this.state;
+    var { pair, sig, first, last, uuid, loading } = this.state;
     return (
-      <div>
-        <Title>User details:</Title>
-        <div>
-          In this example a user generates their keyPair, signs a claim about
-          their name, and then attaches it to the tangle.
-        </div>
-        <div>It also saves the packet to a webDB for testing/inspection</div>
-        <button onClick={() => this.initialise()}>Generate Again</button>
-        <div>
-          UUID: {uuid}
-        </div>
-        <div>
-          Priv: {pair.secretKey && pair.secretKey}
-        </div>
-        <div>
-          Pub: {pair.publicKey && pair.publicKey}
-        </div>
+      <Layout header={`User details:`}>
+        <p>
+          This generates a user's initial keyPair, signs a claim about their
+          name, and then attaches it to the tangle.
+        </p>
+        <p>
+          This proccess will be automated in the future when a user signs up to
+          the service.
+        </p>
+        <Row>
+          <Column flex={"1"}>
+            UUID: <p>{uuid}</p>
+          </Column>
+          <Column flex={"2"}>
+            Private Key:
+            <QRcode
+              value={JSON.stringify({
+                sk: pair.secretKey
+              })}
+              size={200}
+              level="H"
+            />
+            <p
+              style={{
+                maxWidth: 200,
+                wordWrap: "break-word",
+                fontSize: ".6rem"
+              }}
+            >
+              {pair.secretKey && pair.secretKey}
+            </p>
+          </Column>
+          <Column flex={"2"}>
+            Public Key + UUID:
+            <QRcode
+              value={JSON.stringify({
+                id: uuid,
+                pk: pair.publicKey
+              })}
+              size={200}
+              level="H"
+            />
+            <p
+              style={{
+                maxWidth: 200,
+                wordWrap: "break-word",
+                fontSize: ".6rem"
+              }}
+            >
+              {pair.publicKey && pair.publicKey}
+            </p>
+          </Column>
+        </Row>
 
-        <div>
-          <input
-            type={"text"}
-            value={first}
-            placeholder={"First Name"}
-            onChange={e => this.setState({ first: e.target.value })}
-          />
-          <input
-            type={"text"}
-            value={last}
-            placeholder={"Last Name"}
-            onChange={e => this.setState({ last: e.target.value })}
-          />
-        </div>
-        <div>
-          <button
-            onClick={() =>
-              this.sign(
-                JSON.stringify({ firstName: first, lastName: last }),
-                pair.secretKey
-              )}
-          >
-            Save user
-          </button>
-        </div>
-      </div>
+        {!loading
+          ? <Column>
+              <div>
+                <input
+                  type={"text"}
+                  value={first}
+                  placeholder={"First Name"}
+                  onChange={e => this.setState({ first: e.target.value })}
+                />
+                <input
+                  type={"text"}
+                  value={last}
+                  placeholder={"Last Name"}
+                  onChange={e => this.setState({ last: e.target.value })}
+                />
+              </div>
+              <div>
+                <button onClick={() => this.initialise()}>
+                  Generate Again
+                </button>
+
+                <button
+                  onClick={() =>
+                    this.sign(
+                      JSON.stringify({ firstName: first, lastName: last }),
+                      pair.secretKey
+                    )}
+                >
+                  Save user
+                </button>
+              </div>
+            </Column>
+          : `loading`}
+      </Layout>
     );
   }
 }
@@ -101,4 +148,18 @@ export default class extends React.Component {
 const Title = styled.h1`
   color: palevioletred;
   font-size: 24px;
+`;
+const Row = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+`;
+const Column = styled.div`
+  display: flex;
+  flex: ${props => (props.flex ? props.flex : "1")};
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 `;
