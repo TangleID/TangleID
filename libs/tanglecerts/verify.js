@@ -12,7 +12,11 @@ export default class Verify {
   };
   static claim = async (msg, sig, issuerID) => {
     var issuer = await Iota.getBundles(issuerID, "I");
-    return nacl.sign.detached.verify(dUTF(msg), d64(sig), d64(issuer.pk));
+    return nacl.sign.detached.verify(
+      dUTF(msg),
+      d64(sig),
+      d64(issuer[0].message.pk)
+    );
   };
 }
 
