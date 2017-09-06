@@ -9,6 +9,7 @@ export default class extends React.Component {
     issuerID: "",
     issuerSK: "",
     message: "",
+    opt: "",
     packet: {},
     loading: false
   };
@@ -26,9 +27,18 @@ export default class extends React.Component {
     );
 
     this.setState({ loading: true });
-    Certs.iota.attach(packet, this.props.receiver, "C").then(data => {
-      this.setState({ loading: false });
-    });
+   console.log(this.state.opt); 
+    if(this.state.opt === "C") {
+        Certs.iota.attach(packet, this.props.receiver, "C").then(data => {
+            this.setState({ loading: false });
+            this.setState({ opt: "" });
+        });
+    } else if(this.state.opt === "R") {
+        Certs.iota.attach(packet, this.props.receiver, "R").then(data => {
+            this.setState({ loading: false });
+            this.setState({ opt: "" });
+        });
+    }
   };
 
   render() {
@@ -46,9 +56,14 @@ export default class extends React.Component {
                       placeholder={"Message"}
                       onChange={e => this.setState({ message: e.target.value })}
                     />
-                    <button onClick={() => this.sign(message)}>
-                      Sign & Attach
-                    </button>
+                    <div>
+                      <button onClick={() => {this.setState({opt: "C"}); this.sign(message)}}>
+                          Sign & Attach
+                      </button>
+                      <button onClick={() => {this.setState({ opt: "R" }); this.sign(message)}}>
+                          Sign & Revoke
+                      </button>
+                    </div>
                   </Column>
                 : `You need to act as a user to send a message`}
             </Column>

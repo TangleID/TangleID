@@ -25,20 +25,47 @@ export default class extends React.Component {
     var revokes = await Certs.iota.getBundles(key, "R"); // Get all claim revocations
     console.log("Users initial claim: ");
     console.log(initial[0]);
+
+    this.getTxHash(revokes);
     // Get the issuer of the claims
     this.getIssuer(claims);
 
-    this.setState({ initial, revokes });
+    this.setState({ initial });
+  };
+
+  getTxHash = async revokes => {
+      var updatedRevokeHash = [];
+      var revokeTxHash = [];
+      revokes.map(async revoke => {
+          console.log(revoke);
+          updatedRevokeHash.push(JSON.parse(revoke.message.claim).statement);
+          revokeTxHash.push(revoke.hash);
+          this.setState({ revokesTarget: updatedRevokeHash, 
+                          revokesHash: revokeTxHash });
+      });
+      if (updatedRevokeHash[0]) console.log("Found Revocations!");
   };
 
   getIssuer = async claims => {
     var updatedClaims = [];
+    var updatedRevoke = [];
+    var i;
     claims.map(async claim => {
       var issuer = await Certs.iota.getBundles(claim.message.issuer, "I");
       var filledClaim = claim;
       filledClaim.message.issuer = issuer[0].message;
-      updatedClaims.push(filledClaim);
-      this.setState({ claims: updatedClaims });
+
+      if(this.state.revokesTarget && (i = this.state.revokesTarget.indexOf(claim.hash)) > -1) {
+        console.log("origin: " + filledClaim.hash);
+
+        filledClaim.hash = this.state.revokesHash[i]; 
+        console.log("revoke: " + filledClaim.hash);
+        updatedRevoke.push(filledClaim);
+        this.setState({ revokes: updatedRevoke });
+      } else {
+        updatedClaims.push(filledClaim);
+        this.setState({ claims: updatedClaims });
+      }
     });
     if (updatedClaims[0]) console.log("Found claims about this user!");
   };
@@ -142,8 +169,39 @@ export default class extends React.Component {
                         : "Failed"}
                     </div>
                   </Row>
+                  <div>
+                    Hash:{" "}
+                    {claim.hash}
+                  </div>
                 </Column>
               )}
+              <h3> Revocations about this user:</h3>
+              {revokes &&
+               revokes.map((revoke, index) =>
+                    <Column
+                      key={index}
+                      style={{ borderBottom: "1px solid #131515" }}
+                     >
+                     <div>
+                        Issuer:{" "}
+                        {JSON.parse(revoke.message.issuer.claim).firstName +
+                          " " +
+                         JSON.parse(revoke.message.issuer.claim).lastName}
+                     </div>
+                     <Row>
+                        <div>
+                         Claim: {JSON.parse(revoke.message.claim).statement}
+                         </div>
+                         <div>
+                            <font color="red">Revoked</font>
+                         </div>
+                      </Row>
+                     <div>
+                        Hash:{" "}
+                        {revoke.hash}
+                    </div>
+                    </Column>
+                )}
           </Column>
         </Row>
       </Layout>
