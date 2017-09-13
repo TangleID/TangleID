@@ -1,5 +1,4 @@
 import React from "react";
-import { Collapse, Button, CardBlock, Card } from 'reactstrap';
 import styled from "styled-components";
 import Link from "next/link";
 
@@ -12,9 +11,7 @@ import Certs from "../libs/tanglecerts";
 import QRcode from "qrcode.react";
 
 export default class extends React.Component {
-  state = {
-    collapse: false
-  };
+  state = {};
 
   componentDidMount() {
     this.getData(this.props.url.query.user);
@@ -23,17 +20,16 @@ export default class extends React.Component {
   getData = async key => {
     console.log("Getting bundles for: ", key);
 
-    var initial = await Certs.iota.getBundles(key, "I"); // Get all inital Claims
+    var initial = await Certs.iota.getBundles(key, "O"); // Get all inital Claims
     var claims = await Certs.iota.getBundles(key, "C"); // Get all regular Claims
     var revokes = await Certs.iota.getBundles(key, "R"); // Get all claim revocations
 
-    console.log("Users initial claim: ");
+    console.log("organization initial claim: ");
     console.log(initial[0]);
 
     this.getTxHash(revokes);
     // Get the issuer of the claims
     this.getIssuer(claims);
-
     this.setState({ initial });
   };
 
@@ -74,19 +70,13 @@ export default class extends React.Component {
     if (updatedClaims[0]) console.log("Found claims about this user!");
   };
 
-  toggle() {
-    this.setState({ collapse: !this.state.collapse });
-  }
-
   render() {
     var { initial, claims, revokes } = this.state;
     return (
       <Layout
         header={
           initial &&
-          JSON.parse(initial[0].message.claim).firstName +
-            " " +
-            JSON.parse(initial[0].message.claim).lastName
+          JSON.parse(initial[0].message.claim).orgName 
         }
       >
         <Row>
@@ -134,23 +124,21 @@ export default class extends React.Component {
                       "user",
                       JSON.stringify({
                         name:
-                          JSON.parse(initial[0].message.claim).firstName +
-                          " " +
-                          JSON.parse(initial[0].message.claim).lastName,
+                          JSON.parse(initial[0].message.claim).orgName,
                         id: initial[0].message.id,
                         sk: initial[0].message.sk
                       })
                     )}
                 >
-                  Act as user
+                  Act as organization
                 </button>
               </Column>
             : `Loading`}
 
           <Column flex={"2"}>
-            <h3>Make Claim about User:</h3>
+            <h3>Make Claim about Organization:</h3>
             {initial && <Claim receiver={initial[0].message.id} />}
-            <h3>Claims about this user:</h3>
+            <h3>Claims about this organization:</h3>
             {claims &&
               claims.map((claim, index) =>
                 <Column
@@ -161,7 +149,7 @@ export default class extends React.Component {
                     Issuer:{" "}
                     {JSON.parse(claim.message.issuer.claim).orgName}
                   </div>
-                  <Row>               
+                  <Row>
                     <div>
                       Claim: {JSON.parse(claim.message.claim).statement}
                     </div>
@@ -175,15 +163,13 @@ export default class extends React.Component {
                         : "Failed"}
                     </div>
                   </Row>
-                  <Collapse isOpen={this.state.collapse}>
-                    <div class="hash">
-                      Hash:{" "}
-                      {claim.hash}
-                    </div>
-                  </Collapse>
+                  <div>
+                    Hash:{" "}
+                    {claim.hash}
+                  </div>
                 </Column>
               )}
-              <h3> Revocations about this user:</h3>
+              <h3> Revocations about this organization:</h3>
               {revokes &&
                revokes.map((revoke, index) =>
                     <Column
@@ -192,7 +178,9 @@ export default class extends React.Component {
                      >
                      <div>
                         Issuer:{" "}
-                        {JSON.parse(revoke.message.issuer.claim).orgName}
+                        {JSON.parse(revoke.message.issuer.claim).firstName +
+                          " " +
+                         JSON.parse(revoke.message.issuer.claim).lastName}
                      </div>
                      <Row>
                         <div>
@@ -202,7 +190,7 @@ export default class extends React.Component {
                             <font color="red">Revoked</font>
                          </div>
                       </Row>
-                     <div class="collapsed">
+                     <div>
                         Hash:{" "}
                         {revoke.hash}
                     </div>

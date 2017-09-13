@@ -1,6 +1,6 @@
 import IOTA from "iota.lib.js";
 
-var defaultNode = "https://node.tangle.works";
+var defaultNode = "http://node.deviceproof.org:14265";
 
 export var iota = new IOTA({
   provider: defaultNode

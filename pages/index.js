@@ -9,7 +9,8 @@ import Certs from "../libs/tanglecerts";
 
 export default class extends React.Component {
   state = {
-    users: []
+    users: [],
+    orgs: []
   };
 
   componentDidMount() {
@@ -21,12 +22,15 @@ export default class extends React.Component {
     var users = await webReceieve(
       "https://tangleidentity.firebaseio.com/users.json"
     );
-    var arr = [];
+    var orgs = await webReceieve(
+      "https://tangleidentity.firebaseio.com/organizations.json"
+    );
+
     var keys = [];
     Object.keys(users).map(key => {
       keys.push(key);
     });
-    console.log("Searching/Retreiving their bundles from the tangle");
+    console.log("Searching/Retreiving users' bundles from the tangle");
 
     keys.map(key =>
       Certs.iota.getBundles(key, "I").then(data => {
@@ -36,14 +40,30 @@ export default class extends React.Component {
           state.push(item.message);
         });
         if (data[0]) this.setState({ users: state });
-      })
-    );
+      }));
+
+    var orgKeys = [];
+    Object.keys(orgs).map(key => {
+      orgKeys.push(key);
+    });
+    console.log("Searching/Retreiving organizations' bundles from the tangle");
+
+    orgKeys.map(key =>
+      Certs.iota.getBundles(key, "O").then(orgdata => {
+          var orgstate = this.state.orgs;
+          orgdata.map(item => {
+              console.log("Found Org: ", item.message.id);
+              orgstate.push(item.message);
+          });
+          if (orgdata[0]) this.setState({ orgs: orgstate });
+    }));
   };
 
   render() {
-    var { users } = this.state;
+    var { users, orgs } = this.state;
     return (
-      <Layout header={`Users`}>
+      <Layout header={`List`}>
+        <h3>Users</h3>
         {users[0]
           ? users.map((c, index) =>
               <Link href={{ pathname: "user", query: { user: c.id } }}>
@@ -67,10 +87,33 @@ export default class extends React.Component {
               </Link>
             )
           : `loading`}
-        <div
-          style={{ padding: 10 }}
-        >{`These are being retreived live from the tangle`}</div>
-      </Layout>
+          <h3>Organizations</h3>
+          {orgs[0]
+            ? orgs.map((c, index) =>
+                <Link href={{ pathname: "organization", query: { user: c.id } }}>
+                  <UserBox key={index}>
+                    <strong>
+                      {JSON.parse(c.claim).orgName}
+                    </strong>
+                    <Row>
+                      <div>
+                        Claim: {c.claim}
+                      </div>
+                      <div>
+                        Initial Claim:{" "}
+                        {Certs.verify.initial(c.claim, c.signature, c.pk)
+                          ? "Valid"
+                          : "Invalid"}
+                      </div>
+                    </Row>
+                  </UserBox>
+                </Link>
+              )
+            : `loading`}
+          <div
+            style={{ padding: 10 }}
+          >{`There are being retreived live from the tangle`}</div>
+      </Layout>      
     );
   }
 }

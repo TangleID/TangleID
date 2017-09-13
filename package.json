@@ -11,7 +11,10 @@
     "next": "^2.4.6",
     "qrcode.react": "^0.7.1",
     "react": "^15.6.1",
+    "react-addons-css-transition-group": "^15.6.0",
+    "react-addons-transition-group": "^15.6.0",
     "react-dom": "^15.6.1",
+    "reactstrap": "^4.8.0",
     "styled-components": "^2.1.0",
     "tweetnacl": "^1.0.0",
     "tweetnacl-util": "^0.15.0"

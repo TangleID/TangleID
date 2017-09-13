@@ -14,8 +14,9 @@ export default class extends React.Component {
     sig: "",
     first: "",
     last: "",
+    orgName: "",
     packet: {},
-    loading: false
+    loading: false,
   };
 
   componentDidMount() {
@@ -28,7 +29,7 @@ export default class extends React.Component {
     this.setState({ pair: pair, uuid: uuid });
   };
 
-  sign = (msg, sk) => {
+  sign = (type, msg, sk) => {
     var sig = Certs.sign(msg, sk);
     var packet = Certs.generateInitalPacket(
       this.state.uuid,
@@ -37,21 +38,34 @@ export default class extends React.Component {
       this.state.pair.publicKey
     );
     this.setState({ sig: sig, packet: packet, msg: msg });
-    this.save(packet, this.state.uuid);
+    this.save(type, packet, this.state.uuid);
   };
 
-  save = (user, uuid) => {
+  save = (type, user, uuid) => {
+    const userUrl = "https://tangleidentity.firebaseio.com/users/" + uuid + ".json";
+    const orgUrl = "https://tangleidentity.firebaseio.com/organizations/" + uuid + ".json";
+
     this.setState({ loading: true });
-    Certs.iota.attach(user, uuid, "I").then(data => {
-      this.setState({ loading: false });
-    });
-    user.sk = this.state.pair.secretKey;
-    const url = "https://tangleidentity.firebaseio.com/users/" + uuid + ".json";
-    webAttach(url, user);
+    if (type === "org") {
+       console.log("new organization");
+       Certs.iota.attach(user, uuid, "O").then(data => {
+            this.setState({ loading: false });
+        });
+        user.sk = this.state.pair.secretKey;
+        webAttach(orgUrl, user);
+    } else {
+        console.log("new user");
+        Certs.iota.attach(user, uuid, "I").then(data => {
+            this.setState({ loading: false });
+        });
+        user.sk = this.state.pair.secretKey;
+        webAttach(userurl, user);
+    }
+    console.log(this.state.loading);
   };
 
   render() {
-    var { pair, sig, first, last, uuid, loading } = this.state;
+    var { pair, sig, first, last, uuid, orgName, loading } = this.state;
     return (
       <Layout header={`User details:`}>
         <p>
@@ -59,7 +73,7 @@ export default class extends React.Component {
           name, and then attaches it to the tangle.
         </p>
         <p>
-          This proccess will be automated in the future when a user signs up to
+          This proccess will be automated in the future when a user or a organization signs up to
           the service.
         </p>
         <Row>
@@ -108,37 +122,64 @@ export default class extends React.Component {
         </Row>
 
         {!loading
-          ? <Column>
-              <div>
-                <input
-                  type={"text"}
-                  value={first}
-                  placeholder={"First Name"}
-                  onChange={e => this.setState({ first: e.target.value })}
-                />
-                <input
-                  type={"text"}
-                  value={last}
-                  placeholder={"Last Name"}
-                  onChange={e => this.setState({ last: e.target.value })}
-                />
-              </div>
-              <div>
-                <button onClick={() => this.initialise()}>
-                  Generate Again
-                </button>
-
-                <button
-                  onClick={() =>
-                    this.sign(
-                      JSON.stringify({ firstName: first, lastName: last }),
-                      pair.secretKey
-                    )}
-                >
-                  Save user
-                </button>
-              </div>
-            </Column>
+          ? <Row> 
+              <Column>
+                 <h4>User</h4>
+                 <div>
+                    <input
+                       type={"text"}
+                       value={first}
+                       placeholder={"First Name"}
+                       onChange={e => this.setState({ first: e.target.value })}
+                    />
+                    <input
+                       type={"text"}
+                       value={last}
+                       placeholder={"Last Name"}
+                       onChange={e => this.setState({ last: e.target.value })}
+                    />
+                 </div>
+                 <div>
+                   <button
+                     onClick={() =>
+                       this.sign(
+                         "user",
+                         JSON.stringify({ firstName: first, lastName: last }),
+                         pair.secretKey
+                       )}
+                   >
+                     Save user
+                   </button>
+                 </div>
+               </Column>
+               <Column>
+                 <h4>Organization</h4> 
+                 <div>
+                    <input
+                       type={"text"}
+                       value={orgName}
+                       placeholder={"ORG Name"}
+                       onChange={e => this.setState({ orgName: e.target.value })}
+                    />
+                 </div>
+                 <div>
+                    <button
+                      onClick={() => 
+                        this.sign(
+                             "org",
+                             JSON.stringify({ orgName: orgName }),
+                             pair.secretKey
+                         )
+                      }
+                    >
+                     Save organization
+                    </button>
+                 </div>
+               </Column>
+                 <button onClick={() => this.initialise()}>
+                     Generate Again
+                 </button>
+            </Row>
           : `loading`}
       </Layout>
     );
