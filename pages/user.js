@@ -26,13 +26,22 @@ export default class extends React.Component {
     var initial = await Certs.iota.getBundles(key, "I"); // Get all inital Claims
     var claims = await Certs.iota.getBundles(key, "C"); // Get all regular Claims
     var revokes = await Certs.iota.getBundles(key, "R"); // Get all claim revocations
+    var messages = await Certs.iota.getBundles(key, "M"); // Get all private messages
+
+    var user = await webReceieve(
+      "https://tangleidentity.firebaseio.com/users/" + key + ".json"
+    );
+    initial[0].message.sk = user[Object.keys(user)].sk;
 
     console.log("Users initial claim: ");
     console.log(initial[0]);
+    console.log(user);
 
     this.getTxHash(revokes);
     // Get the issuer of the claims
     this.getIssuer(claims);
+
+    this.getMessage(messages);
 
     this.setState({ initial });
   };
@@ -44,10 +53,38 @@ export default class extends React.Component {
           console.log(revoke);
           updatedRevokeHash.push(JSON.parse(revoke.message.claim).statement);
           revokeTxHash.push(revoke.hash);
-          this.setState({ revokesTarget: updatedRevokeHash, 
+          this.setState({ revokesTarget: updatedRevokeHash,
                           revokesHash: revokeTxHash });
       });
       if (updatedRevokeHash[0]) console.log("Found Revocations!");
+  };
+
+  getMessage = async messages => {
+      var verifiedMessages = [];
+      var local = JSON.parse(await localStorage.getItem("user"));
+      if(local) {
+          messages.map(async message => {
+              var issuer = await Certs.iota.getBundles(message.message.issuer, "I");
+              var sender = message.message.issuer;
+              var newMessage = message;
+              try {
+                  var msg = Certs.decryptUTF(message.message.claim, local.sk);
+                  var sig = message.message.signature;
+                  if(await Certs.verify.claim(msg, sig, sender)) {
+                      newMessage.message.claim = msg;
+                      verifiedMessages.push(newMessage);
+                      verifiedMessages.sort(function (a, b) {
+                          return a.time < b.time;
+                      });
+                      this.setState({ messages: verifiedMessages });
+                  }
+              } catch (e) {
+                  console.log("Vaildation failed: ", sender);
+              }
+          });
+      }
+      console.log(verifiedMessages)
+      if (verifiedMessages !== []) console.log("Found messages for this user!");
   };
 
   getIssuer = async claims => {
@@ -62,7 +99,7 @@ export default class extends React.Component {
       if(this.state.revokesTarget && (i = this.state.revokesTarget.indexOf(claim.hash)) > -1) {
         console.log("origin: " + filledClaim.hash);
 
-        filledClaim.hash = this.state.revokesHash[i]; 
+        filledClaim.hash = this.state.revokesHash[i];
         console.log("revoke: " + filledClaim.hash);
         updatedRevoke.push(filledClaim);
         this.setState({ revokes: updatedRevoke });
@@ -79,7 +116,7 @@ export default class extends React.Component {
   }
 
   render() {
-    var { initial, claims, revokes } = this.state;
+    var { initial, claims, revokes, messages } = this.state;
     return (
       <Layout
         header={
@@ -161,7 +198,7 @@ export default class extends React.Component {
                     Issuer:{" "}
                     {JSON.parse(claim.message.issuer.claim).orgName}
                   </div>
-                  <Row>               
+                  <Row>
                     <div>
                       Claim: {JSON.parse(claim.message.claim).statement}
                     </div>
@@ -195,7 +232,7 @@ export default class extends React.Component {
                         {JSON.parse(revoke.message.issuer.claim).orgName}
                      </div>
                      <Row>
-                        <div>
+                         <div>
                          Claim: {JSON.parse(revoke.message.claim).statement}
                          </div>
                          <div>
@@ -206,6 +243,27 @@ export default class extends React.Component {
                         Hash:{" "}
                         {revoke.hash}
                     </div>
+                    </Column>
+                )}
+              <h3> Messages sent to this user:</h3>
+              {messages &&
+               messages.map((message, index) =>
+                    <Column
+                      key={index}
+                      style={{ borderBottom: "1px solid #131515" }}
+                     >
+                     <div>
+                        Sender:{" "}
+                        {message.message.issuer}
+                     </div>
+                     <Row>
+                        <div>
+                         Message: {JSON.parse(message.message.claim).statement}
+                         </div>
+                         <div>
+                            <font color="blue">Verified</font>
+                         </div>
+                      </Row>
                     </Column>
                 )}
           </Column>

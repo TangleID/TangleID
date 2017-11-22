@@ -4,7 +4,6 @@ import Link from "next/link";
 import { webAttach } from "../libs/network";
 import Certs from "../libs/tanglecerts";
 import QRcode from "qrcode.react";
-
 import Layout from "../components/layout";
 
 export default class extends React.Component {
@@ -47,19 +46,21 @@ export default class extends React.Component {
 
     this.setState({ loading: true });
     if (type === "org") {
-       console.log("new organization");
-       Certs.iota.attach(user, uuid, "O").then(data => {
-            this.setState({ loading: false });
-        });
+      console.log("new organization");
+      Certs.iota.attach(user, uuid, "O").then(data => {
+        this.setState({ loading: false });
         user.sk = this.state.pair.secretKey;
         webAttach(orgUrl, user);
+      });
     } else {
-        console.log("new user");
-        Certs.iota.attach(user, uuid, "I").then(data => {
-            this.setState({ loading: false });
-        });
+      console.log("new user");
+      Certs.iota.attach(user, uuid, "I").then(data => {
+        console.log(data);
+        this.setState({ loading: false });
         user.sk = this.state.pair.secretKey;
-        webAttach(userurl, user);
+        webAttach(userUrl, user);
+        console.log(user);
+      });
     }
     console.log(this.state.loading);
   };
@@ -122,7 +123,7 @@ export default class extends React.Component {
         </Row>
 
         {!loading
-          ? <Row> 
+          ? <Row>
               <Column>
                  <h4>User</h4>
                  <div>
@@ -153,7 +154,7 @@ export default class extends React.Component {
                  </div>
                </Column>
                <Column>
-                 <h4>Organization</h4> 
+                 <h4>Organization</h4>
                  <div>
                     <input
                        type={"text"}
@@ -164,7 +165,7 @@ export default class extends React.Component {
                  </div>
                  <div>
                     <button
-                      onClick={() => 
+                      onClick={() =>
                         this.sign(
                              "org",
                              JSON.stringify({ orgName: orgName }),

@@ -7,6 +7,8 @@ import Layout from "../components/layout";
 import { webReceieve } from "../libs/network";
 import Certs from "../libs/tanglecerts";
 
+
+
 export default class extends React.Component {
   state = {
     users: [],
@@ -19,13 +21,13 @@ export default class extends React.Component {
 
   getData = async () => {
     console.log("Getting list of users from the internet.");
+
     var users = await webReceieve(
       "https://tangleidentity.firebaseio.com/users.json"
     );
     var orgs = await webReceieve(
       "https://tangleidentity.firebaseio.com/organizations.json"
     );
-
     var keys = [];
     Object.keys(users).map(key => {
       keys.push(key);
@@ -36,8 +38,11 @@ export default class extends React.Component {
       Certs.iota.getBundles(key, "I").then(data => {
         var state = this.state.users;
         data.map(item => {
-          console.log("Found User: ", item.message.id);
-          state.push(item.message);
+          if(item.message){
+            console.log(key, item);
+            console.log("Found User: ", item.message.id);
+            state.push(item.message);
+          }
         });
         if (data[0]) this.setState({ users: state });
       }));
@@ -113,7 +118,7 @@ export default class extends React.Component {
           <div
             style={{ padding: 10 }}
           >{`There are being retreived live from the tangle`}</div>
-      </Layout>      
+      </Layout>
     );
   }
 }

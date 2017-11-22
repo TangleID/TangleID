@@ -8,9 +8,10 @@ export const webReceieve = async url => {
 
 export const webAttach = (url, body) => {
   fetch(url, {
-    method: "PUT",
+    method: "POST",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      "X-IOTA-API-VERSION": "1.4.1"
     },
     body: JSON.stringify(body)
   });

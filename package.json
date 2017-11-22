@@ -8,16 +8,17 @@
   },
   "dependencies": {
     "iota.lib.js": "git+https://github.com/l3wi/iota.lib.js.git",
-    "next": "^2.4.6",
-    "qrcode.react": "^0.7.1",
-    "react": "^15.6.1",
-    "react-addons-css-transition-group": "^15.6.0",
-    "react-addons-transition-group": "^15.6.0",
-    "react-dom": "^15.6.1",
+    "next": "^2.4.9",
+    "qrcode.react": "^0.7.2",
+    "react": "^15.6.2",
+    "react-addons-css-transition-group": "^15.6.2",
+    "react-addons-transition-group": "^15.6.2",
+    "react-dom": "^15.6.2",
     "reactstrap": "^4.8.0",
-    "styled-components": "^2.1.0",
+    "styled-components": "2.2.0",
     "tweetnacl": "^1.0.0",
-    "tweetnacl-util": "^0.15.0"
+    "tweetnacl-util": "^0.15.0",
+    "ursa": "^0.9.4"
   },
   "devDependencies": {
     "babel-preset-stage-2": "^6.24.1"

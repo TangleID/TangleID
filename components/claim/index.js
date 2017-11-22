@@ -18,6 +18,7 @@ export default class extends React.Component {
     var local = JSON.parse(await localStorage.getItem("user"));
 
     var json = JSON.stringify({ statement: message });
+
     var signature = Certs.sign(json, local.sk);
     var packet = Certs.generatePacket(
       local.id,
@@ -27,7 +28,7 @@ export default class extends React.Component {
     );
 
     this.setState({ loading: true });
-   console.log(this.state.opt); 
+    console.log(this.state.opt);
     if(this.state.opt === "C") {
         Certs.iota.attach(packet, this.props.receiver, "C").then(data => {
             this.setState({ loading: false });
@@ -35,6 +36,15 @@ export default class extends React.Component {
         });
     } else if(this.state.opt === "R") {
         Certs.iota.attach(packet, this.props.receiver, "R").then(data => {
+            this.setState({ loading: false });
+            this.setState({ opt: "" });
+        });
+    } else if(this.state.opt === "M") {
+        var bun = await Certs.iota.getBundles(this.props.receiver, "I");
+        var recv_pubKey = bun[0].message.pk;
+        packet.claim = Certs.encrypt(packet.claim, recv_pubKey);
+        Certs.iota.attach(packet, this.props.receiver, "M").then(data => {
+            console.log(data);
             this.setState({ loading: false });
             this.setState({ opt: "" });
         });
@@ -63,9 +73,12 @@ export default class extends React.Component {
                       <button onClick={() => {this.setState({ opt: "R" }); this.sign(message)}}>
                           Sign & Revoke
                       </button>
+                      <button onClick={() => {this.setState({ opt: "M" }); this.sign(message)}}>
+                          Send private message
+                      </button>
                     </div>
                   </Column>
-                : `You need to act as a user to send a message`}
+                : `You need to act as a user to send a claim`}
             </Column>
           : `Attaching to tangle. Can take a 30s. Refresh when done.`}
       </Column>
