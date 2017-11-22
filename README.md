@@ -17,7 +17,7 @@ such as cryptocurrencies or other tokenized assets.
 
 ## Use Case
 
-[ end-user ]
+* End-user
 
 TangleID allows end-users to: own and control their personal identity,
 reputation, data, and digital assets; securely and selectively disclose
@@ -26,7 +26,8 @@ passwords; digitally sign claims, transactions, and documents; control and
 send value on a Tangle; interact with decentralized operation logic; and
 encrypt messages and data.
 
-[ enterprise ]
+* Enterprise
+
 TangleID allows enterprises to: establish a corporate identity; easily
 onboard new customers and employees; establish an improved and transitive
 Know-Your-Customer (KYC) process; build secure access-controlled
@@ -50,8 +51,6 @@ device is lost.
 
 ## How to use
 
-In your command line tool
-
 1. Clone this repository:
 ```
 git clone https://github.com/TangleID/TangleID
@@ -63,7 +62,8 @@ npm run dev
 ```
 A dev server will be served at `http://localhost:3000`
 
-## How to structure project
+## How to customize
+
 - Put pages/routes components in `pages` directory.
 - Put react components in `components` directory.
 - Put static assets in `static` directory.
