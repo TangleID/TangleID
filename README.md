@@ -1,42 +1,62 @@
-# Opinionated
-Opinionated React boilerplate with Next.js and styled-components.
+# TangleID
 
-Handle all these buzzwords without you making a decision:
-- Server-side rendering
-- Routing library
-- Styling library
-- Code bundling and transpiling
-- Hot reloading
-- Code splitting
-- ES6(+), ES2015(+) support
+## Introduction
 
-So you can focus on writting modern and production ready web app.
+TangleID is a secure, easy-to-use system for self-sovereign identity,
+built on IOTA/Tangle. An identity can be cryptographically linked to
+offline data stores. Each identity is capable of storing the hash of
+an attributed data blob, whether on Google Cloud, Azure, AWS, Dropbox,
+etc., which is where all data associated with that identity is securely
+stored.
 
-## What's inside
-- [**Next.js**](https://github.com/zeit/next.js) v2.4
-- [**React**](https://facebook.github.io/react/) v15.6
-- [**Styled-components**](https://www.styled-components.com/) v2.1
-- [**Babel**](https://babeljs.io/) stage-2 preset
+Identities are capable of updating this file themselves, such as adding
+a profile photo or a friend, or they can also grant others temporary
+permission to read or write specific files. Since they can interact with
+Tangle network, TangleID identities can also control digital bearer assets
+such as cryptocurrencies or other tokenized assets.
 
-## Why
-#### Next.js
-  - Configuration abstraction.
-  - Server-side rendering, code splitting, bundling assets.
-#### Styled-components
-  - Clean, matured and most popular styling library for React components.
-  - Support server-side rendering.
-#### Babel stage-2
-  - Safe enough and cover all widely-used ES6+ features.
+## Use Case
+
+[ end-user ]
+
+TangleID allows end-users to: own and control their personal identity,
+reputation, data, and digital assets; securely and selectively disclose
+their data to counterparties; access digital services without using
+passwords; digitally sign claims, transactions, and documents; control and
+send value on a Tangle; interact with decentralized operation logic; and
+encrypt messages and data.
+
+[ enterprise ]
+TangleID allows enterprises to: establish a corporate identity; easily
+onboard new customers and employees; establish an improved and transitive
+Know-Your-Customer (KYC) process; build secure access-controlled
+environments with less friction for employees; reduce liability by not
+holding sensitive customer information; increase compliance; maintain a
+network of vendors; establish role-specific, actor-agnostic identities
+with specific permissions.
+
+## Functionality
+
+TangleID, an identity system, aims to be a flexible and easy-to-use method
+of interacting with decentralized applications as well as off-Tangl
+ identity related tasks by abstracting away the public key cryptography from
+the end user to make the user experience intuitive.
+
+A mobile app holds the user's private key and a certain address acts as
+their identifier. We use a novel identity recovery mechanism to let the
+user select friends from their contact list which gives a quorum of these
+friends the ability to recover the identity of the user if their mobile
+device is lost.
 
 ## How to use
 
 In your command line tool
 
-1. Clone this repo:
+1. Clone this repository:
 ```
-git clone https://github.com/khanglu/opinionated.js
+git clone https://github.com/TangleID/TangleID
 ```
-2. Install and run
+2. Install and run:
 ```
 npm install
 npm run dev
@@ -44,11 +64,6 @@ npm run dev
 A dev server will be served at `http://localhost:3000`
 
 ## How to structure project
-- Put pages/routes components in `pages` folder.
-- Put react components in `components` folder.
-- Put static assets in `static` folder.
-
-## Suggestion
-- Add [prettier](https://github.com/prettier/prettier) plugin to your editor, turn on code formatting on save and forget about eslint.
-- Use [Jest](https://github.com/facebook/jest) and [Enzyme](https://github.com/airbnb/enzyme) for unit testing.
-- If you use Redux, put a store in each page/route using a higher-order component.
+- Put pages/routes components in `pages` directory.
+- Put react components in `components` directory.
+- Put static assets in `static` directory.
