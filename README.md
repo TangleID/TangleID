@@ -39,7 +39,7 @@ with specific permissions.
 ## Functionality
 
 TangleID, an identity system, aims to be a flexible and easy-to-use method
-of interacting with decentralized applications as well as off-Tangl
+of interacting with decentralized applications as well as off-Tangle
  identity related tasks by abstracting away the public key cryptography from
 the end user to make the user experience intuitive.
 
