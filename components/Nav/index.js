@@ -2,8 +2,14 @@ import Link from 'next/link'
 
 const Nav = () => (
 	<nav>
-		<Link prefetch href="/users/">Users</Link>
-		<Link prefetch href="/users/new/">New user</Link>
+		<span style={{padding: '5px'}}>
+			<Link prefetch href="/users/">
+				<a>Users</a>
+			</Link>
+		</span>
+		<span style={{padding: '5px'}}>
+			<Link prefetch href="/users/new/"><a>New User</a></Link>
+		</span>
 	</nav>
 )
 

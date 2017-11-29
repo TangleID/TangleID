@@ -9,7 +9,10 @@ export default store => next => action => {
 
 	let { endpoint } = callAPI
 
-	const { types, params, method, host } = callAPI
+	const {
+		types, params, method, host,
+		aggregate, getParams,
+	} = callAPI
 
 	if (typeof endpoint !== 'string') {
 		throw new Error('Specify a string endpoint URL.')
@@ -33,17 +36,29 @@ export default store => next => action => {
 
 
 	let promise
-	if (method && method !== 'GET') {
-		promise = fetchData(host, endpoint, method, params.body)
+
+	function getPromise(p, label) {
+		if (!p) {
+			return fetchData(host, endpoint, 'GET')
+		}
+		return fetchData(host, endpoint, method, p.body, label)
+	}
+
+	if (aggregate) {
+		const paramsList = getParams()
+		promise = Promise.all(paramsList.map((p) => {
+			return getPromise(p, { id: p.body.transactionid})
+		}))
+			.then(res => {
+				console.log(res)
+				return res
+			})
 	} else {
-		promise = fetchData(host, endpoint, 'GET')
+		promise = getPromise(params)
 	}
 
 	return promise.then(
 		response => {
-			if (params && params.id) {
-				response.id = params.id
-			}
 			next(actionWith({
 				response,
 				type: successType
