@@ -4,8 +4,10 @@
   "description": "Self-sovereign built on IOTA",
   "main": "index.js",
   "scripts": {
-    "dev": "NODE_ENV=development node server.js",
-    "start": "NODE_ENV=production node server.js",
+    "preinstall": "npm install pm2 -g",
+    "heroku-postbuild": "npm run build",
+    "dev": "pm2 start server.js --watch server.js --watch next.config.js",
+    "start": "NODE_ENV=production pm2 start server.js -i max --attach",
     "build": "NODE_ENV=production next build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "commit": "git-cz"
@@ -26,13 +28,14 @@
     "react-dom": "^16.1.1",
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "webpack": "^3.8.1"
   },
   "devDependencies": {
     "cz-conventional-changelog": "^2.1.0",
     "eslint": "^4.11.0",
     "eslint-plugin-react": "^7.5.1",
-    "webpack": "^3.8.1"
+    "pm2": "^2.8.0"
   },
   "config": {
     "commitizen": {
