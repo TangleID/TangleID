@@ -6,7 +6,7 @@
   "scripts": {
     "preinstall": "npm install pm2 -g",
     "heroku-postbuild": "npm run build",
-    "dev": "pm2 start server.js --watch server.js --watch next.config.js",
+    "dev": "pm2 start server.js --watch server.js --watch utils --watch next.config.js && pm2 logs server",
     "start": "NODE_ENV=production pm2 start server.js -i max --attach",
     "build": "NODE_ENV=production next build",
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -29,6 +29,7 @@
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
+    "ursa": "^0.9.4",
     "webpack": "^3.8.1"
   },
   "devDependencies": {

@@ -50,7 +50,6 @@ export default store => next => action => {
 			return getPromise(p, { id: p.body.transactionid})
 		}))
 			.then(res => {
-				console.log(res)
 				return res
 			})
 	} else {
