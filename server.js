@@ -6,6 +6,8 @@ const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
 const handle = app.getRequestHandler()
 
+const createKeyPair = require('./utils/createKeyPair')
+
 app.prepare()
 	.then(() => {
 		const server = express()
@@ -14,6 +16,17 @@ app.prepare()
 			const actualPage = '/users'
 			return app.render(req, res, actualPage)
 		})
+
+
+		server.get('/api/keyPairs', (req, res) => {
+			return res.send(createKeyPair())
+		})
+
+		server.get('/users/new', (req, res) => {
+			const actualPage = '/users/new'
+			return app.render(req, res, actualPage)
+		})
+
 
 		server.get('/users/:id', (req, res) => {
 			const actualPage = '/user'

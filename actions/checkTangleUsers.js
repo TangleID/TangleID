@@ -5,6 +5,7 @@ import {
 	CHECK_TANGLE_USERS_SUCCESS,
 } from '../constants'
 
+// TODO: Verify is GET or POST
 const checkTangleUsers = (claims) => ({
 	[CALL_API]: {
 		types: [CHECK_TANGLE_USERS_REQUEST, CHECK_TANGLE_USERS_SUCCESS, CHECK_TANGLE_USERS_FAILURE],

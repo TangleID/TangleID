@@ -33,7 +33,7 @@ const validData = (state=[], action) => {
 	}
 }
 
-const offTangleData = (state={}, action) => {
+const offTangleData = (state=[], action) => {
 	switch (action.type) {
 	case OFF_TANGLE_USERS_SUCCESS:
 		return Object.keys(action.response)

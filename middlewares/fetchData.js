@@ -12,9 +12,9 @@ const fetchData = async function(
 	label,
 ) {
 	const fullUrl = (!host) ? DEFAULT_HOST + endpoint : host + endpoint
-	const options = (method === 'GET') ? { method } :{ method, body: JSON.stringify(body), headers: {
+	const options = (method === 'GET') ? { method, mode: 'cors' } :{ method, body: JSON.stringify(body), headers: {
 		'Content-Type': 'application/json'
-	}}
+	}, mode: 'cors'}
 
 	const res = await fetch(fullUrl, options)
 	if (!res.ok) return Promise.reject(res.statusText)
@@ -28,7 +28,6 @@ const fetchData = async function(
 		const text = await res.text()
 		result = { text }
 	}
-	console.log('label', label)
 	if (label) {
 		result = Object.assign({}, result, label)
 	}

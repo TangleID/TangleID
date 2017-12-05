@@ -1,9 +1,9 @@
 import Layout from '../../layouts/Main'
 
-const NewUserPage = () => {
+const NewUserPage = (props) => {
 	return (
 		<Layout>
-			<h2>New User</h2>
+			<h2>New Users</h2>
 		</Layout>
 	)
 }
