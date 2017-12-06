@@ -18,7 +18,7 @@ const checkTangleUsers = (claims) => ({
 			}
 		})),
 		host: process.env.HOST_API,
-		endpoint: '/'
+		endpoint: '/proxy/'
 	}
 })
 

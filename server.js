@@ -1,4 +1,6 @@
 const express = require('express')
+const httpProxy = require('http-proxy')
+const proxy = httpProxy.createProxyServer()
 const next = require('next')
 
 const port = parseInt(process.env.PORT, 10) || 3000
@@ -17,9 +19,12 @@ app.prepare()
 			return app.render(req, res, actualPage)
 		})
 
-
 		server.get('/api/keyPairs', (req, res) => {
 			return res.send(createKeyPair())
+		})
+
+		server.all('/api/proxy/*', (req, res) => {
+			proxy.web(req, res, { target: process.env.BACK_END_API })
 		})
 
 		server.get('/users/new', (req, res) => {
