@@ -7,10 +7,23 @@ import {
 	CHECK_TANGLE_USERS_REQUEST,
 	CHECK_TANGLE_USERS_SUCCESS,
 	CHECK_TANGLE_USERS_FAILURE,
+	RSA_KEY_PAIRS_REQUEST,
+	RSA_KEY_PAIRS_SUCCESS,
+	RSA_KEY_PAIRS_FAILURE,
 } from '../constants'
+
+const keyPairs = (state='', action) => {
+	switch (action.type) {
+	case RSA_KEY_PAIRS_SUCCESS:
+		return action.response
+	default:
+		return state
+	}
+}
 
 const isLoading = (state=false, action) => {
 	switch (action.type) {
+	case RSA_KEY_PAIRS_REQUEST:
 	case OFF_TANGLE_USERS_REQUEST:
 	case CHECK_TANGLE_USERS_REQUEST:
 		return true
@@ -39,6 +52,10 @@ const offTangleData = (state=[], action) => {
 		return Object.keys(action.response)
 			.map(id => action.response[id])
 			.filter(c => c.id)
+			.map((user) => {
+				user.claim = JSON.parse(user.claim)
+				return user
+			})
 	default:
 		return state
 	}
@@ -46,6 +63,7 @@ const offTangleData = (state=[], action) => {
 
 const error = (state=null, action) => {
 	switch (action.type) {
+	case RSA_KEY_PAIRS_FAILURE:
 	case OFF_TANGLE_USERS_FAILURE:
 	case CHECK_TANGLE_USERS_FAILURE:
 		return action.error
@@ -55,6 +73,7 @@ const error = (state=null, action) => {
 }
 
 const reducer = combineReducers({
+	keyPairs,
 	offTangleData,
 	validData,
 	isLoading,
