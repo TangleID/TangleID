@@ -25,6 +25,7 @@
     "isomorphic-unfetch": "^2.0.0",
     "next": "^4.1.4",
     "next-redux-wrapper": "^1.3.4",
+    "qrcode": "^1.0.0",
     "react": "^16.1.1",
     "react-dom": "^16.1.1",
     "react-redux": "^5.0.6",

@@ -1,5 +1,7 @@
 const express = require('express')
 const httpProxy = require('http-proxy')
+
+const transformToQRCode = require('./utils/transformToQRCode')
 const proxy = httpProxy.createProxyServer()
 const next = require('next')
 
@@ -7,6 +9,8 @@ const port = parseInt(process.env.PORT, 10) || 3000
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
 const handle = app.getRequestHandler()
+
+
 
 const createKeyPair = require('./utils/createKeyPair')
 
@@ -19,8 +23,10 @@ app.prepare()
 			return app.render(req, res, actualPage)
 		})
 
-		server.get('/api/keyPairs', (req, res) => {
-			return res.send(createKeyPair())
+		server.get('/api/keyPairs', async (req, res) => {
+			const { sk, pk } = createKeyPair()
+			const [ skImg, pkImg ] = await Promise.all([sk, pk].map(transformToQRCode))
+			return res.send({ sk, skImg, pk, pkImg})
 		})
 
 		server.all('/api/proxy/*', (req, res) => {
