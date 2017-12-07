@@ -10,6 +10,9 @@ import {
 	RSA_KEY_PAIRS_REQUEST,
 	RSA_KEY_PAIRS_SUCCESS,
 	RSA_KEY_PAIRS_FAILURE,
+	NEW_IDENTITY_REQUEST,
+	NEW_IDENTITY_SUCCESS,
+	NEW_IDENTITY_FAILURE,
 } from '../constants'
 
 const keyPairs = (state='', action) => {
@@ -23,14 +26,19 @@ const keyPairs = (state='', action) => {
 
 const isLoading = (state=false, action) => {
 	switch (action.type) {
+	case NEW_IDENTITY_REQUEST:
 	case RSA_KEY_PAIRS_REQUEST:
 	case OFF_TANGLE_USERS_REQUEST:
 	case CHECK_TANGLE_USERS_REQUEST:
 		return true
 	case OFF_TANGLE_USERS_SUCCESS:
 	case OFF_TANGLE_USERS_FAILURE:
+	case RSA_KEY_PAIRS_SUCCESS:
+	case RSA_KEY_PAIRS_FAILURE:
 	case CHECK_TANGLE_USERS_SUCCESS:
 	case CHECK_TANGLE_USERS_FAILURE:
+	case NEW_IDENTITY_SUCCESS:
+	case NEW_IDENTITY_FAILURE:
 		return false
 	default:
 		return state
