@@ -71,7 +71,7 @@ UserPage.getInitialProps = async (context) => {
 	const { id } = context.query
 	await store.dispatch(fetchOffTangleUserList())
 	await store.dispatch(checkTangleUsers([{ id }]))
-	//await store.dispatch(fetchClaims(id))
+	await store.dispatch(fetchClaims(id))
 	const { users } = store.getState()
 	const { offTangleData, validData, claims } = users
 	const validIds = validData.map(v => v.id)

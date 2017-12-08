@@ -34,14 +34,20 @@ $> npm run build && npm start
   - [x] use login api to check
 
 - [ ] User Page: `/users/:id`
-  - [ ] Make claim of specified user
-    - [ ] use new claim api: [doc](https://hackmd.io/s/HJyzQvF1z)
+  - Basic information:
+    - [ ] QRCODE: `{ id: <uuid>, pk: <public key>}`
+    - [ ] private key
   - [ ] List claims of specified user
     - [ ] use get all claims api: [doc](https://hackmd.io/s/Sku7aPFkM#)
+  - [ ] Make claim of specified user
+    - [ ] sign and attach input
+    - [ ] use new claim api: [doc](https://hackmd.io/s/HJyzQvF1z)
+  - [ ] Acting as user
 
-- [ ] New User Page: `/users/new`
+- [x] New User Page: `/users/new`
   - prepare
-    - [ ] retrieve key pairs
-    - [ ] create uuid
-  - [ ] Create new user
-    - [ ] send previous as body to new user api([doc](https://hackmd.io/s/BkB03arJz))
+    - [x] retrieve key pairs
+    - [x] create uuid
+  - [x] Create new user
+    - [x] send previous as body to new user api([doc](https://hackmd.io/s/BkB03arJz))
+    - [ ] error handling (No error message from back-end)
