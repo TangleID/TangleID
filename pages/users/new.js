@@ -5,13 +5,18 @@ import configureStore from '../../store/configureStore'
 import fetchKeyPairs from '../../actions/fetchKeyPairs'
 import createNewIdentity from '../../actions/createNewIdentity'
 import Layout from '../../layouts/Main'
-import NewIdentityForm from '../../components/NewIdentityForm'
+import SimpleForm from '../../components/SimpleForm'
 
 
 const NewUserPage = (props) => {
 	const { keyPairs, isLoading, createNewIdentity } = props
 	const { sk, skImg, pk, pkImg, } = keyPairs
 	const uuid = (uuidV4()).replace(/-/g, '')
+	const handleSubmit = (values) => {
+		const params = Object.assign({ sk, pk, uuid }, values)
+		localStorage.setItem('latestId', JSON.stringify(params))
+		createNewIdentity(params)
+	}
 	return (
 		<Layout>
 
@@ -21,11 +26,31 @@ const NewUserPage = (props) => {
 			<p>
 				uuid: {uuid}
 			</p>
-			<NewIdentityForm handleSubmit={(values) => {
-				const params = Object.assign({ sk, pk, uuid }, values)
-				localStorage.setItem('latestId', JSON.stringify(params))
-				createNewIdentity(params)
-			}}/>
+			<SimpleForm
+				name="newIdentityForm"
+				handleSubmit={handleSubmit}
+				meta={{
+					inputs: [{
+						name: 'firstName',
+						label: 'first name'
+					}, {
+						name: 'lastName',
+						label: 'last name',
+					}, {
+						name: 'cosignerp',
+						label: 'cosignerp (optional)',
+					}, {
+						name: 'cosigners',
+						label: 'cosigners (optional)'
+					}, {
+						name: 'profilePicture',
+						label: 'Profile picture (optional)',
+					}],
+					submit: {
+						text: 'send'
+					}
+				}}
+			/>
 			<div style={{display: 'flex'}}>
 				<div style={{flex: '1'}}>
 					<h2>Secret Key</h2>
