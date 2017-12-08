@@ -12,6 +12,7 @@ export default store => next => action => {
 	const {
 		types, params, method, host,
 		aggregate, getParams,
+		labelFunc,
 	} = callAPI
 
 	if (typeof endpoint !== 'string') {
@@ -37,21 +38,22 @@ export default store => next => action => {
 
 	let promise
 
-	function getPromise(p, label) {
+	function getPromise(p) {
 		if (!p) {
 			return fetchData(host, endpoint, 'GET')
 		}
-		return fetchData(host, endpoint, method, p.body, label)
+		if (labelFunc) {
+			const label = labelFunc(p)
+			return fetchData(host, endpoint, method, p.body, label)
+		}
+		return fetchData(host, endpoint, method, p.body)
 	}
 
 	if (aggregate) {
 		const paramsList = getParams()
-		promise = Promise.all(paramsList.map((p) => {
-			return getPromise(p, { id: p.body.transactionid})
-		}))
-			.then(res => {
-				return res
-			})
+		promise = Promise.all(
+			paramsList.map(getPromise)
+		)
 	} else {
 		promise = getPromise(params)
 	}

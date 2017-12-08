@@ -13,9 +13,15 @@ import {
 	NEW_IDENTITY_REQUEST,
 	NEW_IDENTITY_SUCCESS,
 	NEW_IDENTITY_FAILURE,
+	FETCH_CLAIMS_REQUEST,
+	FETCH_CLAIMS_FAILURE,
+	FETCH_CLAIMS_SUCCESS,
+	CREATE_CLAIM_REQUEST,
+	CREATE_CLAIM_FAILURE,
+	CREATE_CLAIM_SUCCESS,
 } from '../constants'
 
-const keyPairs = (state='', action) => {
+const keyPairs = (state={}, action) => {
 	switch (action.type) {
 	case RSA_KEY_PAIRS_SUCCESS:
 		return action.response
@@ -26,7 +32,9 @@ const keyPairs = (state='', action) => {
 
 const isLoading = (state=false, action) => {
 	switch (action.type) {
+	case CREATE_CLAIM_REQUEST:
 	case NEW_IDENTITY_REQUEST:
+	case FETCH_CLAIMS_REQUEST:
 	case RSA_KEY_PAIRS_REQUEST:
 	case OFF_TANGLE_USERS_REQUEST:
 	case CHECK_TANGLE_USERS_REQUEST:
@@ -39,6 +47,10 @@ const isLoading = (state=false, action) => {
 	case CHECK_TANGLE_USERS_FAILURE:
 	case NEW_IDENTITY_SUCCESS:
 	case NEW_IDENTITY_FAILURE:
+	case FETCH_CLAIMS_SUCCESS:
+	case FETCH_CLAIMS_FAILURE:
+	case CREATE_CLAIM_SUCCESS:
+	case CREATE_CLAIM_FAILURE:
 		return false
 	default:
 		return state
@@ -74,7 +86,20 @@ const error = (state=null, action) => {
 	case RSA_KEY_PAIRS_FAILURE:
 	case OFF_TANGLE_USERS_FAILURE:
 	case CHECK_TANGLE_USERS_FAILURE:
+	case FETCH_CLAIMS_FAILURE:
+	case CREATE_CLAIM_FAILURE:
 		return action.error
+	default:
+		return state
+	}
+}
+
+const claims = (state=[], action) => {
+	switch (action.type) {
+	case CREATE_CLAIM_SUCCESS:
+	case FETCH_CLAIMS_SUCCESS:
+		console.log('[].concat(state, action.response):', [].concat(state, action.response))
+		return [].concat(state, action.response)
 	default:
 		return state
 	}
@@ -85,6 +110,7 @@ const reducer = combineReducers({
 	offTangleData,
 	validData,
 	isLoading,
+	claims,
 	error,
 })
 

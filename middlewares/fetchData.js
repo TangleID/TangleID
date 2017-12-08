@@ -1,6 +1,16 @@
 import fetch from 'isomorphic-unfetch'
 
 let DEFAULT_HOST = process.env.HOST_API
+const isJSONResponse = (response) => response.headers.get('content-type').startsWith('application/json')
+const isJSONString = (text) => {
+	let result
+	try {
+		result = JSON.parse(text)
+	} catch(e) {
+		result = false
+	}
+	return result
+}
 
 // Fetches an API response and normalizes the result JSON according to schema.
 // This makes every API response have the same shape, regardless of how nested it was.
@@ -19,15 +29,20 @@ const fetchData = async function(
 	const res = await fetch(fullUrl, options)
 	if (!res.ok) return Promise.reject(res.statusText)
 
-	const isJSON = (response) => response.headers.get('content-type').startsWith('application/json')
 	let result
-	if (isJSON(res)) {
+	if (isJSONResponse(res)) {
 		const json = await res.json()
 		result = json
 	} else {
 		const text = await res.text()
-		result = { text }
+		const json = isJSONString(text)
+		if (json) {
+			result = json
+		} else {
+			result = { text }
+		}
 	}
+	console.log('label: ', label)
 	if (label) {
 		result = Object.assign({}, result, label)
 	}
