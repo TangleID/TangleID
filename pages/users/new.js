@@ -3,7 +3,7 @@ import uuidV4 from 'uuid/v4'
 import withRedux from 'next-redux-wrapper'
 import configureStore from '../../store/configureStore'
 import fetchKeyPairs from '../../actions/fetchKeyPairs'
-import createNewIdentity from '../../actions/createNewIdentity'
+import createNewIdentity from '../../actions/createIdentity'
 import Layout from '../../layouts/Main'
 import SimpleForm from '../../components/SimpleForm'
 
@@ -19,7 +19,6 @@ const NewUserPage = (props) => {
 	}
 	return (
 		<Layout>
-
 			<h2>New Users</h2>
 
 			{isLoading && <p>loading ...</p>}
@@ -32,7 +31,7 @@ const NewUserPage = (props) => {
 				meta={{
 					inputs: [{
 						name: 'firstName',
-						label: 'first name'
+						label: 'first name',
 					}, {
 						name: 'lastName',
 						label: 'last name',

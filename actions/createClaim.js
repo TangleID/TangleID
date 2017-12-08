@@ -20,6 +20,10 @@ const createClaim = (params) => ({
 				transformParams(params),
 			)
 		},
+		labelFunc: (params) => ({
+			id: params.body.uuid,
+			message: params.body.msg,
+		}),
 		host: process.env.HOST_API,
 		endpoint: '/proxy/'
 	}

@@ -8,7 +8,11 @@ import {
 // TODO: Verify is GET or POST
 const checkTangleUsers = (claims) => ({
 	[CALL_API]: {
-		types: [CHECK_TANGLE_USERS_REQUEST, CHECK_TANGLE_USERS_SUCCESS, CHECK_TANGLE_USERS_FAILURE],
+		types: [
+			CHECK_TANGLE_USERS_REQUEST,
+			CHECK_TANGLE_USERS_SUCCESS,
+			CHECK_TANGLE_USERS_FAILURE,
+		],
 		method: 'GET',
 		aggregate: true,
 		getParams: () => claims.map((claim) => ({
@@ -17,6 +21,7 @@ const checkTangleUsers = (claims) => ({
 				transactionid: claim.id,
 			}
 		})),
+		labelFunc: (p) => ({ id: p.body.transactionid }),
 		host: process.env.HOST_API,
 		endpoint: '/proxy/'
 	}
