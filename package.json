@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Self-sovereign built on IOTA",
   "main": "index.js",
+  "engines": {
+    "node": "8.9.1"
+  },
   "scripts": {
     "preinstall": "npm install pm2 -g",
     "heroku-postbuild": "npm run build",

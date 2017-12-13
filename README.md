@@ -3,10 +3,12 @@
 # Get started
 
 - Create a `.env` file, and specify `OFF_TANGLE_USERS_LINK` and `HOST_API`
+  - `BACK_END_API`: Server will provide a proxy to bypass CORS.
+  - `HOST_API`: The api endpoint of tangleID will call on client.
 
 ```
-OFF_TANGLE_USERS_LINK=https://tangleidentity.firebaseio.com/users.json
-HOST_API=http://node0.puyuma.org/tangleid_backend/api/
+BACK_END_API=http://node0.puyuma.org/tangleid_backend/api/
+HOST_API=http://localhost:3000/api
 ```
 
 ```
@@ -29,20 +31,20 @@ $> npm run build && npm start
 
 # Dev note
 
-- [ ] Users Page(Temporary landing page): `/` or `/users`
+- [x] Users Page(Temporary landing page): `/` or `/users`
   - [x] Fetch offtangle user list
   - [x] use login api to check
+  - [ ] official auth flow (Need to discuss with @yillkid)
 
-- [ ] User Page: `/users/:id`
+- [x] User Page: `/users/:id`
   - Basic information:
-    - [ ] QRCODE: `{ id: <uuid>, pk: <public key>}`
-    - [ ] private key
-  - [ ] List claims of specified user
-    - [ ] use get all claims api: [doc](https://hackmd.io/s/Sku7aPFkM#)
-  - [ ] Make claim of specified user
-    - [ ] sign and attach input
-    - [ ] use new claim api: [doc](https://hackmd.io/s/HJyzQvF1z)
-  - [ ] Acting as user
+    - [x] QRCODE: `{ id: <uuid>, pk: <public key>}`
+    - [x] private key
+  - [x] List claims of specified user
+    - [x] use get all claims api: [doc](https://hackmd.io/s/Sku7aPFkM#)
+  - [x] Make claim of specified user
+    - [x] sign and attach input
+    - [x] use new claim api: [doc](https://hackmd.io/s/HJyzQvF1z)
 
 - [x] New User Page: `/users/new`
   - prepare
