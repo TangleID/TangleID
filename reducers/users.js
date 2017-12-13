@@ -98,7 +98,6 @@ const claims = (state=[], action) => {
 	switch (action.type) {
 	case CREATE_CLAIM_SUCCESS:
 	case FETCH_CLAIMS_SUCCESS:
-		console.log('[].concat(state, action.response):', [].concat(state, action.response))
 		return [].concat(state, action.response)
 	default:
 		return state
