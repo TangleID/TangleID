@@ -10,8 +10,6 @@ const showCliamPage = (props) => {
    const { claims } = props
    const info_array = claims[0].text.split(',')
 
-   console.log("Hellooooo ", info_array[0]) 
-
    const handleSubmit = (values) => {
        const params = Object.assign({
            uuid: id,
