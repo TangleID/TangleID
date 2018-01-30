@@ -45,6 +45,13 @@ app.prepare()
 			return app.render(req, res, actualPage, queryParams)
 		})
 
+                server.get('/claims/info/:hash_txn', (req, res) => {
+                        const actualPage = '/claims/info'
+                        const queryParams = { hash_txn: req.params.hash_txn }
+                        return app.render(req, res, actualPage, queryParams)
+                })
+
+
 		server.get('*', (req, res) => {
 			req.url = req.url.replace(/\/$/, '')
 			return handle(req, res)

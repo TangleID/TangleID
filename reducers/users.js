@@ -19,6 +19,9 @@ import {
 	CREATE_CLAIM_REQUEST,
 	CREATE_CLAIM_FAILURE,
 	CREATE_CLAIM_SUCCESS,
+        SHOW_CLAIM_REQUEST,
+        SHOW_CLAIM_FAILURE,
+        SHOW_CLAIM_SUCCESS,
 } from '../constants'
 
 const keyPairs = (state={}, action) => {
@@ -38,6 +41,7 @@ const isLoading = (state=false, action) => {
 	case RSA_KEY_PAIRS_REQUEST:
 	case OFF_TANGLE_USERS_REQUEST:
 	case CHECK_TANGLE_USERS_REQUEST:
+	case SHOW_CLAIM_REQUEST:
 		return true
 	case OFF_TANGLE_USERS_SUCCESS:
 	case OFF_TANGLE_USERS_FAILURE:
@@ -51,6 +55,8 @@ const isLoading = (state=false, action) => {
 	case FETCH_CLAIMS_FAILURE:
 	case CREATE_CLAIM_SUCCESS:
 	case CREATE_CLAIM_FAILURE:
+	case SHOW_CLAIM_FAILURE:
+	case SHOW_CLAIM_SUCCESS:
 		return false
 	default:
 		return state
@@ -88,6 +94,7 @@ const error = (state=null, action) => {
 	case CHECK_TANGLE_USERS_FAILURE:
 	case FETCH_CLAIMS_FAILURE:
 	case CREATE_CLAIM_FAILURE:
+	case SHOW_CLAIM_FAILURE:
 		return action.error
 	default:
 		return state
@@ -98,6 +105,7 @@ const claims = (state=[], action) => {
 	switch (action.type) {
 	case CREATE_CLAIM_SUCCESS:
 	case FETCH_CLAIMS_SUCCESS:
+	case SHOW_CLAIM_SUCCESS:
 		return [].concat(state, action.response)
 	default:
 		return state

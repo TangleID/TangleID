@@ -8,7 +8,7 @@ import createClaim from '../actions/createClaim'
 import transformToQRCode from '../utils/transformToQRCode'
 import Layout from '../layouts/Main'
 import SimpleForm from '../components/SimpleForm'
-
+import Link from 'next/link'
 
 const UserPage = (props) => {
 	const { claims, user, createClaim } = props
@@ -42,8 +42,10 @@ const UserPage = (props) => {
 				{claims.length !== 0 && (
 					<ul>
 						{claims.map((c) => (
-							<li key={`claim-${c.id}`}>
-							claim: {JSON.stringify(c)}
+							<li key={`claim-${c}`}>
+			                                claim: <Link href={`/claims/info/?hash_txn=${JSON.stringify(c)}`} as={`/claims/info/${c}`}>
+							<a>{c}</a>
+							</Link>
 							</li>
 						))}
 					</ul>
@@ -83,7 +85,7 @@ UserPage.getInitialProps = async (context) => {
 	return {
 		id,
 		user,
-		claims: claims.filter(e => e.id === id),
+		claims
 	}
 }
 
