@@ -36,7 +36,7 @@ $> npm run build && npm start
 - [x] Users Page(Temporary landing page): `/` or `/users`
   - [x] Fetch offtangle user list
   - [x] use login api to check
-  - [ ] official auth flow (Need to discuss with @yillkid)
+  - [ ] official auth flow
 
 - [x] User Page: `/users/:id`
   - Basic information:
