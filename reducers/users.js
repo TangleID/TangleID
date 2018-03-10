@@ -112,6 +112,15 @@ const claims = (state=[], action) => {
 	}
 }
 
+const isRegister = (state=false, action) => {
+    switch  (action.type) {
+        case NEW_IDENTITY_SUCCESS:
+            return true
+        default:
+            return false
+    }
+}
+
 const reducer = combineReducers({
 	keyPairs,
 	offTangleData,
@@ -119,6 +128,7 @@ const reducer = combineReducers({
 	isLoading,
 	claims,
 	error,
+    isRegister,
 })
 
 export default reducer

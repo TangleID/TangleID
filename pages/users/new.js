@@ -4,68 +4,32 @@ import withRedux from 'next-redux-wrapper'
 import configureStore from '../../store/configureStore'
 import fetchKeyPairs from '../../actions/fetchKeyPairs'
 import createNewIdentity from '../../actions/createIdentity'
-import Layout from '../../layouts/Main'
-import SimpleForm from '../../components/SimpleForm'
-
+//import Layout from '../../layouts/Main'
+import Layout from '../../layouts/material/Main'
+import NewUserForm from '../../components/NewUserForm'
+import LoginDialog from '../../components/LoginDialog'
+import Grid from 'material-ui/Grid'
 
 const NewUserPage = (props) => {
-	const { keyPairs, isLoading, createNewIdentity } = props
+	const { keyPairs, isLoading, isRegister, createNewIdentity } = props
 	const { sk, skImg, pk, pkImg, } = keyPairs
 	const uuid = (uuidV4()).replace(/-/g, '')
 	const handleSubmit = (values) => {
 		const params = Object.assign({ sk, pk, uuid }, values)
 		localStorage.setItem('latestId', JSON.stringify(params))
 		createNewIdentity(params)
-	}
+    }
 	return (
 		<Layout>
-			<h2>New Users</h2>
-
-			{isLoading && <p>loading ...</p>}
-			<p>
-				uuid: {uuid}
-			</p>
-			<SimpleForm
-				name="newIdentityForm"
-				handleSubmit={handleSubmit}
-				meta={{
-					inputs: [{
-						name: 'firstName',
-						label: 'first name',
-					}, {
-						name: 'lastName',
-						label: 'last name',
-					}, {
-						name: 'cosignerp',
-						label: 'cosignerp (optional)',
-					}, {
-						name: 'cosigners',
-						label: 'cosigners (optional)'
-					}, {
-						name: 'profilePicture',
-						label: 'Profile picture (optional)',
-					}],
-					submit: {
-						text: 'send'
-					}
-				}}
-			/>
-			<div style={{display: 'flex'}}>
-				<div style={{flex: '1'}}>
-					<h2>Secret Key</h2>
-					<img width="300" height="300" src={skImg} alt="image of secret key" />
-					<p>
-						{sk}
-					</p>
-				</div>
-				<div style={{flex: '1'}}>
-					<h2>Public Key</h2>
-					<img width="300" height="300" src={pkImg} alt="image of public key" />
-					<p>
-						{pk}
-					</p>
-				</div>
-			</div>
+            { isRegister
+                ? <LoginDialog open="true" />
+                : <div style={{display: 'flex', justifyContent: 'center'}}>
+                      <NewUserForm 
+                          keyPairs={keyPairs}
+                          uuid={uuid}   
+                          handleSubmit={handleSubmit} />
+                   </div>	
+             }
 		</Layout>
 	)
 }
@@ -83,11 +47,13 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 const mapStateToProps = (state) => {
-	const { keyPairs, isLoading } = state.users
+	const { keyPairs, isLoading, isRegister } = state.users
 	return {
 		isLoading,
 		keyPairs,
+        isRegister,
 	}
 }
+
 
 export default withRedux(configureStore, mapStateToProps, mapDispatchToProps)(NewUserPage)
