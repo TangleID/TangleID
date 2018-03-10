@@ -29,7 +29,6 @@ const NewUserForm = (props) => {
         <Card className={classes.card}>
         <CardContent>
         <Typography className={classes.head} variant="title" color="secondary" align="center">Register</Typography>
-        <Typography className={classes.uid} variant="subheading" align="center">uuid: {uuid}</Typography>
             <SimpleForm
                 name="newIdentityForm"
                 handleSubmit={handleSubmit}
@@ -41,11 +40,11 @@ const NewUserForm = (props) => {
                         name: 'lastName',
                         label: 'last name',
                     }, {
-                        name: 'cosigner1',
+                        name: 'cosignerp',
                         label: 'cosigner1 (optional)',
                         placeholder: 'address',
                     }, {
-                        name: 'cosigner2',
+                        name: 'cosigners',
                         label: 'cosigner2 (optional)',
                         placeholder: 'address',
                     }, {
@@ -58,6 +57,9 @@ const NewUserForm = (props) => {
                 }}
             />
        
+        <Typography className={classes.head} variant="title" color="error">**Please do remember the following information**</Typography>
+        <Typography className={classes.head} variant="title" color="primary">UUID</Typography>
+        <Typography  variant="subheading">{uuid}</Typography>
         <Typography className={classes.head} variant="title" color="primary">Secret Key</Typography>
         <Card className={classes.key}>
             <CardContent>
