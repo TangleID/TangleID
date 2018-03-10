@@ -1,5 +1,4 @@
 import { bindActionCreators } from 'redux'
-import uuidV4 from 'uuid/v4'
 import withRedux from 'next-redux-wrapper'
 import configureStore from '../../store/configureStore'
 import fetchKeyPairs from '../../actions/fetchKeyPairs'
@@ -10,10 +9,18 @@ import NewUserForm from '../../components/NewUserForm'
 import LoginDialog from '../../components/LoginDialog'
 import Grid from 'material-ui/Grid'
 
+const gen_uuid = () => {                                                                           
+    const validChar = "ABCDEFGHIJKLMNOPQRSTUVWXYZ9"
+    var ret = ""
+    for (var i = 0; i < 26; ++i) 
+        ret = ret.concat(validChar[Math.floor(Math.random() * 27)])
+    return ret 
+}
+
 const NewUserPage = (props) => {
 	const { keyPairs, isLoading, isRegister, createNewIdentity } = props
 	const { sk, skImg, pk, pkImg, } = keyPairs
-	const uuid = (uuidV4()).replace(/-/g, '')
+	const uuid = gen_uuid() 
 	const handleSubmit = (values) => {
 		const params = Object.assign({ sk, pk, uuid }, values)
 		localStorage.setItem('latestId', JSON.stringify(params))
