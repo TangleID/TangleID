@@ -6,8 +6,10 @@ import fetchOffTangleUserList from '../actions/fetchOffTangleUserList'
 import fetchClaims from '../actions/fetchClaims'
 import createClaim from '../actions/createClaim'
 import transformToQRCode from '../utils/transformToQRCode'
-import Layout from '../layouts/Main'
+//import Layout from '../layouts/Main'
+import Layout from '../layouts/material/Main'
 import SimpleForm from '../components/SimpleForm'
+import ClaimList from '../components/ClaimList'
 import Link from 'next/link'
 
 const UserPage = (props) => {
@@ -40,15 +42,7 @@ const UserPage = (props) => {
 					<p>No Claims</p>
 				)}
 				{claims.length !== 0 && (
-					<ul>
-						{claims.map((c) => (
-							<li key={`claim-${c}`}>
-			                                claim: <Link href={`/claims/info/?hash_txn=${JSON.stringify(c)}`} as={`/claims/info/${c}`}>
-							<a>{c}</a>
-							</Link>
-							</li>
-						))}
-					</ul>
+                    <ClaimList claims={claims}></ClaimList>
 				)}
 			</div>
 			<SimpleForm

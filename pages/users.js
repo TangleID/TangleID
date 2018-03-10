@@ -2,7 +2,8 @@ import withRedux from 'next-redux-wrapper'
 import configureStore from '../store/configureStore'
 import fetchOffTangleUserList from '../actions/fetchOffTangleUserList'
 import checkTangleUsers from '../actions/checkTangleUsers'
-import Layout from '../layouts/Main'
+//import Layout from '../layouts/Main'
+import Layout from '../layouts/material/Main'
 import UserList from '../components/UserList'
 
 const UsersPage = (props) => {
