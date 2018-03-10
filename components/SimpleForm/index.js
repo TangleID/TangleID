@@ -1,3 +1,18 @@
+import PropTypes from 'prop-types'
+import { withStyles } from 'material-ui/styles'
+import TextField from 'material-ui/TextField'
+import Button from 'material-ui/Button'
+import Send from 'material-ui-icons/Send'
+
+const styles = theme => ({
+      button: {
+         margin: theme.spacing.unit,
+      },
+      leftIcon: {
+          marginLeft: theme.spacing.unit,
+      },
+});
+
 const getValues = (refs) => {
 	return Object.keys(refs).reduce((acc, cur) => {
 		acc[cur] = refs[cur].value
@@ -11,7 +26,7 @@ const clear = (refs) => {
 
 const SimpleForm = (props) => {
 	const refs = {}
-	const { handleSubmit, name, meta } = props
+	const { handleSubmit, name, meta, classes } = props
 	const { inputs, submit } = meta
 	const formName = name
 
@@ -19,14 +34,14 @@ const SimpleForm = (props) => {
 		const { name, placeholder, label } = options
 		const id = `${formName}-input-${name}`
 		return (
-			<div key={id}>
-				{label && <label htmlFor={id}>{label}</label>}
-				<input
+			<div key={id} style={{display: 'flex', justifyContent: 'center'}}>
+				<TextField
 					id={id}
-					type="text"
 					name={name}
-					placeholder={placeholder}
-					ref={(input) => { refs[name] = input }}
+                    label={label}
+                    placeholder={placeholder}
+                    margin="normal"
+					inputRef={(input) => { refs[name] = input }}
 				/>
 			</div>
 		)
@@ -39,11 +54,18 @@ const SimpleForm = (props) => {
 			clear(refs)
 		}}>
 			{inputs.map(createInputBlock)}
-			<div>
-				<button>{submit.text ? submit.text : 'submit'}</button>
+			<div style={{display: 'flex', justifyContent: 'center'}}>
+				<Button type="submit" className={classes.button} variant="raised" color="primary" size="small">
+                    Send 
+                    <Send className={classes.leftIcon} />
+                </Button>
 			</div>
 		</form>
 	)
 }
 
-export default SimpleForm
+SimpleForm.propTypes = {
+	classes: PropTypes.object.isRequired,
+}
+
+export default withStyles(styles)(SimpleForm)
