@@ -2,11 +2,11 @@ import { bindActionCreators } from 'redux'
 import withRedux from 'next-redux-wrapper'
 import configureStore from '../../store/configureStore'
 import checkTangleUsers from '../../actions/checkTangleUsers'
-import fetchOffTangleUserList from '../../actions/fetchOffTangleUserList'
+//import fetchOffTangleUserList from '../../actions/fetchOffTangleUserList'
 import Layout from '../../layouts/Main'
 import showClaims from '../../actions/showClaims.js'
 
-const showCliamPage = (props) => {
+const showClaimPage = (props) => {
    const { claims } = props
    const info_array = claims[0].text.split(',')
 
@@ -16,7 +16,7 @@ const showCliamPage = (props) => {
        }, values)
        showClaim(params)
    }
-   
+
    return (
        <Layout>
            <h2>Claim full content:</h2>
@@ -30,7 +30,7 @@ const showCliamPage = (props) => {
    )
 }
 
-showCliamPage.getInitialProps = async (context) => {
+showClaimPage.getInitialProps = async (context) => {
    const { store } = context
    const { hash_txn } = context.query
 
@@ -49,8 +49,8 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state, ownProps) => {
    const { user, claims } = state.users
-   
+
    return { user, claims }
 }
 
-export default withRedux(configureStore, mapStateToProps, mapDispatchToProps)(showCliamPage)
+export default withRedux(configureStore, mapStateToProps, mapDispatchToProps)(showClaimPage)

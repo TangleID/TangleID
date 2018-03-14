@@ -2,7 +2,8 @@ import { bindActionCreators } from 'redux'
 import withRedux from 'next-redux-wrapper'
 import configureStore from '../store/configureStore'
 import checkTangleUsers from '../actions/checkTangleUsers'
-import fetchOffTangleUserList from '../actions/fetchOffTangleUserList'
+//import fetchOffTangleUserList from '../actions/fetchOffTangleUserList'
+import fetchUserList from '../actions/fetchUserList'
 import fetchClaims from '../actions/fetchClaims'
 import createClaim from '../actions/createClaim'
 import transformToQRCode from '../utils/transformToQRCode'
@@ -65,14 +66,16 @@ const UserPage = (props) => {
 UserPage.getInitialProps = async (context) => {
 	const { store } = context
 	const { id } = context.query
-	await store.dispatch(fetchOffTangleUserList())
+//	await store.dispatch(fetchOffTangleUserList())
+        await store.dispatch(fetchUserList())
 	await store.dispatch(checkTangleUsers([{ id }]))
 	await store.dispatch(fetchClaims(id))
 	const { users } = store.getState()
-	const { offTangleData, validData, claims } = users
+	const { localList, validData, claims } = users
 	const validIds = validData.map(v => v.id)
 	// TODO: Use selector to get better performance
-	const userList = offTangleData.filter(d => validIds.indexOf(d.id) !== -1)
+//	const userList = offTangleData.filter(d => validIds.indexOf(d.id) !== -1)
+	const userList = localList.filter(d => validIds.indexOf(d.id) !== -1)
 	const user = userList.find(u => u.id === id)
 	const { pk } = user
 	user.qrcode = await transformToQRCode(JSON.stringify({pk, id}))

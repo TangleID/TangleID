@@ -22,6 +22,12 @@ import {
         SHOW_CLAIM_REQUEST,
         SHOW_CLAIM_FAILURE,
         SHOW_CLAIM_SUCCESS,
+        UPDATE_ACCOUNT_STORE_REQUEST,
+        UPDATE_ACCOUNT_STORE_FAILURE,
+        UPDATE_ACCOUNT_STORE_SUCCESS,
+        FETCH_ACCOUNT_STORE_REQUEST,
+        FETCH_ACCOUNT_STORE_FAILURE,
+        FETCH_ACCOUNT_STORE_SUCCESS,
 } from '../constants'
 
 const keyPairs = (state={}, action) => {
@@ -42,6 +48,7 @@ const isLoading = (state=false, action) => {
 	case OFF_TANGLE_USERS_REQUEST:
 	case CHECK_TANGLE_USERS_REQUEST:
 	case SHOW_CLAIM_REQUEST:
+        case UPDATE_ACCOUNT_STORE_REQUEST:
 		return true
 	case OFF_TANGLE_USERS_SUCCESS:
 	case OFF_TANGLE_USERS_FAILURE:
@@ -57,6 +64,8 @@ const isLoading = (state=false, action) => {
 	case CREATE_CLAIM_FAILURE:
 	case SHOW_CLAIM_FAILURE:
 	case SHOW_CLAIM_SUCCESS:
+        case UPDATE_ACCOUNT_STORE_FAILURE:
+        case UPDATE_ACCOUNT_STORE_SUCCESS:
 		return false
 	default:
 		return state
@@ -87,6 +96,15 @@ const offTangleData = (state=[], action) => {
 	}
 }
 
+const localList = (state={}, action) => {
+	switch (action.type) {
+	case FETCH_ACCOUNT_STORE_SUCCESS:
+		return action.response
+	default:
+		return state
+	}
+}
+
 const error = (state=null, action) => {
 	switch (action.type) {
 	case RSA_KEY_PAIRS_FAILURE:
@@ -95,6 +113,7 @@ const error = (state=null, action) => {
 	case FETCH_CLAIMS_FAILURE:
 	case CREATE_CLAIM_FAILURE:
 	case SHOW_CLAIM_FAILURE:
+        case UPDATE_ACCOUNT_STORE_FAILURE:
 		return action.error
 	default:
 		return state
@@ -123,6 +142,7 @@ const isRegister = (state=false, action) => {
 
 const reducer = combineReducers({
 	keyPairs,
+  localList,
 	offTangleData,
 	validData,
 	isLoading,
