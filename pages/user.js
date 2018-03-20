@@ -43,7 +43,7 @@ const UserPage = (props) => {
 					<p>No Claims</p>
 				)}
 				{claims.length !== 0 && (
-                    <ClaimList claims={claims}></ClaimList>
+					<ClaimList claims={claims}></ClaimList>
 				)}
 			</div>
 			<SimpleForm
@@ -66,15 +66,15 @@ const UserPage = (props) => {
 UserPage.getInitialProps = async (context) => {
 	const { store } = context
 	const { id } = context.query
-//	await store.dispatch(fetchOffTangleUserList())
-        await store.dispatch(fetchUserList())
+	// await store.dispatch(fetchOffTangleUserList())
+	await store.dispatch(fetchUserList())
 	await store.dispatch(checkTangleUsers([{ id }]))
 	await store.dispatch(fetchClaims(id))
 	const { users } = store.getState()
 	const { localList, validData, claims } = users
 	const validIds = validData.map(v => v.id)
 	// TODO: Use selector to get better performance
-//	const userList = offTangleData.filter(d => validIds.indexOf(d.id) !== -1)
+	// const userList = offTangleData.filter(d => validIds.indexOf(d.id) !== -1)
 	const userList = localList.filter(d => validIds.indexOf(d.id) !== -1)
 	const user = userList.find(u => u.id === id)
 	const { pk } = user

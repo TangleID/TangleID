@@ -5,13 +5,13 @@ import Button from 'material-ui/Button'
 import Send from 'material-ui-icons/Send'
 
 const styles = theme => ({
-      button: {
-         margin: theme.spacing.unit,
-      },
-      leftIcon: {
-          marginLeft: theme.spacing.unit,
-      },
-});
+	button: {
+		margin: theme.spacing.unit,
+	},
+	leftIcon: {
+		marginLeft: theme.spacing.unit,
+	},
+})
 
 const getValues = (refs) => {
 	return Object.keys(refs).reduce((acc, cur) => {
@@ -38,9 +38,9 @@ const SimpleForm = (props) => {
 				<TextField
 					id={id}
 					name={name}
-                    label={label}
-                    placeholder={placeholder}
-                    margin="normal"
+					label={label}
+					placeholder={placeholder}
+					margin="normal"
 					inputRef={(input) => { refs[name] = input }}
 				/>
 			</div>
@@ -57,8 +57,8 @@ const SimpleForm = (props) => {
 			<div style={{display: 'flex', justifyContent: 'center'}}>
 				<Button type="submit" className={classes.button} variant="raised" color="primary" size="small">
                     Send 
-                    <Send className={classes.leftIcon} />
-                </Button>
+					<Send className={classes.leftIcon} />
+				</Button>
 			</div>
 		</form>
 	)

@@ -1,10 +1,10 @@
+import { transformParams } from './_helper'
 import {
 	CALL_API,
 	NEW_IDENTITY_REQUEST,
 	NEW_IDENTITY_FAILURE,
 	NEW_IDENTITY_SUCCESS,
 } from '../constants'
-import { transformParams } from './_helper'
 
 const createNewIdentity = (params) => ({
 	[CALL_API]: {

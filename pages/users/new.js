@@ -11,11 +11,11 @@ import LoginDialog from '../../components/LoginDialog'
 import Grid from 'material-ui/Grid'
 
 const gen_uuid = () => {
-    const validChar = "ABCDEFGHIJKLMNOPQRSTUVWXYZ9"
-    var ret = ""
-    for (var i = 0; i < 26; ++i)
-        ret = ret.concat(validChar[Math.floor(Math.random() * 27)])
-    return ret
+	const validChar = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ9'
+	var ret = ''
+	for (var i = 0; i < 26; ++i)
+		ret = ret.concat(validChar[Math.floor(Math.random() * 27)])
+	return ret
 }
 
 const NewUserPage = (props) => {
@@ -26,21 +26,21 @@ const NewUserPage = (props) => {
 		const params = Object.assign({ sk, pk, uuid }, values)
 		localStorage.setItem('latestId', JSON.stringify(params))
 		createNewIdentity(params)
-          var store = {}
-          store['data'] = { claim: values, id: uuid, sk, pk }
-          updateAccountStore(store)
-    }
+		var store = {}
+		store['data'] = { claim: values, id: uuid, sk, pk }
+		updateAccountStore(store)
+	}
 	return (
 		<Layout>
-            { isRegister
-                ? <LoginDialog open="true" />
-                : <div style={{display: 'flex', justifyContent: 'center'}}>
-                      <NewUserForm
-                          keyPairs={keyPairs}
-                          uuid={uuid}
-                          handleSubmit={handleSubmit} />
-                   </div>
-             }
+			{ isRegister
+				? <LoginDialog open="true" />
+				: <div style={{display: 'flex', justifyContent: 'center'}}>
+					<NewUserForm
+						keyPairs={keyPairs}
+						uuid={uuid}
+						handleSubmit={handleSubmit} />
+				</div>
+			}
 		</Layout>
 	)
 }
@@ -54,7 +54,7 @@ NewUserPage.getInitialProps = async (context) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		createNewIdentity: bindActionCreators(createNewIdentity, dispatch),
-    updateAccountStore: bindActionCreators(updateAccountStore, dispatch),
+		updateAccountStore: bindActionCreators(updateAccountStore, dispatch),
 	}
 }
 
@@ -63,7 +63,7 @@ const mapStateToProps = (state) => {
 	return {
 		isLoading,
 		keyPairs,
-        isRegister,
+		isRegister,
 	}
 }
 

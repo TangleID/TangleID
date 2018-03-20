@@ -34,6 +34,10 @@ module.exports = {
             "error",
             "never"
         ],
+        "no-console": [
+            "error",
+            { allow: [ "log", "warn", "error" ] }
+        ],
         "react/jsx-uses-vars": 2,
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
     }

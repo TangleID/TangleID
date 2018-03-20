@@ -11,9 +11,9 @@ const styles = theme => ({
 	},
 })
 
-function CircularIndeterminate(props) {
+function CircularIndeterminate (props) {
 	const { classes, isLoading } = props
-        console.log(classes.progress);
+	console.log(classes.progress)
 	return (
 		<div>
 			{isLoading &&

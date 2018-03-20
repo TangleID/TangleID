@@ -1,10 +1,10 @@
+import { transformParams } from './_helper'
 import {
 	CALL_API,
 	CREATE_CLAIM_REQUEST,
 	CREATE_CLAIM_FAILURE,
 	CREATE_CLAIM_SUCCESS,
 } from '../constants'
-import { transformParams } from './_helper'
 
 const createClaim = (params) => ({
 	[CALL_API]: {
