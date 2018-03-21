@@ -18,17 +18,17 @@ var accountStore
 
 /* make the callback function into promise */
 var asyncInit = () => {
-  return new Promise( (res, rej) => {
-    accountStore = new AccountStore('account.json', res)
-  })
+	return new Promise( (res, rej) => {
+		accountStore = new AccountStore('account.json', res)
+	})
 }
 
 app.prepare()
-        .then(() => asyncInit())
+	.then(() => asyncInit())
 	.then(() => {
 		const server = express()
-      server.use(bodyParser.urlencoded({ extended: false }));
-      server.use(bodyParser.json());
+		server.use(bodyParser.urlencoded({ extended: false }))
+		server.use(bodyParser.json())
 
 		server.get('/', (req, res) => {
 			const actualPage = '/users'
@@ -40,17 +40,17 @@ app.prepare()
 			const [ skImg, pkImg ] = await Promise.all([sk, pk].map(transformToQRCode))
 			return res.send({ sk, skImg, pk, pkImg})
 		})
-      server.post('/api/localStorageUpdate', (req, res) => {
-        console.log('storageUpdate')
-        accountStore.insert(req.body)
-        return res.send('Success')
-      })
+		server.post('/api/localStorageUpdate', (req, res) => {
+			console.log('storageUpdate')
+			accountStore.insert(req.body)
+			return res.send('Success')
+		})
 
-      server.get('/api/fetchUserList', (req, res) => {
-        console.log('fetching user')
-        const list = accountStore.all().map(user => user.data)
-        return res.send(list)
-      })
+		server.get('/api/fetchUserList', (req, res) => {
+			console.log('fetching user')
+			const list = accountStore.all().map(user => user.data)
+			return res.send(list)
+		})
 
 		server.all('/api/proxy/*', (req, res) => {
 			proxy.web(req, res, { target: process.env.BACK_END_API })
@@ -68,11 +68,11 @@ app.prepare()
 			return app.render(req, res, actualPage, queryParams)
 		})
 
-                server.get('/claims/info/:hash_txn', (req, res) => {
-                        const actualPage = '/claims/info'
-                        const queryParams = { hash_txn: req.params.hash_txn }
-                        return app.render(req, res, actualPage, queryParams)
-                })
+		server.get('/claims/info/:hash_txn', (req, res) => {
+			const actualPage = '/claims/info'
+			const queryParams = { hash_txn: req.params.hash_txn }
+			return app.render(req, res, actualPage, queryParams)
+		})
 
 
 		server.get('*', (req, res) => {

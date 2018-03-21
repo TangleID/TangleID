@@ -18,52 +18,52 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-var loki = require("lokijs")
+var loki = require('lokijs')
 
 class accountStore {
-  constructor(dbFileName, callback){
-    var self = this
-    // implement the autoloadback referenced in loki constructor
+	constructor(dbFileName, callback){
+		var self = this
+		// implement the autoloadback referenced in loki constructor
 
-    var databaseInitialize = function() {
-      self.accounts = self.db.getCollection("accounts");
-      if ( self.accounts === null) {
-        self.accounts = self.db.addCollection("accounts");
-      }
-      callback()
-    }
+		var databaseInitialize = function() {
+			self.accounts = self.db.getCollection('accounts')
+			if ( self.accounts === null) {
+				self.accounts = self.db.addCollection('accounts')
+			}
+			callback()
+		}
 
-    this.db = new loki(dbFileName, {
-      autoload: true,
-      autoloadCallback: databaseInitialize,
-      autosave: true,
-      autosaveInterval: 4000
-    });
+		this.db = new loki(dbFileName, {
+			autoload: true,
+			autoloadCallback: databaseInitialize,
+			autosave: true,
+			autosaveInterval: 4000
+		})
 
-  }
-  insert(params) {
-    var result = this.accounts.insert(params)
-    this.db.saveDatabase()
-    return result
-  }
+	}
+	insert(params) {
+		var result = this.accounts.insert(params)
+		this.db.saveDatabase()
+		return result
+	}
 
-  update(params) {
-    var result = this.accounts.update(params)
-    this.db.saveDatabase()
-    return result
-  }
+	update(params) {
+		var result = this.accounts.update(params)
+		this.db.saveDatabase()
+		return result
+	}
 
-  find(query) {
-    return this.accounts.find(query)
-  }
+	find(query) {
+		return this.accounts.find(query)
+	}
 
-  all() {
-    return this.accounts.find({})
-  }
+	all() {
+		return this.accounts.find({})
+	}
 
-  remove(object) {
-    return this.accounts.remove(object)
-  }
+	remove(object) {
+		return this.accounts.remove(object)
+	}
 }
 
 module.exports = accountStore

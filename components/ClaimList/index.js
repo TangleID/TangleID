@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 const ClaimList = (props) => {
 	const { claims } = props
-        console.log(claims)
+	console.log(claims)
 	return (
 		<div>
 			{claims.map(claim => (
