@@ -1,27 +1,23 @@
-import Router from 'next/router'
+import React from 'react'
 import Button from 'material-ui/Button'
-import TextField from 'material-ui/TextField'
-import PropTypes from 'prop-types'
-import {withStyles} from 'material-ui/styles'
 import SimpleForm from '../SimpleForm'
-import {Component} from 'react'
 import Dialog, {
 	DialogActions,
 	DialogContent,
-	DialogContentText,
 	DialogTitle,
 } from 'material-ui/Dialog'
 
-const styles = theme => ({
-	cancel: {
+const styles = {
+	button: {
 		maxWidth: '35%',
 	},
-})
+}
 
-class FormDialog extends Component {
+export default class LoginDialog extends React.Component {
+
 	state = {
 		open: false,
-		init_open: false
+		init_open: false,
 	}
 
 	handleClickOpen = () => {
@@ -33,13 +29,13 @@ class FormDialog extends Component {
 	}
 
 	changeInit = (open) => {
-		if (open && this.state.init_open == false) {
+		if (open && false === this.state.init_open) {
 			this.setState({init_open: true, open: true})
 		}
 	}
 
 	render() {
-		const {classes, open} = this.props
+		const {open} = this.props
 		this.changeInit(open)
 
 		return (
@@ -71,7 +67,7 @@ class FormDialog extends Component {
 						/>
 					</DialogContent>
 					<DialogActions>
-						<Button onClick={this.handleClose} className={classes.cancel} color="secondary">
+						<Button onClick={this.handleClose} style={styles.button} color="secondary">
 							Cancel
 						</Button>
 					</DialogActions>
@@ -80,9 +76,3 @@ class FormDialog extends Component {
 		)
 	}
 }
-
-FormDialog.propTypes = {
-	classes: PropTypes.object.isRequired,
-}
-
-export default withStyles(styles)(FormDialog)
