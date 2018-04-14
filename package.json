@@ -40,6 +40,7 @@
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
+    "ssri": "^5.3.0",
     "ursa": "^0.9.4",
     "webpack": "^3.8.1"
   },
