@@ -104,3 +104,7 @@ $> npm run build && npm start
   - [x] Create new user
     - [x] send previous as body to new user api([doc](https://hackmd.io/s/BkB03arJz))
     - [ ] error handling (No error message from back-end)
+
+## Licensing
+TangleID is freely redistributable under the MIT License. Use of this source
+code is governed by a MIT-style license that can be found in the `LICENSE` file.
