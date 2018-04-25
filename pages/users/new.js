@@ -23,7 +23,8 @@ const NewUserPage = (props) => {
 	const { sk, skImg, pk, pkImg, } = keyPairs
 	const uuid = gen_uuid()
 	const handleSubmit = (values) => {
-		const params = Object.assign({ sk, pk, uuid }, values)
+        const signature = ""
+		const params = Object.assign({ pk, uuid, signature }, values)
 		localStorage.setItem('latestId', JSON.stringify(params))
 		createNewIdentity(params)
 		var store = {}
