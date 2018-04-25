@@ -3,7 +3,6 @@ const httpProxy = require('http-proxy')
 
 const proxy = httpProxy.createProxyServer()
 const next = require('next')
-const bodyParser = require('body-parser') /* use for server.post */
 
 const port = parseInt(process.env.PORT, 10) || 3000
 const dev = process.env.NODE_ENV !== 'production'
@@ -27,8 +26,6 @@ app.prepare()
 	.then(() => asyncInit())
 	.then(() => {
 		const server = express()
-		server.use(bodyParser.urlencoded({ extended: false }))
-		server.use(bodyParser.json())
 
 		server.get('/', (req, res) => {
 			const actualPage = '/users'
@@ -42,7 +39,13 @@ app.prepare()
 		})
 		server.post('/api/localStorageUpdate', (req, res) => {
 			console.log('storageUpdate')
-			accountStore.insert(req.body)
+			let body = '';
+			req.on('data', chunk => {
+				body += chunk.toString(); // convert Buffer to string
+			});
+			req.on('end', () => {
+				accountStore.insert(JSON.parse(body))	
+			});
 			return res.send('Success')
 		})
 
