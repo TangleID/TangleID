@@ -1,6 +1,7 @@
 .next
 .env
 .vscode
+.json
 
 # OSX
 #
