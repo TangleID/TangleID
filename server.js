@@ -3,6 +3,7 @@ const httpProxy = require('http-proxy')
 
 const proxy = httpProxy.createProxyServer()
 const next = require('next')
+const bodyParser = require('body-parser')
 
 const port = parseInt(process.env.PORT, 10) || 3000
 const dev = process.env.NODE_ENV !== 'production'
@@ -27,6 +28,13 @@ app.prepare()
 	.then(() => {
 		const server = express()
 
+		server.all('/api/proxy/*', (req, res) => {
+			proxy.web(req, res, { target: process.env.BACK_END_API })
+		})
+
+        server.use(bodyParser.urlencoded({ extended: false }))
+        server.use(bodyParser.json())
+
 		server.get('/', (req, res) => {
 			const actualPage = '/users'
 			return app.render(req, res, actualPage)
@@ -39,13 +47,7 @@ app.prepare()
 		})
 		server.post('/api/localStorageUpdate', (req, res) => {
 			console.log('storageUpdate')
-			let body = '';
-			req.on('data', chunk => {
-				body += chunk.toString(); // convert Buffer to string
-			});
-			req.on('end', () => {
-				accountStore.insert(JSON.parse(body))	
-			});
+            accountStore.insert(req.body)	
 			return res.send('Success')
 		})
 
@@ -55,9 +57,6 @@ app.prepare()
 			return res.send(list)
 		})
 
-		server.all('/api/proxy/*', (req, res) => {
-			proxy.web(req, res, { target: process.env.BACK_END_API })
-		})
 
 		server.get('/users/new', (req, res) => {
 			const actualPage = '/users/new'
