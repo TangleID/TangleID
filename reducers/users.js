@@ -19,18 +19,21 @@ import {
 	CREATE_CLAIM_REQUEST,
 	CREATE_CLAIM_FAILURE,
 	CREATE_CLAIM_SUCCESS,
-	SHOW_CLAIM_REQUEST,
-	SHOW_CLAIM_FAILURE,
-	SHOW_CLAIM_SUCCESS,
-	UPDATE_ACCOUNT_STORE_REQUEST,
-	UPDATE_ACCOUNT_STORE_FAILURE,
-	UPDATE_ACCOUNT_STORE_SUCCESS,
-	FETCH_ACCOUNT_STORE_REQUEST,
-	FETCH_ACCOUNT_STORE_FAILURE,
-	FETCH_ACCOUNT_STORE_SUCCESS,
     LOGIN_REQUEST,
     LOGIN_FAILURE,
     LOGIN_SUCCESS,
+        SHOW_CLAIM_REQUEST,
+        SHOW_CLAIM_FAILURE,
+        SHOW_CLAIM_SUCCESS,
+        UPDATE_LOCAL_ACCOUNT_REQUEST,
+        UPDATE_LOCAL_ACCOUNT_FAILURE,
+        UPDATE_LOCAL_ACCOUNT_SUCCESS,
+        FETCH_LOCAL_ACCOUNT_REQUEST,
+        FETCH_LOCAL_ACCOUNT_FAILURE,
+        FETCH_LOCAL_ACCOUNT_SUCCESS,
+        FETCH_MAM_MESSAGES_REQUEST,
+        FETCH_MAM_MESSAGES_FAILURE,
+        FETCH_MAM_MESSAGES_SUCCESS,
 } from '../constants'
 
 const keyPairs = (state={}, action) => {
@@ -51,8 +54,10 @@ const isLoading = (state=false, action) => {
 	case OFF_TANGLE_USERS_REQUEST:
 	case CHECK_TANGLE_USERS_REQUEST:
 	case SHOW_CLAIM_REQUEST:
-	case UPDATE_ACCOUNT_STORE_REQUEST:
     case LOGIN_REQUEST:
+        case UPDATE_LOCAL_ACCOUNT_REQUEST:
+        case FETCH_LOCAL_ACCOUNT_REQUEST:
+        case FETCH_MAM_MESSAGES_REQUEST:
 		return true
 	case OFF_TANGLE_USERS_SUCCESS:
 	case OFF_TANGLE_USERS_FAILURE:
@@ -68,10 +73,14 @@ const isLoading = (state=false, action) => {
 	case CREATE_CLAIM_FAILURE:
 	case SHOW_CLAIM_FAILURE:
 	case SHOW_CLAIM_SUCCESS:
-	case UPDATE_ACCOUNT_STORE_FAILURE:
-	case UPDATE_ACCOUNT_STORE_SUCCESS:
     case LOGIN_FAILURE:
     case LOGIN_SUCCESS:
+        case UPDATE_LOCAL_ACCOUNT_FAILURE:
+        case UPDATE_LOCAL_ACCOUNT_SUCCESS:
+        case FETCH_LOCAL_ACCOUNT_FAILURE:
+        case FETCH_LOCAL_ACCOUNT_SUCCESS:
+        case FETCH_MAM_MESSAGES_SUCCESS:
+        case FETCH_MAM_MESSAGES_FAILURE:
 		return false
 	default:
 		return state
@@ -104,7 +113,7 @@ const offTangleData = (state=[], action) => {
 
 const localList = (state={}, action) => {
 	switch (action.type) {
-	case FETCH_ACCOUNT_STORE_SUCCESS:
+	case FETCH_LOCAL_ACCOUNT_SUCCESS:
 		return action.response
 	default:
 		return state
@@ -119,8 +128,10 @@ const error = (state=null, action) => {
 	case FETCH_CLAIMS_FAILURE:
 	case CREATE_CLAIM_FAILURE:
 	case SHOW_CLAIM_FAILURE:
-	case UPDATE_ACCOUNT_STORE_FAILURE:
     case LOGIN_FAILURE:
+        case UPDATE_LOCAL_ACCOUNT_FAILURE:
+	case FETCH_LOCAL_ACCOUNT_FAILURE:
+        case FETCH_MAM_MESSAGES_FAILURE:
 		return action.error
 	default:
 		return state
@@ -133,6 +144,15 @@ const claims = (state=[], action) => {
 	case FETCH_CLAIMS_SUCCESS:
 	case SHOW_CLAIM_SUCCESS:
 		return [].concat(state, action.response)
+	default:
+		return state
+	}
+}
+
+const messages = (state=[], action) => {
+	switch (action.type) {
+	case FETCH_MAM_MESSAGES_SUCCESS:
+		return action.response
 	default:
 		return state
 	}
@@ -166,6 +186,7 @@ const reducer = combineReducers({
 	error,
 	isRegister,
     isLogin,
+  messages,
 })
 
 export default reducer

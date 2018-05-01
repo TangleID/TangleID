@@ -19,9 +19,8 @@ const UsersPage = (props) => {
 
 UsersPage.getInitialProps = async (context) => {
 	const { isServer, store } = context
-	// await store.dispatch(fetchOffTangleUserList())
-	await store.dispatch(fetchUserList())
-	// TODO: Refactor offTangleData to list
+//	await store.dispatch(fetchOffTangleUserList())
+  await store.dispatch(fetchUserList())
 	const { localList } = (store.getState()).users
 	// await store.dispatch(checkTangleUsers(offTangleData.slice(0, 2)))
 	await store.dispatch(checkTangleUsers(localList))
@@ -35,6 +34,7 @@ const mapStateToProps = (state) => {
 	// TODO: Use selector to get better performance
 	// const userList = offTangleData.filter(d => validIds.indexOf(d.id) !== -1)
 	const userList = localList.filter(d => validIds.indexOf(d.id) !== -1)
+//  console.log(localList)
 	return { userList }
 }
 
