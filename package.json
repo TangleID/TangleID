@@ -19,7 +19,7 @@
     "iota",
     "tangleId"
   ],
-  "author": "abalone0204",
+  "author": "TangleID",
   "license": "MIT",
   "dependencies": {
     "babel-eslint": "^8.2.2",
