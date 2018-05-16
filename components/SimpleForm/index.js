@@ -15,6 +15,7 @@ const styles = theme => ({
 
 const getValues = (refs) => {
 	return Object.keys(refs).reduce((acc, cur) => {
+        console.log(cur)
 		acc[cur] = refs[cur].value
 		return acc
 	}, {})
@@ -50,6 +51,7 @@ const SimpleForm = (props) => {
 		<form onSubmit={(e) => {
 			e.preventDefault()
 			const values = getValues(refs)
+            console.log(values)
 			handleSubmit(values)
 			clear(refs)
 		}}>
