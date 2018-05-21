@@ -8,7 +8,6 @@ import updateAccountStore from '../../actions/updateAccountStore'
 import Layout from '../../layouts/material/Main'
 import NewUserForm from '../../components/NewUserForm'
 import LoginDialog from '../../components/LoginDialog'
-import Grid from 'material-ui/Grid'
 
 const gen_uuid = () => {
 	const validChar = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ9'

@@ -1,10 +1,9 @@
 import PropTypes from 'prop-types'
-import { withStyles } from 'material-ui/styles'
-import Card, { CardActions, CardContent } from 'material-ui/Card'
-// import TextField from 'material-ui/TextField'
-// import Button from 'material-ui/Button'
-// import Icon from 'material-ui/Icon'
-import Typography from 'material-ui/Typography'
+import { withStyles } from '@material-ui/core/styles'
+
+import Card from '@material-ui/core/Card'
+import CardContent from '@material-ui/core/CardContent'
+import Typography from '@material-ui/core/Typography'
 import SimpleForm from '../SimpleForm'
 
 const styles = theme => ({
