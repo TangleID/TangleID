@@ -9,6 +9,7 @@
   "scripts": {
     "preinstall": "npm install pm2 -g",
     "heroku-postbuild": "npm run build",
+    "eslint": "eslint actions components constants layouts middlewares pages reducers store utils",
     "dev": "pm2 start server.js --watch server.js --watch utils --watch next.config.js && pm2 logs server",
     "start": "NODE_ENV=production pm2 start server.js -i max --attach",
     "build": "NODE_ENV=production next build",
