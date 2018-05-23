@@ -6,9 +6,10 @@ var tools = require('./tools.js')
 var now = require('moment')
 const debug = process.env.DEBUG || 0
 
-var AccountStore = require('./account.js')
-var ContactStore = require('./contact.js')
-var MessageStore = require('./message.js')
+var localStore = require('./localStore.js')
+var AccountStore = localStore.Account
+var ContactStore = localStore.Contact
+var MessageStore = localStore.Message
 
 var path = require('path')
 var main_path = path.dirname(require.main.filename)
@@ -327,7 +328,7 @@ class mam {
         var store = this.messageStore.findOnly({id: params.sender})
         packet.fromSelf = true
 
-        if (!params.receiver in messages) {
+        if (!(params.receiver in store.messages)) {
             store.messages[params.receiver] = []
         }
         store.messages[params.receiver].push(packet)
