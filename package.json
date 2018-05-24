@@ -1,7 +1,7 @@
 {
-  "name": "tangle-id",
+  "name": "tangleid",
   "version": "1.0.0",
-  "description": "Self-sovereign built on IOTA",
+  "description": "Self-sovereign identity system built on IOTA",
   "main": "index.js",
   "engines": {
     "node": "8.9.1"
@@ -17,10 +17,11 @@
     "commit": "git-cz"
   },
   "keywords": [
-    "iota",
-    "tangleId"
+    "IOTA",
+    "Tangle",
+    "TangleID"
   ],
-  "author": "TangleID",
+  "author": "TangleID Developers",
   "license": "MIT",
   "dependencies": {
     "@babel/runtime": "^7.0.0-beta.47",
