@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
-import { withStyles } from 'material-ui/styles'
-import { CircularProgress } from 'material-ui/Progress'
+
+import { withStyles } from '@material-ui/core/styles'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 const styles = theme => ({
 	progress: {
@@ -17,7 +18,7 @@ function CircularIndeterminate (props) {
 	return (
 		<div>
 			{isLoading &&
-          <CircularProgress className={classes.progress} size={100}/>
+				<CircularProgress className={classes.progress} size={100}/>
 			}
 		</div>
 	)

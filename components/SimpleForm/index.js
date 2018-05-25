@@ -1,8 +1,10 @@
 import PropTypes from 'prop-types'
-import { withStyles } from 'material-ui/styles'
-import TextField from 'material-ui/TextField'
-import Button from 'material-ui/Button'
-import Send from 'material-ui-icons/Send'
+import { withStyles } from '@material-ui/core/styles'
+
+import TextField from '@material-ui/core/TextField'
+import Button from '@material-ui/core/Button'
+
+import Send from '@material-ui/icons/Send'
 
 const styles = theme => ({
 	button: {

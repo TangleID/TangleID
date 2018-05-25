@@ -1,5 +1,7 @@
 import Link from 'next/link'
-import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List'
+
+import ListItem from '@material-ui/core/ListItem'
+import ListItemText from '@material-ui/core/ListItemText'
 
 const Nav = () => (
 	<nav>
