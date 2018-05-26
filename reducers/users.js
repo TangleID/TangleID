@@ -28,6 +28,9 @@ import {
 	FETCH_ACCOUNT_STORE_REQUEST,
 	FETCH_ACCOUNT_STORE_FAILURE,
 	FETCH_ACCOUNT_STORE_SUCCESS,
+    LOGIN_REQUEST,
+    LOGIN_FAILURE,
+    LOGIN_SUCCESS,
 } from '../constants'
 
 const keyPairs = (state={}, action) => {
@@ -49,6 +52,7 @@ const isLoading = (state=false, action) => {
 	case CHECK_TANGLE_USERS_REQUEST:
 	case SHOW_CLAIM_REQUEST:
 	case UPDATE_ACCOUNT_STORE_REQUEST:
+    case LOGIN_REQUEST:
 		return true
 	case OFF_TANGLE_USERS_SUCCESS:
 	case OFF_TANGLE_USERS_FAILURE:
@@ -66,6 +70,8 @@ const isLoading = (state=false, action) => {
 	case SHOW_CLAIM_SUCCESS:
 	case UPDATE_ACCOUNT_STORE_FAILURE:
 	case UPDATE_ACCOUNT_STORE_SUCCESS:
+    case LOGIN_FAILURE:
+    case LOGIN_SUCCESS:
 		return false
 	default:
 		return state
@@ -114,6 +120,7 @@ const error = (state=null, action) => {
 	case CREATE_CLAIM_FAILURE:
 	case SHOW_CLAIM_FAILURE:
 	case UPDATE_ACCOUNT_STORE_FAILURE:
+    case LOGIN_FAILURE:
 		return action.error
 	default:
 		return state
@@ -140,6 +147,15 @@ const isRegister = (state=false, action) => {
 	}
 }
 
+const isLogin = (state=false, action) => {
+    switch (action.type) {
+    case LOGIN_SUCCESS:
+            return true
+    default:
+            return false
+    }
+}
+
 const reducer = combineReducers({
 	keyPairs,
 	localList,
@@ -149,6 +165,7 @@ const reducer = combineReducers({
 	claims,
 	error,
 	isRegister,
+    isLogin,
 })
 
 export default reducer
