@@ -18,7 +18,7 @@ const gen_uuid = () => {
 }
 
 const NewUserPage = (props) => {
-	const { keyPairs, isLoading, isRegister, createNewIdentity, updateAccountStore } = props
+	const { keyPairs, isLoading, createNewIdentity, updateAccountStore } = props
 	const { sk, skImg, pk, pkImg, } = keyPairs
 	const uuid = gen_uuid()
 	const handleSubmit = (values) => {
@@ -32,15 +32,12 @@ const NewUserPage = (props) => {
 	}
 	return (
 		<Layout>
-			{ isRegister
-				? <LoginDialog open="true" />
-				: <div style={{display: 'flex', justifyContent: 'center'}}>
-					<NewUserForm
-						keyPairs={keyPairs}
-						uuid={uuid}
-						handleSubmit={handleSubmit} />
-				</div>
-			}
+			<div style={{display: 'flex', justifyContent: 'center'}}>
+				<NewUserForm
+					keyPairs={keyPairs}
+					uuid={uuid}
+					handleSubmit={handleSubmit} />
+			</div>
 		</Layout>
 	)
 }
@@ -59,11 +56,10 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 const mapStateToProps = (state) => {
-	const { keyPairs, isLoading, isRegister } = state.users
+	const { keyPairs, isLoading } = state.users
 	return {
 		isLoading,
 		keyPairs,
-		isRegister,
 	}
 }
 

@@ -54,21 +54,21 @@ class LoginDialog extends Component {
         return this.state.uuid 
     }
 
-	changeInit = (open) => {
-		if (open && false === this.state.init_open) {
+	changeInit = (isRegister) => {
+		if (isRegister && false === this.state.init_open) {
 			this.setState({init_open: true, open: true})
 		}
 	}
 
 	render() {
-		const { open, isLogin } = this.props
-		this.changeInit(open)
+		const { isRegister, isLogin } = this.props
+		this.changeInit(isRegister)
 
 		return (
 			<div>
                 { !isLogin ?
                   <div>
-                    {!open &&
+                    {!isRegister &&
                      <Button onClick={this.handleClickOpen} color="inherit">Login</Button>
                     }
                     <Dialog
@@ -127,7 +127,8 @@ class LoginDialog extends Component {
 
 const mapStateToProps = store => {
     return {
-        isLogin: store.users.isLogin
+        isLogin: store.users.isLogin,
+        isRegister: store.users.isRegister,
     }
 }
 
