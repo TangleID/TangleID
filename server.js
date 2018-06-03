@@ -62,7 +62,10 @@ app.prepare()
 			const actualPage = '/users/new'
 			return app.render(req, res, actualPage)
 		})
-
+		
+		server.get('/chatroom', (req, res) =>{
+			return app.render(req, res, '/chatroom')
+		}) 
 
 		server.get('/users/:id', (req, res) => {
 			const actualPage = '/user'
