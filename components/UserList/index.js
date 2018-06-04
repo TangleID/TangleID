@@ -124,4 +124,8 @@ class UserList extends React.Component {
 	}
 }
 
+UserList.propTypes = {
+	users: PropTypes.array,
+};
+
 export default UserList;

@@ -5,10 +5,13 @@ import checkTangleUsers from '../actions/checkTangleUsers'
 //import fetchOffTangleUserList from '../actions/fetchOffTangleUserList'
 import fetchUserList from '../actions/fetchUserList'
 import fetchClaims from '../actions/fetchClaims'
+import fetchMamMessages from '../actions/fetchMamMessages'
 import createClaim from '../actions/createClaim'
+import createMamMessage from '../actions/createMamMessage'
 import transformToQRCode from '../utils/transformToQRCode'
 //import Layout from '../layouts/Main'
 import Layout from '../layouts/material/Main'
+import Button from '@material-ui/core/Button'
 import SimpleForm from '../components/SimpleForm'
 import ClaimList from '../components/ClaimList'
 import Link from 'next/link'
@@ -81,18 +84,29 @@ const styles = {
 }
 
 const UserPage = (props) => {
-	const { claims, user, createClaim } = props
-	const { pk, sk, id, claim, qrcode, } = user
-	const handleSubmit = (values) => {
-		const params = Object.assign({
-			uuid: id,
-			partA: '',
-			partB: '',
-			expDate: '',
-			claimPic: '',
-		}, values)
-		createClaim(params)
-	}
+  const { claims, messages, user, otherUser, createClaim, createMamMessage } = props
+  const { pk, sk, id, claim, qrcode, } = user
+  const handleSubmit = (values) => {
+    const params = Object.assign({
+      uuid: id,
+      partA: '',
+      partB: '',
+      expDate: '',
+      claimPic: '',
+    }, values)
+    createClaim(params)
+  }
+  const handleMamSubmit = (values) => {
+    const params = {
+      sender: localStorage.getItem('act_as_id'),
+      receiver: id,
+      msg: values.msg
+    }
+    createMamMessage(params)
+  }
+  const handleSetUser = (values) => {
+    localStorage.setItem('act_as_id', id)
+  }
 	return (
 		<Layout>
 			<div style={styles.root}>
@@ -128,35 +142,42 @@ const UserPage = (props) => {
 UserPage.getInitialProps = async (context) => {
 	const { store } = context
 	const { id } = context.query
-	// await store.dispatch(fetchOffTangleUserList())
-	await store.dispatch(fetchUserList())
+//	await store.dispatch(fetchOffTangleUserList())
+        await store.dispatch(fetchUserList())
+        /* what is this used for ? */
 	await store.dispatch(checkTangleUsers([{ id }]))
 	await store.dispatch(fetchClaims(id))
+	await store.dispatch(fetchMamMessages(id))
 	const { users } = store.getState()
-	const { localList, validData, claims } = users
+	const { localList, validData, claims, messages } = users
+	/* not working at all */
 	const validIds = validData.map(v => v.id)
 	// TODO: Use selector to get better performance
-	// const userList = offTangleData.filter(d => validIds.indexOf(d.id) !== -1)
-	const userList = localList.filter(d => validIds.indexOf(d.id) !== -1)
+//	const userList = offTangleData.filter(d => validIds.indexOf(d.id) !== -1)
+	const userList = localList//.filter(d => validIds.indexOf(d.id) !== -1)
 	const user = userList.find(u => u.id === id)
+	const otherUser = userList.map(u => {return u.id}).filter(i => i !== id)
 	const { pk } = user
 	user.qrcode = await transformToQRCode(JSON.stringify({pk, id}))
 	return {
 		id,
 		user,
-		claims
+		claims,
+		messages,
+		otherUser,
 	}
 }
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		createClaim: bindActionCreators(createClaim, dispatch)
+		createClaim: bindActionCreators(createClaim, dispatch),
+		createMamMessage: bindActionCreators(createMamMessage, dispatch)
 	}
 }
 
 const mapStateToProps = (state, ownProps) => {
-	const { user, claims } = ownProps
-	return { user, claims }
+	const { user, claims, messages, otherUser } = ownProps
+	return { user, claims, messages, otherUser }
 }
 
 export default withRedux(configureStore, mapStateToProps, mapDispatchToProps)(UserPage)
