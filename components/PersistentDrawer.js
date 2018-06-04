@@ -15,8 +15,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 
-import LoginDialog from '../LoginDialog';
-import Nav from './Nav';
+import LoginDialog from './LoginDialog';
+import DrawerNavItem from './DrawerNavItem';
 
 const drawerWidth = 240;
 
@@ -149,7 +149,7 @@ class PersistentDrawer extends React.Component {
           </div>
           <Divider />
           <List className={classes.list}>
-            <Nav />
+            <DrawerNavItem />
           </List>
         </div>
       </Drawer>

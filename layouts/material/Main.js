@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import PersistentDrawer from '../../components/material/PersistentDrawer';
+import PersistentDrawer from '../../components/PersistentDrawer';
 import Loader from '../../components/Loader';
 
 const MainLayout = props => (

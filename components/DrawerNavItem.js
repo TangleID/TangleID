@@ -4,7 +4,7 @@ import Link from 'next/link';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
-const Nav = () => (
+const DrawerNavItem = () => (
   <nav>
     <ListItem button>
       <Link prefetch href="/users/">
@@ -20,4 +20,4 @@ const Nav = () => (
   </nav>
 );
 
-export default Nav;
+export default DrawerNavItem;
