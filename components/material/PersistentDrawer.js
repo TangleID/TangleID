@@ -1,22 +1,22 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import classNames from 'classnames'
-import Drawer from '@material-ui/core/Drawer'
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
-import List from '@material-ui/core/List'
-import Typography from '@material-ui/core/Typography'
-import Divider from '@material-ui/core/Divider'
-import IconButton from '@material-ui/core/IconButton'
-import { withStyles } from '@material-ui/core/styles'
+import classNames from 'classnames';
+import Drawer from '@material-ui/core/Drawer';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import List from '@material-ui/core/List';
+import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
+import IconButton from '@material-ui/core/IconButton';
+import { withStyles } from '@material-ui/core/styles';
 
-import MenuIcon from '@material-ui/icons/Menu'
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
-import ChevronRightIcon from '@material-ui/icons/ChevronRight'
+import MenuIcon from '@material-ui/icons/Menu';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 
-import LoginDialog from '../LoginDialog'
-import Nav from './Nav'
+import LoginDialog from '../LoginDialog';
+import Nav from './Nav';
 
 const drawerWidth = 240;
 
@@ -25,7 +25,7 @@ const styles = theme => ({
     flexGrow: 1,
   },
   flex: {
-      flex: 1,
+    flex: 1,
   },
   appFrame: {
     position: 'relative',
@@ -122,7 +122,7 @@ class PersistentDrawer extends React.Component {
     this.setState({ open: false });
   };
 
-  handleChangeAnchor = event => {
+  handleChangeAnchor = (event) => {
     this.setState({
       anchor: event.target.value,
     });
@@ -149,8 +149,8 @@ class PersistentDrawer extends React.Component {
           </div>
           <Divider />
           <List className={classes.list}>
-		<Nav />
-	  </List>
+            <Nav />
+          </List>
         </div>
       </Drawer>
     );
@@ -166,14 +166,14 @@ class PersistentDrawer extends React.Component {
 
     return (
       <div className={classes.root}>
-        
+
         <div className={classes.appFrame}>
           <AppBar
             className={classNames(classes.appBar, {
               [classes.appBarShift]: open,
               [classes[`appBarShift-${anchor}`]]: open,
             })}
-           >
+          >
             <Toolbar disableGutters={!open}>
               <IconButton
                 color="inherit"
@@ -208,6 +208,7 @@ class PersistentDrawer extends React.Component {
 PersistentDrawer.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
+  children: PropTypes.node,
 };
 
 export default withStyles(styles, { withTheme: true })(PersistentDrawer);

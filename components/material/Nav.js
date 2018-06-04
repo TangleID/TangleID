@@ -1,22 +1,23 @@
-import Link from 'next/link'
+import React from 'react';
+import Link from 'next/link';
 
-import ListItem from '@material-ui/core/ListItem'
-import ListItemText from '@material-ui/core/ListItemText'
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 
 const Nav = () => (
-	<nav>
-		<ListItem button>
-			<Link prefetch href="/users/">
-				<ListItemText primary="Users" />
-			</Link>
-		</ListItem>
-		<ListItem button>
-			<Link prefetch href="/users/new/">
-				<ListItemText primary="New User" />
-			</Link>
-		</ListItem>
+  <nav>
+    <ListItem button>
+      <Link prefetch href="/users/">
+        <ListItemText primary="Users" />
+      </Link>
+    </ListItem>
+    <ListItem button>
+      <Link prefetch href="/users/new/">
+        <ListItemText primary="New User" />
+      </Link>
+    </ListItem>
 
-	</nav>
-)
+  </nav>
+);
 
-export default Nav
+export default Nav;
