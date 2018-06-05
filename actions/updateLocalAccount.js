@@ -3,18 +3,22 @@ import {
   UPDATE_LOCAL_ACCOUNT_REQUEST,
   UPDATE_LOCAL_ACCOUNT_FAILURE,
   UPDATE_LOCAL_ACCOUNT_SUCCESS,
-} from '../constants'
+} from '../constants';
 
-const updateLocalAccount = (params) => ({
+const updateLocalAccount = params => ({
   [CALL_API]: {
-    types: [ UPDATE_LOCAL_ACCOUNT_REQUEST, UPDATE_LOCAL_ACCOUNT_SUCCESS, UPDATE_LOCAL_ACCOUNT_FAILURE ],
+    types: [
+      UPDATE_LOCAL_ACCOUNT_REQUEST,
+      UPDATE_LOCAL_ACCOUNT_SUCCESS,
+      UPDATE_LOCAL_ACCOUNT_FAILURE,
+    ],
     method: 'POST',
     params: {
-      body: params
+      body: params,
     },
     host: process.env.HOST_API,
-    endpoint: '/updateLocalAccount'
-  }
-})
+    endpoint: '/updateLocalAccount',
+  },
+});
 
-export default updateLocalAccount
+export default updateLocalAccount;
