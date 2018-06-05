@@ -1,5 +1,5 @@
-import fetchOffTangleUserList from './fetchOffTangleUserList'
+import fetchOffTangleUserList from './fetchOffTangleUserList';
 
 export default {
-	fetchOffTangleUserList
-}
+  fetchOffTangleUserList,
+};
