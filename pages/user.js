@@ -4,6 +4,9 @@ import { bindActionCreators } from 'redux';
 import withRedux from 'next-redux-wrapper';
 
 import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+
+import Send from '@material-ui/icons/Send';
 
 import configureStore from '../store/configureStore';
 import checkTangleUsers from '../actions/checkTangleUsers';
@@ -17,11 +20,14 @@ import Layout from '../layouts/material/Main';
 import SimpleForm from '../components/SimpleForm';
 import ClaimList from '../components/ClaimList';
 
+import formDataUtils from '../utils/formDataUtils';
+
 const UserPage = (props) => {
   const { claims, messages, user } = props;
   const {
     pk, sk, id, claim, qrcode,
   } = user;
+
   const handleSubmit = (values) => {
     const params = Object.assign({
       uuid: id,
@@ -32,7 +38,13 @@ const UserPage = (props) => {
     }, values);
     props.createClaim(params);
   };
-  const handleMamSubmit = (values) => {
+  const handleMamSubmit = (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(event.target);
+    const values = formDataUtils.convertToObject(formData);
+    event.target.reset();
+
     const params = {
       sender: localStorage.getItem('act_as_id'),
       receiver: id,
@@ -95,19 +107,24 @@ const UserPage = (props) => {
           },
         }}
       />
-      <SimpleForm
-        name="sendMessage"
-        handleSubmit={handleMamSubmit}
-        meta={{
-          inputs: [{
-            name: 'msg',
-            label: 'sendMamMessage',
-          }],
-          submit: {
-            text: 'Send',
-          },
-        }}
-      />
+
+      <form onSubmit={handleMamSubmit}>
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <TextField
+            name="msg"
+            label="sendMamMessage"
+            placeholder="sendMamMessage"
+            margin="normal"
+          />
+        </div>
+
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <Button type="submit" variant="raised" color="primary" size="small" style={{ margin: '8px' }} >
+            Send
+            <Send style={{ marginLeft: '8px' }} />
+          </Button>
+        </div>
+      </form>
 
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         <Button onClick={handleSetUser} type="submit" variant="raised" color="primary" size="small">
