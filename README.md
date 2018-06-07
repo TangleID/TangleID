@@ -51,14 +51,12 @@ device is lost.
 
 ## Get started
 
-- Create a `.env` file, and specify `OFF_TANGLE_USERS_LINK` and `HOST_API`
+- Create a `.env` file, and specify `BACK_END_API` and `HOST_API`
   - `BACK_END_API`: Server will provide a proxy to bypass CORS.
   - `HOST_API`: The api endpoint of tangleID will call on client.
-  - `OFF_TANGLE_USERS_LINK`: link to list of off-tangle users.
 
 ```
-OFF_TANGLE_USERS_LINK=https://tangleidentity.firebaseio.com/users.json
-BACK_END_API=http://node0.puyuma.org/tangleid_backend/api/
+BACK_END_API=http://node2.puyuma.org:8000/tangleid_backend/api/
 HOST_API=http://localhost:3000/api
 ```
 
