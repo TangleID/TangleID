@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import withRedux from 'next-redux-wrapper';
 import configureStore from '../store/configureStore';
-// import fetchOffTangleUserList from '../actions/fetchOffTangleUserList'
 import checkTangleUsers from '../actions/checkTangleUsers';
 import fetchUserList from '../actions/fetchUserList';
 // import Layout from '../layouts/Main'
@@ -25,7 +24,6 @@ UsersPage.propTypes = {
 
 UsersPage.getInitialProps = async (context) => {
   const { isServer, store } = context;
-  // await store.dispatch(fetchOffTangleUserList())
   await store.dispatch(fetchUserList());
   const { localList } = (store.getState()).users;
   // await store.dispatch(checkTangleUsers(offTangleData.slice(0, 2)))
