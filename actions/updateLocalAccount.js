@@ -16,7 +16,7 @@ const updateLocalAccount = params => ({
     params: {
       body: params,
     },
-    host: process.env.HOST_API,
+    host: process.env.API_HOST,
     endpoint: '/updateLocalAccount',
   },
 });

@@ -1,6 +1,6 @@
 import fetch from 'isomorphic-unfetch';
 
-const DEFAULT_HOST = process.env.HOST_API;
+const DEFAULT_HOST = process.env.API_HOST;
 const isJSONResponse = response => response.headers.get('content-type').startsWith('application/json');
 const isJSONString = (text) => {
   let result;

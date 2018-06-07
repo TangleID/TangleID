@@ -24,7 +24,7 @@ const createClaim = params => ({
       id: p.body.uuid,
       message: p.body.msg,
     }),
-    host: process.env.HOST_API,
+    host: process.env.API_HOST,
     endpoint: '/proxy/',
   },
 });

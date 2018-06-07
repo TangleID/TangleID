@@ -10,7 +10,7 @@ const fetchKeyPairs = () => ({
   [CALL_API]: {
     types: [RSA_KEY_PAIRS_REQUEST, RSA_KEY_PAIRS_SUCCESS, RSA_KEY_PAIRS_FAILURE],
     method: 'GET',
-    host: process.env.HOST_API,
+    host: process.env.API_HOST,
     endpoint: '/keyPairs',
   },
 });

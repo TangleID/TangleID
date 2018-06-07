@@ -41,7 +41,7 @@ app.prepare()
         const server = express()
 
         server.all('/api/proxy/*', (req, res) => {
-            proxy.web(req, res, { target: process.env.BACK_END_API })
+            proxy.web(req, res, { target: process.env.BACKEND })
         })
 
         server.use(bodyParser.urlencoded({ extended: false }))

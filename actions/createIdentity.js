@@ -13,7 +13,7 @@ const createNewIdentity = param => ({
       // body: Object.assign({ command: 'new_user' }, transformParams(param))
       body: param,
     },
-    host: process.env.HOST_API,
+    host: process.env.API_HOST,
     /* temporary workaround */
     endpoint: '/createIdentity',
     // endpoint: '/proxy/'

@@ -21,7 +21,7 @@ const showClaims = uuid =>
           hash_txn: uuid,
         },
       },
-      host: process.env.HOST_API,
+      host: process.env.API_HOST,
       endpoint: '/proxy/',
     },
   });

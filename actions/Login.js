@@ -16,7 +16,7 @@ const Login = uuid => ({
     params: {
       body: Object.assign({ command: 'login', uuid }),
     },
-    host: process.env.HOST_API,
+    host: process.env.API_HOST,
     endpoint: '/proxy/',
   },
 });

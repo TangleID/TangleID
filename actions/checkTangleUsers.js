@@ -22,7 +22,7 @@ const checkTangleUsers = claims => ({
       },
     })),
     labelFunc: p => ({ id: p.body.transactionid }),
-    host: process.env.HOST_API,
+    host: process.env.API_HOST,
     endpoint: '/proxy/',
   },
 });
