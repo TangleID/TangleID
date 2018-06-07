@@ -34,6 +34,7 @@ import {
   FETCH_MAM_MESSAGES_REQUEST,
   FETCH_MAM_MESSAGES_FAILURE,
   FETCH_MAM_MESSAGES_SUCCESS,
+  CLOSE_LOGIN_DIALOG,
 } from '../constants';
 
 const keyPairs = (state = {}, action) => {
@@ -163,6 +164,8 @@ const isRegister = (state = false, action) => {
     case NEW_IDENTITY_SUCCESS:
       return true;
     case NEW_IDENTITY_FAILURE:
+      return false;
+    case CLOSE_LOGIN_DIALOG:
       return false;
     default:
       return state;
