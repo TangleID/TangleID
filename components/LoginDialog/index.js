@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import Button from '@material-ui/core/Button';
@@ -10,6 +11,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
 import Login from '../../actions/Login';
+import closeLoginDialog from '../../actions/closeLoginDialog';
 
 const createHandlers = (dispatch) => {
   const onClick = (data) => {
@@ -41,16 +43,17 @@ class LoginDialog extends Component {
 
   handleClose = () => {
     this.setState({ open: false });
+    this.props.closeLoginDialog();
   }
 
-    handleChange = (e) => {
-      this.setState({ [e.target.id]: e.target.value });
-    }
+  handleChange = (e) => {
+    this.setState({ [e.target.id]: e.target.value });
+  }
 
-    handleSubmit() {
-      console.log(this.state.uuid);
-      return this.state.uuid;
-    }
+  handleSubmit() {
+    console.log(this.state.uuid);
+    return this.state.uuid;
+  }
 
   changeInit = (isRegister) => {
     if (isRegister && this.state.init_open === false) {
@@ -129,6 +132,7 @@ LoginDialog.propTypes = {
   dispatch: PropTypes.func,
   isRegister: PropTypes.bool,
   isLogin: PropTypes.bool,
+  closeLoginDialog: PropTypes.func,
 };
 
 const mapStateToProps = store => ({
@@ -136,4 +140,8 @@ const mapStateToProps = store => ({
   isRegister: store.users.isRegister,
 });
 
-export default connect(mapStateToProps)(LoginDialog);
+const mapDispatchToProps = dispatch => ({
+  closeLoginDialog: bindActionCreators(closeLoginDialog, dispatch),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginDialog);
