@@ -1,25 +1,24 @@
-import { transformParams } from './_helper'
 import {
-	CALL_API,
-	LOGIN_REQUEST,
-	LOGIN_FAILURE,
-	LOGIN_SUCCESS,
-} from '../constants'
+  CALL_API,
+  LOGIN_REQUEST,
+  LOGIN_FAILURE,
+  LOGIN_SUCCESS,
+} from '../constants';
 
-const Login = (uuid) => ({
-	[CALL_API]: {
-		types: [
-			LOGIN_REQUEST,
-			LOGIN_SUCCESS,
-			LOGIN_FAILURE,
-		],
-		method: 'POST',
-        params: {
-            body: Object.assign({ command: 'login', uuid: uuid })
-		},
-		host: process.env.HOST_API,
-		endpoint: '/proxy/'
-	}
-})
+const Login = uuid => ({
+  [CALL_API]: {
+    types: [
+      LOGIN_REQUEST,
+      LOGIN_SUCCESS,
+      LOGIN_FAILURE,
+    ],
+    method: 'POST',
+    params: {
+      body: Object.assign({ command: 'login', uuid }),
+    },
+    host: process.env.API_HOST,
+    endpoint: '/proxy/',
+  },
+});
 
-export default Login 
+export default Login;

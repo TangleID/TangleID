@@ -1,9 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import withRedux from 'next-redux-wrapper';
+
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+
+import Send from '@material-ui/icons/Send';
+
 import configureStore from '../store/configureStore';
 import checkTangleUsers from '../actions/checkTangleUsers';
-// import fetchOffTangleUserList from '../actions/fetchOffTangleUserList'
 import fetchUserList from '../actions/fetchUserList';
 import fetchClaims from '../actions/fetchClaims';
 import fetchMamMessages from '../actions/fetchMamMessages';
@@ -16,9 +22,11 @@ import Layout from '../layouts/material/Main';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
-
 import MessageInput from '../components/MessageInput';
 import Button from '@material-ui/core/Button';
+import SimpleForm from '../components/SimpleForm';
+import ClaimList from '../components/ClaimList';
+import formDataUtils from '../utils/formDataUtils';
 
 
 const styles = {
@@ -77,9 +85,7 @@ const styles = {
 };
 
 const UserPage = (props) => {
-  const {
-    claims, messages, user, otherUser, createClaim, createMamMessage,
-  } = props;
+  const { claims, messages, user } = props;
   const {
     pk, sk, id, claim, qrcode,
   } = user;
@@ -91,17 +97,23 @@ const UserPage = (props) => {
       expDate: '',
       claimPic: '',
     }, values);
-    createClaim(params);
+    props.createClaim(params);
   };
-  const handleMamSubmit = (values) => {
+  const handleMamSubmit = (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(event.target);
+    const values = formDataUtils.convertToObject(formData);
+    event.target.reset();
+
     const params = {
       sender: localStorage.getItem('act_as_id'),
       receiver: id,
       msg: values.msg,
     };
-    createMamMessage(params);
+    props.createMamMessage(params);
   };
-  const handleSetUser = (values) => {
+  const handleSetUser = () => {
     localStorage.setItem('act_as_id', id);
   };
   return (
@@ -138,10 +150,18 @@ const UserPage = (props) => {
   );
 };
 
+UserPage.propTypes = {
+  claims: PropTypes.array,
+  messages: PropTypes.object,
+  user: PropTypes.object,
+  createClaim: PropTypes.func,
+  createMamMessage: PropTypes.func,
+};
+
 UserPage.getInitialProps = async (context) => {
   const { store } = context;
   const { id } = context.query;
-  //	await store.dispatch(fetchOffTangleUserList())
+  //  await store.dispatch(fetchOffTangleUserList())
   await store.dispatch(fetchUserList());
   /* what is this used for ? */
   await store.dispatch(checkTangleUsers([{ id }]));
@@ -149,12 +169,12 @@ UserPage.getInitialProps = async (context) => {
   await store.dispatch(fetchMamMessages(id));
   const { users } = store.getState();
   const {
-    localList, validData, claims, messages,
+    localList, claims, messages,
   } = users;
   /* not working at all */
-  const validIds = validData.map(v => v.id);
+  // const validIds = validData.map(v => v.id);
   // TODO: Use selector to get better performance
-  //	const userList = offTangleData.filter(d => validIds.indexOf(d.id) !== -1)
+  //  const userList = offTangleData.filter(d => validIds.indexOf(d.id) !== -1)
   const userList = localList;// .filter(d => validIds.indexOf(d.id) !== -1)
   const user = userList.find(u => u.id === id);
   const otherUser = userList.map(u => u.id).filter(i => i !== id);
