@@ -56,7 +56,7 @@ device is lost.
   * `API_HOST`: main entry point for the API that TangleID invokes on client side.
 
 ```
-BACKEND=http://node2.puyuma.org:8000/tangleid/api/
+BACKEND=http://node2.puyuma.org:8000
 API_HOST=http://localhost:3000/api
 ```
 
