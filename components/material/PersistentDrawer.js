@@ -91,6 +91,9 @@ const styles = theme => ({
   'content-left': {
     marginLeft: -drawerWidth,
   },
+  topbutton: {
+    backgroundColor: '#42A5F5',
+  },
   'content-right': {
     marginRight: -drawerWidth,
   },
@@ -174,7 +177,7 @@ class PersistentDrawer extends React.Component {
               [classes[`appBarShift-${anchor}`]]: open,
             })}
           >
-            <Toolbar disableGutters={!open}>
+            <Toolbar disableGutters={!open} className={classNames(classes.topbutton)} >
               <IconButton
                 color="inherit"
                 aria-label="open drawer"

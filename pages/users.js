@@ -12,7 +12,6 @@ const UsersPage = (props) => {
   const { userList } = props;
   return (
     <Layout>
-      <h2>Users</h2>
       <UserList users={userList} />
     </Layout>
   );

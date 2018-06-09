@@ -1,19 +1,20 @@
-const express = require('express')
-const httpProxy = require('http-proxy')
+const express = require('express');
+const httpProxy = require('http-proxy');
 
-const proxy = httpProxy.createProxyServer()
-const next = require('next')
-const bodyParser = require('body-parser') /* use for server.post */
+const proxy = httpProxy.createProxyServer();
+const next = require('next');
+const bodyParser = require('body-parser'); /* use for server.post */
 
-const port = parseInt(process.env.PORT, 10) || 3000
-const dev = process.env.NODE_ENV !== 'production'
-const app = next({ dev })
-const handle = app.getRequestHandler()
+const port = parseInt(process.env.PORT, 10) || 3000;
+const dev = process.env.NODE_ENV !== 'production';
+const app = next({ dev });
+const handle = app.getRequestHandler();
 
-const transformToQRCode = require('./utils/transformToQRCode')
-const createKeyPair = require('./utils/createKeyPair')
-const MamUtils = require('./utils/mamUtils')
-var mam
+const transformToQRCode = require('./utils/transformToQRCode');
+const createKeyPair = require('./utils/createKeyPair');
+const MamUtils = require('./utils/mamUtils');
+
+let mam;
 
 
 /*
@@ -29,11 +30,9 @@ var asyncInit = () => {
 }
 */
 
-var asyncInit = () => {
-    return new Promise( (res, rej) => {
-        mam = new MamUtils(res)
-    })
-}
+const asyncInit = () => new Promise((res, rej) => {
+  mam = new MamUtils(res);
+});
 
 app.prepare()
     .then(() => asyncInit())
@@ -121,7 +120,7 @@ app.prepare()
             req.url = req.url.replace(/\/$/, '')
             return handle(req, res)
         })
-
+        server.get('/chatroom', (req, res) => app.render(req, res, '/chatroom'));
         server.listen(port, (err) => {
             if (err) throw err
             console.log(`> Ready on http://localhost:${port}`)
