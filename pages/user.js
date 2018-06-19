@@ -16,18 +16,79 @@ import fetchMamMessages from '../actions/fetchMamMessages';
 import createClaim from '../actions/createClaim';
 import createMamMessage from '../actions/createMamMessage';
 import transformToQRCode from '../utils/transformToQRCode';
+// import Layout from '../layouts/Main'
 import Layout from '../layouts/material/Main';
+
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardHeader from '@material-ui/core/CardHeader';
+import MessageInput from '../components/MessageInput';
+import Button from '@material-ui/core/Button';
 import SimpleForm from '../components/SimpleForm';
 import ClaimList from '../components/ClaimList';
-
 import formDataUtils from '../utils/formDataUtils';
+
+
+const styles = {
+  root: {
+    display: 'flex',
+    'flex-flow': 'row',
+    height: '75vh',
+  },
+  'left-block': {
+    'align-items': 'center',
+    background: '#42A5F5',
+    display: 'flex',
+    flex: '12%',
+    'flex-direction': 'column',
+    'justify-content': 'center',
+  },
+  'left-img': {
+    'text-align': 'center',
+  },
+  'right-block': {
+    'align-items': 'flex-start',
+    background: '#81D4FA',
+    display: 'flex',
+    flex: '40%',
+    'justify-content': 'flex-start',
+  },
+  qcode: {
+    height: '45%',
+    width: '45%',
+  },
+  'qcode-word': {
+    // color: "#000000",
+    color: '#424242',
+    'font-weight': 'bolder',
+  },
+  'qcode-Name': {
+    // color: "#424242",
+    color: '#000000',
+    'font-size': '2.0em',
+    'font-weight': 'bolder',
+  },
+  messageInput: {
+    display: 'inline',
+    'margin-left': '1.2em',
+  },
+  Button_Coler: {
+    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+    borderRadius: 3,
+    border: 0,
+    color: 'white',
+    height: 40,
+    padding: '0 40px',
+    margin: 30,
+    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .30)',
+  },
+};
 
 const UserPage = (props) => {
   const { claims, messages, user } = props;
   const {
     pk, sk, id, claim, qrcode,
   } = user;
-
   const handleSubmit = (values) => {
     const params = Object.assign({
       uuid: id,
@@ -57,79 +118,33 @@ const UserPage = (props) => {
   };
   return (
     <Layout>
-      <h2>{claim.firstName}</h2>
-      <img src={qrcode} alt="QRCode of id and public key" />
-      <div>
-        <p>id: {id}</p>
-        <p>public key: {pk}</p>
-      </div>
-      <div>
-        <p>private key: {sk}</p>
-      </div>
-      <div>
-        <h3>Claims about this user</h3>
-        {claims.length === 0 && (
-        <p>No Claims</p>
-        )}
-        {claims.length !== 0 && (
-        <ClaimList claims={claims} />
-        )}
-      </div>
-      <div>
-        <h3>Mam Messages</h3>
-        {Object.keys(messages).length === 0 && (
-        <p>No Messages</p>
-        )}
-        {messages.length !== 0 && (
-          Object.keys(messages).map(key => (
-            <div key={`div-test-${key}`}>
-              <ul>
-                <li> {key} </li>
-                <ul>
-                  {messages[key].map(data => (
-                    <li key={`li3-${key}${data.msg}`}>{data.msg} {data.fromSelf ? '- You' : ''}</li>
-                  ))}
-                </ul>
-              </ul>
-            </div>
-        )))}
-      </div>
-      <SimpleForm
-        name="signClaim"
-        handleSubmit={handleSubmit}
-        meta={{
-          inputs: [{
-            name: 'msg',
-            label: 'message',
-          }],
-          submit: {
-            text: 'Sign & Attach',
-          },
-        }}
-      />
-
-      <form onSubmit={handleMamSubmit}>
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <TextField
-            name="msg"
-            label="sendMamMessage"
-            placeholder="sendMamMessage"
-            margin="normal"
-          />
+      <div style={styles.root}>
+        <div style={styles['left-block']}>
+          <div style={styles['qcode-Name']}>Name</div>
+          <div style={styles['left-img']}>
+            <p style={styles['qcode-word']}>{claim.firstName}</p>
+            <img
+              alt="QRCode of id and public key"
+              style={styles.qcode}
+              src={qrcode}
+            />
+          </div>
         </div>
-
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <Button type="submit" variant="raised" color="primary" size="small" style={{ margin: '8px' }} >
-            Send
-            <Send style={{ marginLeft: '8px' }} />
-          </Button>
+        <div style={styles['right-block']}>
+          <Card>
+            <CardHeader
+              title="Make Claim about User"
+            />
+            <CardContent>
+              <span>Acting as: {claim.firstName}</span>
+              <MessageInput
+                placeholder="Message"
+                style={styles.messageInput}
+              />
+              <Button style={styles.Button_Coler}>Sign & Attach</Button>
+            </CardContent>
+          </Card>
         </div>
-      </form>
-
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <Button onClick={handleSetUser} type="submit" variant="raised" color="primary" size="small">
-          SetUser
-        </Button>
       </div>
     </Layout>
   );
