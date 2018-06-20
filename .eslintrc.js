@@ -17,6 +17,7 @@ module.exports = {
     "sourceType": "module"
   },
   "rules": {
+    "no-plusplus": [0],
     "no-console": ["error", { allow: [ "log", "warn", "error" ] }],
     "no-restricted-syntax": [0], // allow using JavaScript features and syntax
     "no-param-reassign": ["error", { "props": false }], // allow to modify parameter properties
