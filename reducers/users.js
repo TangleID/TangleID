@@ -112,7 +112,7 @@ const offTangleData = (state = [], action) => {
   }
 };
 
-const localList = (state = {}, action) => {
+const localList = (state = [], action) => {
   switch (action.type) {
     case FETCH_LOCAL_ACCOUNT_SUCCESS:
       return action.response;
