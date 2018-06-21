@@ -1,11 +1,6 @@
-const IOTA = require('iota.lib.js');
 const crypto = require('crypto');
 
-const defaultNode = 'http://node.deviceproof.org:14265';
-
-const iota = new IOTA({
-  provider: defaultNode,
-});
+const iota = require('./iotaSetup.js');
 
 const attach = async (packet, uuid, type, seed) => {
   // Create random seed
