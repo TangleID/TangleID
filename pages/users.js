@@ -1,46 +1,45 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import withRedux from 'next-redux-wrapper';
 import configureStore from '../store/configureStore';
-import checkTangleUsers from '../actions/checkTangleUsers';
-import fetchUserList from '../actions/fetchUserList';
-// import Layout from '../layouts/Main'
 import Layout from '../layouts/material/Main';
 import UserList from '../components/UserList';
 
-const UsersPage = (props) => {
-  const { userList } = props;
-  return (
-    <Layout>
-      <h2>Users</h2>
-      <UserList users={userList} />
-    </Layout>
-  );
-};
+import { fetchUserList } from '../utils/tangleidAPI';
 
-UsersPage.propTypes = {
-  userList: PropTypes.array,
-};
+class UsersPage extends Component {
+  constructor() {
+    super();
+    this.state = {
+      userList: [],
+    };
+  }
+
+  componentDidMount() {
+    fetchUserList().then((userList) => {
+      this.setState({ userList });
+    });
+  }
+
+  render() {
+    return (
+      <Layout>
+        <h2>Users</h2>
+        {
+          this.state.userList
+            ? <UserList users={this.state.userList} />
+            : null
+        }
+      </Layout>
+    );
+  }
+}
 
 UsersPage.getInitialProps = async (context) => {
-  const { isServer, store } = context;
-  await store.dispatch(fetchUserList());
-  const { localList } = (store.getState()).users;
-  // await store.dispatch(checkTangleUsers(offTangleData.slice(0, 2)))
-  await store.dispatch(checkTangleUsers(localList));
+  const { isServer } = context;
   return { isServer };
 };
 
-const mapStateToProps = (state) => {
-  const { users } = state;
-  const { localList, validData } = users;
-  const validIds = validData.map(v => v.id);
-  // TODO: Use selector to get better performance
-  // const userList = offTangleData.filter(d => validIds.indexOf(d.id) !== -1)
-  const userList = localList.filter(d => validIds.indexOf(d.id) !== -1);
-  //  console.log(localList)
-  return { userList };
-};
+const mapStateToProps = state => state;
 
 export default withRedux(configureStore, mapStateToProps)(UsersPage);
 
