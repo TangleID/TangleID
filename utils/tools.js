@@ -30,24 +30,24 @@ const uuid = () => {
 
 const verify = async (msg, sig, issuerID) => {
   const issuer = await Iota.getBundles(issuerID, 'I');
-  return eUTF(crypto.publicDecrypt(eUTF(d64(issuer[0].message.pk)), Buffer(d64(sig)))) === msg;
+  return eUTF(crypto.publicDecrypt(eUTF(d64(issuer[0].message.pk)), Buffer.from(d64(sig)))) === msg;
 };
 
 const verifyHash = async (root, sig, issuerID) => {
   const issuer = await Iota.getBundles(issuerID, 'I');
-  return eUTF(crypto.publicDecrypt(eUTF(d64(issuer[0].message.pk)), Buffer(d64(sig)))) === sha256(root);
+  return eUTF(crypto.publicDecrypt(eUTF(d64(issuer[0].message.pk)), Buffer.from(d64(sig)))) === sha256(root);
 };
 
-const sign = (msg, sk) => e64(crypto.privateEncrypt(eUTF(d64(sk)), Buffer(dUTF(msg))));
+const sign = (msg, sk) => e64(crypto.privateEncrypt(eUTF(d64(sk)), Buffer.from(dUTF(msg))));
 
-const signHash = (msg, sk) => sha256(e64(crypto.privateEncrypt(eUTF(d64(sk)), Buffer(dUTF(msg)))));
+const signHash = (msg, sk) => sha256(e64(crypto.privateEncrypt(eUTF(d64(sk)), Buffer.from(dUTF(msg)))));
 // Encrypt data for transmit
-const encrypt = (msg, pk) => e64(crypto.publicEncrypt(eUTF(d64(pk)), Buffer(dUTF(msg))));
+const encrypt = (msg, pk) => e64(crypto.publicEncrypt(eUTF(d64(pk)), Buffer.from(dUTF(msg))));
 
 // Decrypt data
-const decryptUTF = (msg, sk) => eUTF(crypto.privateDecrypt(eUTF(d64(sk)), Buffer(d64(msg))));
+const decryptUTF = (msg, sk) => eUTF(crypto.privateDecrypt(eUTF(d64(sk)), Buffer.from(d64(msg))));
 
-const decrypt64 = (msg, sk) => e64(crypto.privateDecrypt(eUTF(d64(sk)), Buffer(d64(msg))));
+const decrypt64 = (msg, sk) => e64(crypto.privateDecrypt(eUTF(d64(sk)), Buffer.from(d64(msg))));
 
 // Create
 const generatePacket = (issuerID, msg, sig, receiverID) => ({
