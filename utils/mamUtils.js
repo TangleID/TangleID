@@ -16,7 +16,7 @@ const MessageStore = localStore.Message;
 
 const path = require('path');
 
-const main_path = path.dirname(require.main.filename);
+const mainPath = path.dirname(require.main.filename);
 
 class mam {
   /* make the callback function into promise */
@@ -25,9 +25,9 @@ class mam {
 
     const databaseInitialize = () => {
       Mam.init(iota);
-      self.accountStore = new AccountStore(path.resolve(main_path, 'json', 'account.json'), () => {
-        self.contactStore = new ContactStore(path.resolve(main_path, 'json', 'contact.json'), () => {
-          self.messageStore = new MessageStore(path.resolve(main_path, 'json', 'message.json'), () => {
+      self.accountStore = new AccountStore(path.resolve(mainPath, 'json', 'account.json'), () => {
+        self.contactStore = new ContactStore(path.resolve(mainPath, 'json', 'contact.json'), () => {
+          self.messageStore = new MessageStore(path.resolve(mainPath, 'json', 'message.json'), () => {
             callback();
           });
         });
@@ -191,25 +191,25 @@ class mam {
     console.log('sendMamMsg finished');
   }
 
-  addContact(self_id, add_id) {
-    const store = this.contactStore.findOnly({ id: self_id });
-    if (add_id in store.contacts) {
+  addContact(userID, contactorID) {
+    const store = this.contactStore.findOnly({ id: userID });
+    if (contactorID in store.contacts) {
       console.log('[ERROR] error adding exist contact');
       return;
     }
-    store.contacts[add_id] = {};
+    store.contacts[contactorID] = {};
     this.contactStore.update(store);
   }
 
   async initMamClaim(params) {
     console.log('initMamClaim');
     // console.log(params)
-    let receiver_pub = await Cert.getBundles(params.receiver, 'I');
-    receiver_pub = receiver_pub[0].message.pk;
-    // console.log('recvPub:', receiver_pub)
+    const receiverBundles = await Cert.getBundles(params.receiver, 'I');
+    const receiverPublicKey = receiverBundles[0].message.pk;
+    // console.log('recvPub:', receiverPublicKey)
 
-    const sender_priv = this.accountStore.findOnly({ id: params.sender }).sk;
-    // console.log('sendPriv:', sender_priv)
+    const senderPrivatyKey = this.accountStore.findOnly({ id: params.sender }).sk;
+    // console.log('sendPriv:', senderPrivatyKey)
 
     const state = this.getInitMamState(params);
     const root = Mam.getRoot(state);
@@ -218,7 +218,7 @@ class mam {
       id: params.sender,
       root,
       /* TODO: Signature is too large */
-      //    signature: tools.sign(root, sender_priv)
+      //    signature: tools.sign(root, senderPrivatyKey)
     };
 
     if (debug) {
@@ -227,7 +227,7 @@ class mam {
       console.log(`len:${JSON.stringify(packet).length}`);
     }
 
-    const enc = tools.encrypt(JSON.stringify(packet), receiver_pub);
+    const enc = tools.encrypt(JSON.stringify(packet), receiverPublicKey);
     const tx = await Cert.attach(enc, params.receiver, 'M', null);
   }
 
