@@ -92,6 +92,11 @@ app.prepare()
             mam.addContact(req.body.self_id, req.body.new_id)
         })
 
+        server.get('/api/user/:id', (req, res) => {
+            const user = mam.accountStore.findOnly({ id: req.params.id });
+            return res.send(user)
+        });
+
         server.get('/api/fetchUserList', (req, res) => {
             console.log('fetching user')
             const list = mam.accountStore.findAll()
