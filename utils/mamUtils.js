@@ -23,7 +23,7 @@ class mam {
   constructor(callback) {
     const self = this;
 
-    const databaseInitialize = function () {
+    const databaseInitialize = () => {
       Mam.init(iota);
       self.accountStore = new AccountStore(path.resolve(main_path, 'json', 'account.json'), () => {
         self.contactStore = new ContactStore(path.resolve(main_path, 'json', 'contact.json'), () => {

@@ -5,7 +5,7 @@ class Account {
     const self = this;
     // implement the autoloadback referenced in loki constructor
 
-    const databaseInitialize = function () {
+    const databaseInitialize = () => {
       self.accounts = self.db.getCollection('accounts');
       if (self.accounts === null) {
         self.accounts = self.db.addCollection('accounts');
@@ -61,7 +61,7 @@ class Contact {
     const self = this;
     // implement the autoloadback referenced in loki constructor
 
-    const databaseInitialize = function () {
+    const databaseInitialize = () => {
       self.contacts = self.db.getCollection('contacts');
       if (self.contacts === null) {
         self.contacts = self.db.addCollection('contacts');
@@ -117,7 +117,7 @@ class Message {
     const self = this;
     // implement the autoloadback referenced in loki constructor
 
-    const databaseInitialize = function () {
+    const databaseInitialize = () => {
       self.messages = self.db.getCollection('messages');
       if (self.messages === null) {
         self.messages = self.db.addCollection('messages');
