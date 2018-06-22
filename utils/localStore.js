@@ -1,4 +1,4 @@
-const loki = require('lokijs');
+const Loki = require('lokijs');
 
 class Account {
   constructor(dbFileName, callback) {
@@ -13,7 +13,7 @@ class Account {
       callback();
     };
 
-    this.db = new loki(dbFileName, {
+    this.db = new Loki(dbFileName, {
       autoload: true,
       autoloadCallback: databaseInitialize,
       autosave: true,
@@ -69,7 +69,7 @@ class Contact {
       callback();
     };
 
-    this.db = new loki(dbFileName, {
+    this.db = new Loki(dbFileName, {
       autoload: true,
       autoloadCallback: databaseInitialize,
       autosave: true,
@@ -125,7 +125,7 @@ class Message {
       callback();
     };
 
-    this.db = new loki(dbFileName, {
+    this.db = new Loki(dbFileName, {
       autoload: true,
       autoloadCallback: databaseInitialize,
       autosave: true,
