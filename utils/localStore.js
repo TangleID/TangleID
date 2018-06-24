@@ -1,177 +1,174 @@
-var loki = require("lokijs")
+const Loki = require('lokijs');
 
 class Account {
-  constructor(dbFileName, callback){
-    var self = this
+  constructor(dbFileName, callback) {
+    const self = this;
     // implement the autoloadback referenced in loki constructor
 
-    var databaseInitialize = function() {
-      self.accounts = self.db.getCollection("accounts");
-      if ( self.accounts === null) {
-        self.accounts = self.db.addCollection("accounts");
+    const databaseInitialize = () => {
+      self.accounts = self.db.getCollection('accounts');
+      if (self.accounts === null) {
+        self.accounts = self.db.addCollection('accounts');
       }
-      callback()
-    }
+      callback();
+    };
 
-    this.db = new loki(dbFileName, {
+    this.db = new Loki(dbFileName, {
       autoload: true,
       autoloadCallback: databaseInitialize,
       autosave: true,
-      autosaveInterval: 4000
+      autosaveInterval: 4000,
     });
-
   }
   insert(params) {
-    var result = this.accounts.insert(params)
-    this.db.saveDatabase()
-    return result
+    const result = this.accounts.insert(params);
+    this.db.saveDatabase();
+    return result;
   }
 
   update(params) {
-    var result = this.accounts.update(params)
-    this.db.saveDatabase()
-    return result
+    const result = this.accounts.update(params);
+    this.db.saveDatabase();
+    return result;
   }
 
   find(params) {
-    return this.accounts.find(params)
+    return this.accounts.find(params);
   }
 
   findOnly(params) {
-    var result = this.accounts.find(params)
+    const result = this.accounts.find(params);
 
-    if(result.length !== 1) {
-      console.log('[Error] more/less than one accounts are found:', result.length)
-      return undefined
+    if (result.length !== 1) {
+      console.log('[Error] more/less than one accounts are found:', result.length);
+      return undefined;
     }
 
-    return result[0]
+    return result[0];
   }
 
   findAll() {
-    return this.accounts.find({})
+    return this.accounts.find({});
   }
 
   remove(params) {
-    return this.accounts.remove(params)
+    return this.accounts.remove(params);
   }
 }
 
 class Contact {
-  constructor(dbFileName, callback){
-    var self = this
+  constructor(dbFileName, callback) {
+    const self = this;
     // implement the autoloadback referenced in loki constructor
 
-    var databaseInitialize = function() {
-      self.contacts = self.db.getCollection("contacts");
-      if ( self.contacts === null) {
-        self.contacts = self.db.addCollection("contacts");
+    const databaseInitialize = () => {
+      self.contacts = self.db.getCollection('contacts');
+      if (self.contacts === null) {
+        self.contacts = self.db.addCollection('contacts');
       }
-      callback()
-    }
+      callback();
+    };
 
-    this.db = new loki(dbFileName, {
+    this.db = new Loki(dbFileName, {
       autoload: true,
       autoloadCallback: databaseInitialize,
       autosave: true,
-      autosaveInterval: 4000
+      autosaveInterval: 4000,
     });
-
   }
   insert(params) {
-    var result = this.contacts.insert(params)
-    this.db.saveDatabase()
-    return result
+    const result = this.contacts.insert(params);
+    this.db.saveDatabase();
+    return result;
   }
 
   update(params) {
-    var result = this.contacts.update(params)
-    this.db.saveDatabase()
-    return result
+    const result = this.contacts.update(params);
+    this.db.saveDatabase();
+    return result;
   }
 
   find(params) {
-    return this.contacts.find(params)
+    return this.contacts.find(params);
   }
 
   findOnly(params) {
-    var result = this.contacts.find(params)
+    const result = this.contacts.find(params);
 
-    if(result.length !== 1) {
-      console.log('[Error] more/less than one contacts are found:', result.length)
-      return undefined
+    if (result.length !== 1) {
+      console.log('[Error] more/less than one contacts are found:', result.length);
+      return undefined;
     }
 
-    return result[0]
+    return result[0];
   }
 
   findAll() {
-    return this.contacts.find({})
+    return this.contacts.find({});
   }
 
   remove(object) {
-    return this.contacts.remove(object)
+    return this.contacts.remove(object);
   }
 }
 
 class Message {
-  constructor(dbFileName, callback){
-    var self = this
+  constructor(dbFileName, callback) {
+    const self = this;
     // implement the autoloadback referenced in loki constructor
 
-    var databaseInitialize = function() {
-      self.messages = self.db.getCollection("messages");
-      if ( self.messages === null) {
-        self.messages = self.db.addCollection("messages");
+    const databaseInitialize = () => {
+      self.messages = self.db.getCollection('messages');
+      if (self.messages === null) {
+        self.messages = self.db.addCollection('messages');
       }
-      callback()
-    }
+      callback();
+    };
 
-    this.db = new loki(dbFileName, {
+    this.db = new Loki(dbFileName, {
       autoload: true,
       autoloadCallback: databaseInitialize,
       autosave: true,
-      autosaveInterval: 4000
+      autosaveInterval: 4000,
     });
-
   }
   insert(params) {
-    var result = this.messages.insert(params)
-    this.db.saveDatabase()
-    return result
+    const result = this.messages.insert(params);
+    this.db.saveDatabase();
+    return result;
   }
 
   update(params) {
-    var result = this.messages.update(params)
-    this.db.saveDatabase()
-    return result
+    const result = this.messages.update(params);
+    this.db.saveDatabase();
+    return result;
   }
 
   find(params) {
-    return this.messages.find(params)
+    return this.messages.find(params);
   }
 
   findOnly(params) {
-    var result = this.messages.find(params)
+    const result = this.messages.find(params);
 
-    if(result.length !== 1) {
-      console.log('[Error] more/less than one id are found:', result.length)
-      return undefined
+    if (result.length !== 1) {
+      console.log('[Error] more/less than one id are found:', result.length);
+      return undefined;
     }
 
-    return result[0]
+    return result[0];
   }
   findAll() {
-    return this.messages.find({})
+    return this.messages.find({});
   }
 
   remove(object) {
-    return this.messages.remove(object)
+    return this.messages.remove(object);
   }
 }
 
 module.exports = {
   Account,
   Contact,
-  Message
-}
+  Message,
+};
