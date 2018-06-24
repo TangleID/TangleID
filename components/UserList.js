@@ -30,21 +30,49 @@ const styless = {
     color: '#212121',
   },
 };
+class UserList extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      bgColor: {
+        start: Object.keys(BlueColor).indexOf('200'),
+        end: Object.keys(BlueColor).indexOf('0'),
+      },
+    };
+  }
+getFullName = claim => `${claim.firstName} ${claim.lastName}`
+listExpand = panelIndex => (event, expanded) => {
+  const parent = event.currentTarget.parentElement;
+  let start = this.state.bgColor.start;
+  const end = this.state.bgColor.end;
+  let operator = 0;
 
-const UserList = (props) => {
-  const { users } = props;
-  return (
-    <div>
-      {users.map(user => (
-        <div key={user.id}>
-          <Link href={`/user?id=${user.id}`} as={`/users/${user.id}`}>
-            <a>{user.id}</a>
-          </Link>
-        </div>
-      ))}
-    </div>
-  );
-};
+  if (start - end < 0) {
+    operator = end - start;
+    start = end;
+  } else {
+    operator = start - end;
+  }
+
+  operator += 1;
+  const colorIndex = Object.keys(BlueColor)[start - (panelIndex % operator)];
+
+  parent.style['background-color'] = BlueColor[colorIndex];
+
+  if (expanded) {
+    parent.style.border = styless['list-expand'].border;
+    parent.querySelector('p.userFullName').style.fontSize = styless['userFullName-after']['font-size'];
+    parent.querySelector('p.userFullName').style.color = styless['userFullName-after'].color;
+  } else {
+    parent.setAttribute('style', '');
+    parent.querySelector('p.userFullName').style.fontSize = styless['userFullName-before']['font-size'];
+    parent.querySelector('p.userFullName').style.color = styless['userFullName-before'].color;
+  }
+}
+
+
+
+
 
 UserList.propTypes = {
   users: PropTypes.array,
