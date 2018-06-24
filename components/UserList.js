@@ -18,9 +18,6 @@ const styless = {
   'list-expand': {
     border: '1px solid #0288D1',
   },
-  Word_Coler: {
-    color: '#2196F3',
-  },
   'userFullName-before': {
     'font-size': '0.875rem',
     color: '#2196F3',
@@ -30,21 +27,22 @@ const styless = {
     color: '#212121',
   },
 };
+const bgColor = {
+  start: Object.keys(BlueColor).indexOf('200'),
+  end: Object.keys(BlueColor).indexOf('0'),
+};
 class UserList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      bgColor: {
-        start: Object.keys(BlueColor).indexOf('200'),
-        end: Object.keys(BlueColor).indexOf('0'),
-      },
-    };
+    this.listExpand = this.listExpand.bind(this);
   }
-getFullName = claim => `${claim.firstName} ${claim.lastName}`
+  static getFullName(claim) {
+    return `${claim.firstName} ${claim.lastName}`;
+  }
 listExpand = panelIndex => (event, expanded) => {
   const parent = event.currentTarget.parentElement;
-  let start = this.state.bgColor.start;
-  const end = this.state.bgColor.end;
+  let { start } = bgColor;
+  const { end } = bgColor;
   let operator = 0;
 
   if (start - end < 0) {
@@ -69,9 +67,40 @@ listExpand = panelIndex => (event, expanded) => {
     parent.querySelector('p.userFullName').style.color = styless['userFullName-before'].color;
   }
 }
+render() {
+  const { users } = this.props;
+  return (
+    <div style={styless.root}>
+      {
+        users.map((user, i) => (
+          <ExpansionPanel onChange={this.listExpand(i)}>
+            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+              <Typography className="userFullName">{this.constructor.getFullName(user.claim)}</Typography>
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails>
+              <Typography>
+                <div style={styless.chatroom}>
+                  <Link href={`/user?id=${user.id}`} as={`/users/${user.id}`}>
+                    <IconButton tooltip="Profile">
+                      <Badge
+                        secondary
+                        badgeStyle={{ top: 12, right: 12 }}
+                      >
+                        <AccountBoxIcon />
+                      </Badge>
+                    </IconButton>
+                  </Link>
+                </div>
 
-
-
+              </Typography>
+            </ExpansionPanelDetails>
+          </ExpansionPanel>
+  ))
+  }
+    </div>
+  );
+}
+}
 
 
 UserList.propTypes = {
