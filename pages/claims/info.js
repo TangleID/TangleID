@@ -1,51 +1,60 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { bindActionCreators } from 'redux';
 import withRedux from 'next-redux-wrapper';
 import configureStore from '../../store/configureStore';
-import Layout from '../../layouts/Main';
-import showClaims from '../../actions/showClaims';
+import Layout from '../../layouts/material/Main';
+
+import tangleid from '../../utils/tangleidSetup';
 
 class ShowClaimPage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      claim: null,
+    };
+  }
+
+  componentDidMount() {
+    tangleid.api.fetchClaimInfo(this.props.transactionHash)
+      .then((claim) => {
+        this.setState({ claim });
+      });
+  }
+
+
   render() {
-    const infoArray = this.props.claims[0].text.split(',');
     return (
       <Layout>
-        <h2>Claim full content:</h2>
-        <a>Part A: {infoArray[0]}</a><br />
-        <a>Part B: {infoArray[1]}</a><br />
-        <a>Expiration Date: {infoArray[2]}</a><br />
-        <a>Image: </a><br />
-        <img src={infoArray[3]} alt="" /><br />
-        <a>Description: {infoArray[4]}</a>
+        {
+          this.state.claim
+            ?
+              <div>
+                <h2>Claim full content:</h2>
+                <p>UUID: {this.state.claim.uuid}</p>
+                <p>Message: {this.state.claim.msg}</p>
+                <a>Part A: {this.state.claim.partA}</a><br />
+                <a>Part B: {this.state.claim.partB}</a><br />
+                <a>Expiration Date: {this.state.claim.expiratedAt}</a><br />
+                <a>Image: </a><br />
+                <img src={this.state.claim.imageURL} alt="" /><br />
+              </div>
+            : <p>No claim detail.</p>
+        }
+
       </Layout>
     );
   }
 }
 
 ShowClaimPage.propTypes = {
-  claims: PropTypes.array,
+  transactionHash: PropTypes.string.isRequired,
 };
 
-ShowClaimPage.getInitialProps = async (context) => {
-  const { store } = context;
+ShowClaimPage.getInitialProps = (context) => {
   const { transactionHash } = context.query;
-
-  await store.dispatch(showClaims(transactionHash));
-
   return {
     transactionHash,
   };
 };
 
-const mapDispatchToProps = dispatch => ({
-  showClaim: bindActionCreators(showClaims, dispatch),
-});
-
-const mapStateToProps = (state) => {
-  const { user, claims } = state.users;
-
-  return { user, claims };
-};
-
-export default withRedux(configureStore, mapStateToProps, mapDispatchToProps)(ShowClaimPage);
+export default withRedux(configureStore)(ShowClaimPage);
