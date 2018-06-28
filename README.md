@@ -53,6 +53,8 @@ device is lost.
 
 - [x] Create new file named `.env` and specify `BACKEND` and `API_HOST`
   * `BACKEND`: an address (IP or domain) providing a proxy to bypass CORS.
+    * `BACKEND` is a open source extension named [iota-swarm-node](https://github.com/yillkid/iota-swarm-node) be used with IOTA's IRI Node. It format TangleID requests meet [DID Specification](https://w3c-ccg.github.io/did-spec/).
+    * You could use the BACKEND demo site `http://node2.puyuma.org:8000` or build and deploy from [iota-swarm-node](https://github.com/yillkid/iota-swarm-node) by yourself.
   * `API_HOST`: main entry point for the API that TangleID invokes on client side.
 
 ```
