@@ -7,7 +7,6 @@
     "node": "8.9.1"
   },
   "scripts": {
-    "heroku-postbuild": "npm run build",
     "eslint": "eslint actions components constants layouts middlewares pages reducers store utils",
     "dev": "node server.js",
     "start": "NODE_ENV=production node server.js",
