@@ -22,9 +22,6 @@ import {
   LOGIN_REQUEST,
   LOGIN_FAILURE,
   LOGIN_SUCCESS,
-  SHOW_CLAIM_REQUEST,
-  SHOW_CLAIM_FAILURE,
-  SHOW_CLAIM_SUCCESS,
   UPDATE_LOCAL_ACCOUNT_REQUEST,
   UPDATE_LOCAL_ACCOUNT_FAILURE,
   UPDATE_LOCAL_ACCOUNT_SUCCESS,
@@ -54,7 +51,6 @@ const isLoading = (state = false, action) => {
     case RSA_KEY_PAIRS_REQUEST:
     case OFF_TANGLE_USERS_REQUEST:
     case CHECK_TANGLE_USERS_REQUEST:
-    case SHOW_CLAIM_REQUEST:
     case LOGIN_REQUEST:
     case UPDATE_LOCAL_ACCOUNT_REQUEST:
     case FETCH_LOCAL_ACCOUNT_REQUEST:
@@ -72,8 +68,6 @@ const isLoading = (state = false, action) => {
     case FETCH_CLAIMS_FAILURE:
     case CREATE_CLAIM_SUCCESS:
     case CREATE_CLAIM_FAILURE:
-    case SHOW_CLAIM_FAILURE:
-    case SHOW_CLAIM_SUCCESS:
     case LOGIN_FAILURE:
     case LOGIN_SUCCESS:
     case UPDATE_LOCAL_ACCOUNT_FAILURE:
@@ -128,7 +122,6 @@ const error = (state = null, action) => {
     case CHECK_TANGLE_USERS_FAILURE:
     case FETCH_CLAIMS_FAILURE:
     case CREATE_CLAIM_FAILURE:
-    case SHOW_CLAIM_FAILURE:
     case LOGIN_FAILURE:
     case UPDATE_LOCAL_ACCOUNT_FAILURE:
     case FETCH_LOCAL_ACCOUNT_FAILURE:
@@ -143,7 +136,6 @@ const claims = (state = [], action) => {
   switch (action.type) {
     case CREATE_CLAIM_SUCCESS:
     case FETCH_CLAIMS_SUCCESS:
-    case SHOW_CLAIM_SUCCESS:
       return [].concat(state, action.response);
     default:
       return state;
