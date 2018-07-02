@@ -1,7 +1,5 @@
 const Mam = require('./mam.node.js');
-const IOTA = require('iota.lib.js');
-
-const iota = new IOTA({ provider: 'http://node.deviceproof.org:14265' });
+const iota = require('./iotaSetup.js');
 const Cert = require('./cert.js');
 const tools = require('./tools.js');
 const now = require('moment');

@@ -51,8 +51,12 @@ device is lost.
 
 ## Get started
 
-- [x] Create new file named `.env` and specify `BACKEND` and `API_HOST`
-  * `BACKEND`: an address (IP or domain) providing a proxy to bypass CORS.
+### Setup environment
+
+TangleID uses [swarm node](https://github.com/yillkid/iota-swarm-node) as backend to interact with Tangle.
+
+- Create new file named `.env` and specify `BACKEND` and `API_HOST`
+  * `BACKEND`: an address (IP or domain) to the swarm node.
   * `API_HOST`: main entry point for the API that TangleID invokes on client side.
 
 ```
@@ -60,6 +64,13 @@ BACKEND=http://node2.puyuma.org:8000
 API_HOST=http://localhost:3000/api
 ```
 
+You can setup your swarm node, and change the `.env`.
+```
+BACKEND=SWARM_NODE_ADDRESS
+API_HOST=http://localhost:3000/api
+```
+
+### Run TangleID
 - [x] Build and launch TangleID service
 
 ```shell
