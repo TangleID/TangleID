@@ -10,6 +10,9 @@ const fetchClaims = uuid =>
   // forward request to Backend API
   fetch('/api/proxy/', {
     method: 'POST',
+    headers: {
+      'Content-Type': 'application/json; charset=utf-8',
+    },
     body: JSON.stringify({
       command: 'get_all_claims',
       uuid,
@@ -19,6 +22,9 @@ const fetchClaims = uuid =>
 const fetchMamMessages = uuid =>
   fetch('/api/mamFetch', {
     method: 'POST',
+    headers: {
+      'Content-Type': 'application/json; charset=utf-8',
+    },
     body: JSON.stringify({ id: uuid }),
   }).then(response => response.json());
 
@@ -36,6 +42,9 @@ const createClaim = (uuid, formValues) => {
   // forward request to Backend API
   return fetch('/api/proxy/', {
     method: 'POST',
+    headers: {
+      'Content-Type': 'application/json; charset=utf-8',
+    },
     body: JSON.stringify(claim),
   }).then(response => response.text());
 };

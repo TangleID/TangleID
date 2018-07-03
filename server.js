@@ -39,13 +39,11 @@ app.prepare()
     .then(() => asyncInit())
     .then(() => {
         const server = express()
+        server.use(express.json());
 
         server.all('/api/proxy/*', (req, res) => {
             proxy.web(req, res, { target: process.env.BACKEND })
         })
-
-        server.use(bodyParser.urlencoded({ extended: false }))
-        server.use(bodyParser.json())
 
 
         server.get('/', (req, res) => {
@@ -81,7 +79,7 @@ app.prepare()
 
         server.post('/api/mamFetch', async (req, res) => {
             var id = req.body.id
-            console.log('Fetch mam: ' + id)
+            console.log('Fetching mam: ' + id)
 
             var messages = await mam.fetchMessages(id)
             return res.send(messages)
