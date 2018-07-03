@@ -43,26 +43,16 @@ class mam {
     const mamState = await this.getActiveMamState(params);
     await this.sendMamMsg(packet, params, mamState);
 
-    const bkState = await this.getBackupMamState(params);
-    await this.backupMamMsg(packet, params, bkState);
-
     this.messageUpdate(packet, params);
   }
-
-  async getBackupMamState(params) {
-    const store = this.contactStore.findOnly({ id: params.sender });
-
-    return deepCopy(store.contacts[params.receiver].backupMamState);
-  }
-
 
   async recoverMamMsg(params) {
     console.log('message recovering');
 
-    const backupRoot = this.getBackupRoot(params);
+    const { initRoot, sideKey } = this.getRecoveryProps(params);
     const messages = [];
 
-    await Mam.fetch(backupRoot, 'private', null, (trytes) => {
+    await Mam.fetch(initRoot, 'restricted', sideKey, (trytes) => {
       const data = JSON.parse(iota.utils.fromTrytes(tryte));
       data.fromSelf = true;
       messages.push(data); /* data wrapped message and other things */
@@ -74,10 +64,18 @@ class mam {
     this.messageStore.update(store);
   }
 
-  getBackupRoot(params) {
-    const store = this.contactStore.findOnly({ id: params.sender });
+  getRecoveryProps(params) {
+    /* make it restart from first root */
+    let store = this.contactStore.findOnly({ id: params.sender });
+    let receiver = store.contacts[params.receiver];
+    const mamState = deepCopy(receiver.activateMamState);
+    mamState.channel.start = 0;
+    Mam.create(mamState, 'INITIALMESSAGE');
 
-    return store.contacts[params.receiver].backupRoot;
+    return {
+      initRoot: mamState.channel.next_root,
+      sideKey: mamState.channel.side_key
+    };
   }
 
 
@@ -91,6 +89,7 @@ class mam {
         return {
           id: msg.id,
           root: msg.root,
+          sideKey: msg.sideKey,
         };
       } catch (err) {
         console.log(err);
@@ -111,10 +110,11 @@ class mam {
     await Promise.all(contactRoots.map(async (tx) => {
       const id = tx.id;
       const root = tx.root;
+      const sideKey = tx.sideKey;
       messages[id] = [];
 
       /* fetch from tangle */
-      await Mam.fetch(root, 'private', null, (tryte) => {
+      await Mam.fetch(root, 'restricted', sideKey, (tryte) => {
         const data = JSON.parse(iota.utils.fromTrytes(tryte));
         data.fromSelf = false;
         messages[id].push(data); /* data wrapped message and other things */
@@ -132,32 +132,9 @@ class mam {
         messages[id] = [].concat(localmsg[id]);
       }
     });
+    console.log(messages);
 
     return messages;
-  }
-
-
-  async backupMamMsg(packet, params, bkState) {
-    console.log('backupMamMsg');
-
-    let sendPub = await Cert.getBundles(params.receiver, 'I');
-    if (sendPub.length !== 1) { console.log('error: Get initial claim failed'); }
-    sendPub = sendPub[0].message.pk;
-
-    const msg = JSON.stringify(packet);
-    const trytes = iota.utils.toTrytes(msg);
-    const message = Mam.create(bkState, trytes);
-
-    this.updateBackupMamState(params, message.state);
-
-    if (debug) {
-      console.log('Root: ', message.root);
-      console.log('Address: ', message.address);
-      console.log('length: ', message.payload.length);
-    }
-
-    const tx = await Mam.attach(message.payload, message.address);
-    console.log('backupMamMsg finished');
   }
 
   async sendMamMsg(packet, params, mamState) {
@@ -168,9 +145,6 @@ class mam {
     recvPub = recvPub[0].message.pk;
 
     const sendPriv = this.accountStore.findOnly({ id: params.sender }).sk;
-
-    /* does private mode encrypt messages? */
-    //  var msg = tools.encrypt(JSON.stringify(packet), recvPub)
 
 
     const msg = JSON.stringify(packet);
@@ -206,17 +180,20 @@ class mam {
     const receiverPublicKey = receiverBundles[0].message.pk;
     // console.log('recvPub:', receiverPublicKey)
 
-    const senderPrivatyKey = this.accountStore.findOnly({ id: params.sender }).sk;
+    const senderPrivateKey = this.accountStore.findOnly({ id: params.sender }).sk;
     // console.log('sendPriv:', senderPrivatyKey)
 
     const state = this.getInitMamState(params);
     const root = Mam.getRoot(state);
+    const sideKey = state.channel.side_key;
     // console.log(root)
     const packet = {
       id: params.sender,
       root,
+      /* TODO: find proper key length */
+      sideKey,
       /* TODO: Signature is too large */
-      //    signature: tools.sign(root, senderPrivatyKey)
+      //    signature: tools.sign(root, senderPrivateKey)
     };
 
     if (debug) {
@@ -237,30 +214,21 @@ class mam {
 
     /* init mam state */
     let mamState = Mam.init(iota);
-    mamState = Mam.changeMode(mamState, 'private');
-    /* in order to update next_root */
-    const msg = Mam.create(mamState, 'INITIALMESSAGE');
-    const newState = deepCopy(mamState);
+    mamState = Mam.changeMode(mamState, 'restricted', Cert.seedGen(56));
+
+    /* update next_root, doesn't care return value */
+    Mam.create(mamState, 'INITIALMESSAGE');
 
     store.contacts[params.receiver] = {
       activeMamState: deepCopy(mamState),
     };
 
 
-    /* init message backup mam state */
-    let bkState = Mam.init(iota);
-    bkState = Mam.changeMode(bkState, 'private');
-    const bkmsg = Mam.create(bkState, 'INITIALMESSAGE');
-
-    store.contacts[params.receiver].backupMamState = deepCopy(bkState);
-    store.contacts[params.receiver].backupRoot = bkState.next_root;
-
-
     if (debug) { console.log('Store updated: ', store); }
 
     this.contactStore.update(store);
 
-    return newState;
+    return deepCopy(mamState);
   }
 
   async getActiveMamState(params) {

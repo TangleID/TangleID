@@ -108,4 +108,5 @@ module.exports = {
   sendTransfer,
   find,
   getTransactions,
+  seedGen,
 };
