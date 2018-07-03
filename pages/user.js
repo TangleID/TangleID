@@ -119,7 +119,8 @@ class UserPage extends Component {
         <div>
           <h3>Mam Messages</h3>
           {
-            this.state.mamMessages && this.state.mamMessages.length > 0
+            this.state.mamMessages &&
+            !Object.keys(this.state.mamMessages).every(k => this.state.mamMessages[k].length === 0)
               ? <MessageList messages={this.state.mamMessages} />
               : <p>No Messages</p>
           }
