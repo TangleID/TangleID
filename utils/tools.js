@@ -28,16 +28,6 @@ const uuid = () => {
   return id;
 };
 
-const verify = async (msg, sig, issuerID) => {
-  const issuer = await Iota.getBundles(issuerID, 'I');
-  return eUTF(crypto.publicDecrypt(eUTF(d64(issuer[0].message.pk)), Buffer.from(d64(sig)))) === msg;
-};
-
-const verifyHash = async (root, sig, issuerID) => {
-  const issuer = await Iota.getBundles(issuerID, 'I');
-  return eUTF(crypto.publicDecrypt(eUTF(d64(issuer[0].message.pk)), Buffer.from(d64(sig)))) === sha256(root);
-};
-
 const sign = (msg, sk) => e64(crypto.privateEncrypt(eUTF(d64(sk)), Buffer.from(dUTF(msg))));
 
 const signHash = (msg, sk) => sha256(e64(crypto.privateEncrypt(eUTF(d64(sk)), Buffer.from(dUTF(msg)))));
@@ -78,8 +68,6 @@ module.exports = {
   keypair,
   sha256,
   uuid,
-  verify,
-  verifyHash,
   sign,
   signHash,
   encrypt,
