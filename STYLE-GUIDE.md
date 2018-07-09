@@ -1,6 +1,24 @@
 ### Refer to Airbnb JavaScript Style Guide
   - https://github.com/airbnb/javascript
 
+### Allow the unary operators ++ and --
+
+Since we are using semicolons instead of ASI, it would be fine to use
+++ and -- operators without any side effect.
+
+```javascript
+var foo = 0;
+foo++;
+
+var bar = 42;
+bar--;
+
+for (i = 0; i < l; i++) {
+  return;
+}
+```
+
+## Code example
 
 ### Writing the React Component
 Class-based components are preferable over the ones in pure function,

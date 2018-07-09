@@ -19,6 +19,7 @@ module.exports = {
   "rules": {
     "no-console": ["error", { allow: [ "log", "warn", "error" ] }],
     "no-restricted-syntax": [0], // allow using JavaScript features and syntax
+    "no-plusplus": [0], // allow using ++ and -- operators
     "no-param-reassign": ["error", { "props": false }], // allow to modify parameter properties
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "react/forbid-prop-types": [0],
