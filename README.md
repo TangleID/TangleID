@@ -55,20 +55,18 @@ device is lost.
 
 TangleID uses [swarm node](https://github.com/yillkid/iota-swarm-node) as backend to interact with Tangle.
 
-- Create new file named `.env` and specify `BACKEND` and `API_HOST`
-  * `BACKEND`: an address (IP or domain) to the swarm node.
+- Create new file named `.env` and specify `IRI_HOST`, `SWARM_HOST` and `API_HOST`
+  * `IRI_HOST`: an address (IP or domain) to the IRI node.
+  * `SWARM_HOST`: an address (IP or domain) to the swarm node that implements the TangleID API.
   * `API_HOST`: main entry point for the API that TangleID invokes on client side.
 
 ```
-BACKEND=http://node2.puyuma.org:8000
+IRI_HOST=http://node2.puyuma.org:8000
+SWARM_HOST=http://node2.puyuma.org:8000
 API_HOST=http://localhost:3000/api
 ```
 
-You can setup your swarm node, and change the `.env`.
-```
-BACKEND=SWARM_NODE_ADDRESS
-API_HOST=http://localhost:3000/api
-```
+You can modify these entries in file .env accordingly.
 
 ### Run TangleID
 - [x] Build and launch TangleID service

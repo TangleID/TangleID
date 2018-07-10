@@ -26,8 +26,9 @@ app.prepare()
     const server = express();
     server.use(express.json());
 
+    // forward request to the swarm-node that implement the full-feature TangleID API
     server.all('/api/proxy/*', (req, res) => {
-      proxy.web(req, res, { target: process.env.BACKEND });
+      proxy.web(req, res, { target: process.env.SWARM_HOST });
     });
 
 

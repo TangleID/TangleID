@@ -4,7 +4,8 @@ const webpack = require('webpack');
 const customEnvironments = dotenv.config().parsed;
 
 const defaultEnvironments = {
-  BACKEND: 'http://node2.puyuma.org:8000',
+  IRI_HOST: 'http://node2.puyuma.org:8000',
+  SWARM_HOST: 'http://node2.puyuma.org:8000',
   API_HOST: 'http://localhost:3000/api',
 };
 
