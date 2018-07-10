@@ -1,5 +1,7 @@
-### Refer to Airbnb JavaScript Style Guide
-  - https://github.com/airbnb/javascript
+## Style Guide
+
+Most of our coding style is following the [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript),
+but some of the rules are changed for the following reason.
 
 ### Allow the unary operators ++ and --
 
