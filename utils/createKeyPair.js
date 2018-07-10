@@ -1,8 +1,9 @@
-const ursa = require('ursa');
+const forge = require('node-forge');
 
 module.exports = function createKeyPair() {
-  const key = ursa.generatePrivateKey(2048);
-  const sk = key.toPrivatePem('base64');
-  const pk = key.toPublicPem('base64');
+  const rsa = forge.pki.rsa
+  const keypair = rsa.generateKeyPair({bits: 2048, e: 0x10001});
+  const pk = forge.pki.publicKeyToPem(keypair.publicKey);
+  const sk = forge.pki.privateKeyToPem(keypair.privateKey);
   return { sk, pk };
 };
