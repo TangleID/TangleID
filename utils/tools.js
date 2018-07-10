@@ -9,14 +9,18 @@ const keypair = () => {
   return { sk, pk };
 };
 
+const seedGen = (length) => {
+  const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ9';
+  let result = '';
+  const buf = crypto.randomBytes(4 * length);
+  for (let i = 0; i < length; ++i) {
+    result += charset.charAt(buf.readUInt32LE(i) % charset.length);
+  }
+  return result;
+};
 
 const uuid = () => {
-  const ch = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ9';
-  let id = '';
-  for (let i = 0; i < 26; i++) {
-    id += ch.charAt(Math.floor(Math.random() * ch.length));
-  }
-  return id;
+  return seedGen(26);
 };
 
 const sign = (msg, sk) => {
@@ -78,6 +82,7 @@ const eUTF = data => forge.util.encodeUtf8(data);
 
 module.exports = {
   keypair,
+  seedGen,
   uuid,
   sign,
   verify,

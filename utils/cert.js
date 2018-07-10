@@ -1,10 +1,10 @@
 const crypto = require('crypto');
-
+const tools = require('./tools.js');
 const iota = require('./iotaSetup.js');
 
 const attach = async (packet, uuid, type, seed) => {
   // Create random seed
-  const transSeed = seed || seedGen(81);
+  const transSeed = seed || tools.seedGen(81);
   // Generate address for the seed
   const address = await generateAddress(transSeed);
   // Attach the address / send the signed packet.
@@ -91,15 +91,6 @@ const getTransactions = async (hashes) => {
   return p;
 };
 
-const seedGen = (length) => {
-  const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ9';
-  let result = '';
-  const buf = [...crypto.randomBytes(length)];
-  for (let i = 0; i < length; ++i) {
-    result += charset[buf[i] % charset.length];
-  }
-  return result;
-};
 
 module.exports = {
   attach,
@@ -108,5 +99,4 @@ module.exports = {
   sendTransfer,
   find,
   getTransactions,
-  seedGen,
 };

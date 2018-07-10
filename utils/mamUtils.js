@@ -214,7 +214,7 @@ class mam {
 
     /* init mam state */
     let mamState = Mam.init(iota);
-    mamState = Mam.changeMode(mamState, 'restricted', Cert.seedGen(56));
+    mamState = Mam.changeMode(mamState, 'restricted', tools.seedGen(56));
 
     /* update next_root, doesn't care return value */
     Mam.create(mamState, 'INITIALMESSAGE');
