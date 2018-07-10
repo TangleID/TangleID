@@ -53,11 +53,13 @@ device is lost.
 
 ### Setup environment
 
-TangleID uses [swarm node](https://github.com/yillkid/iota-swarm-node) as backend to interact with Tangle.
+TangleID depends on [swarm node](https://github.com/yillkid/iota-swarm-node) to
+accelerate the interaction between API calls and IRI nodes. Therefore, you shall
+configure the swarm node host in advance.
 
 - Create new file named `.env` and specify `IRI_HOST`, `SWARM_HOST` and `API_HOST`
   * `IRI_HOST`: an address (IP or domain) to the IRI node.
-  * `SWARM_HOST`: an address (IP or domain) to the swarm node that implements the TangleID API.
+  * `SWARM_HOST`: an address (IP or domain) to the swarm node that accepts TangleID extension.
   * `API_HOST`: main entry point for the API that TangleID invokes on client side.
 
 ```
