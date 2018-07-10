@@ -62,21 +62,24 @@ configure the swarm node host in advance.
   * `SWARM_HOST`: an address (IP or domain) to the swarm node that accepts TangleID extension.
   * `API_HOST`: main entry point for the API that TangleID invokes on client side.
 
+Default host-specific configurations:
 ```
 IRI_HOST=http://node.deviceproof.org:14265
 SWARM_HOST=http://node2.puyuma.org:8000
 API_HOST=http://localhost:3000/api
 ```
 
-You can modify these entries in file .env accordingly.
+You can modify these entries in file `.env` accordingly.
 
 ### Run TangleID
-- [x] Build and launch TangleID service
+
+Build TangleID from scratch:
 
 ```shell
 $> npm install
 ```
 
+Launch TangleID service, for either development or production build:
 - Development build
     ```shell
     $> npm run dev
