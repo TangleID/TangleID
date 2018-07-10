@@ -24,7 +24,7 @@ class MessageList extends Component {
 }
 
 MessageList.propTypes = {
-  messages: PropTypes.array,
+  messages: PropTypes.object,
 };
 
 

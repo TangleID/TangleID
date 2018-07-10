@@ -51,17 +51,24 @@ device is lost.
 
 ## Get started
 
-- [x] Create new file named `.env` and specify `BACKEND` and `API_HOST`
-  * `BACKEND`: an address (IP or domain) providing a proxy to bypass CORS.
-    * `BACKEND` is a open source extension named [iota-swarm-node](https://github.com/yillkid/iota-swarm-node) be used with IOTA's IRI Node. It format TangleID requests meet [DID Specification](https://w3c-ccg.github.io/did-spec/).
-    * You could use the BACKEND demo site `http://node2.puyuma.org:8000` or build and deploy from [iota-swarm-node](https://github.com/yillkid/iota-swarm-node) by yourself.
+### Setup environment
+
+TangleID uses [swarm node](https://github.com/yillkid/iota-swarm-node) as backend to interact with Tangle.
+
+- Create new file named `.env` and specify `IRI_HOST`, `SWARM_HOST` and `API_HOST`
+  * `IRI_HOST`: an address (IP or domain) to the IRI node.
+  * `SWARM_HOST`: an address (IP or domain) to the swarm node that implements the TangleID API.
   * `API_HOST`: main entry point for the API that TangleID invokes on client side.
 
 ```
-BACKEND=http://node2.puyuma.org:8000
+IRI_HOST=http://node.deviceproof.org:14265
+SWARM_HOST=http://node2.puyuma.org:8000
 API_HOST=http://localhost:3000/api
 ```
 
+You can modify these entries in file .env accordingly.
+
+### Run TangleID
 - [x] Build and launch TangleID service
 
 ```shell

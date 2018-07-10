@@ -8,7 +8,7 @@ class ClaimList extends Component {
       <div>
         {this.props.claims.map(claim => (
           <div key={`claim-${claim}`}>
-            <Link href={`/claims/info/?hash_txn=${JSON.stringify(claim)}`} as={`/claims/info/${claim}`}>
+            <Link href={`/claims/info/${claim}`} as={`/claims/info/${claim}`}>
               <a>{claim}</a>
             </Link>
           </div>

@@ -1,53 +1,59 @@
-const nacl = require('tweetnacl');
-nacl.util = require('tweetnacl-util');
+const forge = require('node-forge');
 const crypto = require('crypto');
-const ursa = require('ursa');
 
 const keypair = () => {
-  const keys = ursa.generatePrivateKey(2048, 65537);
-
-  const priv = keys.toPrivatePem('base64');
-  const pub = keys.toPublicPem('base64');
-
-  return { pub, priv };
+  const rsa = forge.pki.rsa;
+  const keypair = rsa.generateKeyPair({bits: 2048, e: 0x10001});
+  const pk = tools.e64(forge.pki.publicKeyToPem(keypair.publicKey));
+  const sk = tools.e64(forge.pki.privateKeyToPem(keypair.privateKey));
+  return { sk, pk };
 };
 
-const sha256 = (data) => {
-  const hash = crypto.createHash('sha256');
-  hash.update(data);
-  return hash.digest('hex');
+const seedGen = (length) => {
+  const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ9';
+  let result = '';
+  const buf = crypto.randomBytes(4 * length);
+  for (let i = 0; i < length; ++i) {
+    result += charset.charAt(buf.readUInt32LE(i) % charset.length);
+  }
+  return result;
 };
-
 
 const uuid = () => {
-  const ch = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ9';
-  let id = '';
-  for (let i = 0; i < 26; i++) {
-    id += ch.charAt(Math.floor(Math.random() * ch.length));
-  }
-  return id;
+  return seedGen(26);
 };
 
-const verify = async (msg, sig, issuerID) => {
-  const issuer = await Iota.getBundles(issuerID, 'I');
-  return eUTF(crypto.publicDecrypt(eUTF(d64(issuer[0].message.pk)), Buffer.from(d64(sig)))) === msg;
-};
+const sign = (msg, sk) => {
+  sk = forge.pki.privateKeyFromPem(sk);
+  const md = forge.md.sha256.create();
+  md.update(msg);
+  return e64(sk.sign(md));
+}
 
-const verifyHash = async (root, sig, issuerID) => {
-  const issuer = await Iota.getBundles(issuerID, 'I');
-  return eUTF(crypto.publicDecrypt(eUTF(d64(issuer[0].message.pk)), Buffer.from(d64(sig)))) === sha256(root);
-};
+const verify = (msg, sign, pk) => {
+  pk = forge.pki.publicKeyFromPem(pk);
+  const md = forge.md.sha256.create();
+  md.update(msg);
+  return pk.verify(md.digest().bytes(), d64(sign));
+}
 
-const sign = (msg, sk) => e64(crypto.privateEncrypt(eUTF(d64(sk)), Buffer.from(dUTF(msg))));
-
-const signHash = (msg, sk) => sha256(e64(crypto.privateEncrypt(eUTF(d64(sk)), Buffer.from(dUTF(msg)))));
 // Encrypt data for transmit
-const encrypt = (msg, pk) => e64(crypto.publicEncrypt(eUTF(d64(pk)), Buffer.from(dUTF(msg))));
+const encrypt = (msg, pk) => {
+  pk = forge.pki.publicKeyFromPem(pk);
+  return e64(pk.encrypt(msg));
+}
 
 // Decrypt data
-const decryptUTF = (msg, sk) => eUTF(crypto.privateDecrypt(eUTF(d64(sk)), Buffer.from(d64(msg))));
+const decryptUTF = (msg, sk) => {
+  sk = forge.pki.privateKeyFromPem(sk);
+  return eUTF(sk.decrypt(d64(msg)));
+}
 
-const decrypt64 = (msg, sk) => e64(crypto.privateDecrypt(eUTF(d64(sk)), Buffer.from(d64(msg))));
+const decrypt64 = (msg, sk) => {
+  sk = forge.pki.privateKeyFromPem(sk);
+  return e64(sk.decrypt(d64(msg)));
+}
+
 
 // Create
 const generatePacket = (issuerID, msg, sig, receiverID) => ({
@@ -66,22 +72,20 @@ const generateInitialPacket = (uuid, msg, sig, pk) => ({
 });
 
 
-const d64 = data => nacl.util.decodeBase64(data);
+const d64 = data => forge.util.decode64(data);
 
-const e64 = data => nacl.util.encodeBase64(data);
+const e64 = data => forge.util.encode64(data);
 
-const dUTF = data => nacl.util.decodeUTF8(data);
+const dUTF = data => forge.util.decodeUtf8(data);
 
-const eUTF = data => nacl.util.encodeUTF8(data);
+const eUTF = data => forge.util.encodeUtf8(data);
 
 module.exports = {
   keypair,
-  sha256,
+  seedGen,
   uuid,
-  verify,
-  verifyHash,
   sign,
-  signHash,
+  verify,
   encrypt,
   decrypt64,
   decryptUTF,
