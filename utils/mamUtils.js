@@ -81,20 +81,28 @@ class mam {
 
   async fetchMessages(uuid) {
     const recvPriv = this.accountStore.findOnly({ id: uuid }).sk;
-    const roots = await Cert.getBundles(uuid, 'M').then(data => data.map((item) => {
-      try {
-        const msg = JSON.parse(tools.decryptUTF(item.message, recvPriv));
-        /* TODO: signature verification */
-        //        if(tools.verify(msg.root, msg.signature, send_id))
-        return {
-          id: msg.id,
-          root: msg.root,
-          sideKey: msg.sideKey,
-        };
-      } catch (err) {
-        console.log(err);
-      }
-    }));
+    const roots = await Cert.getBundles(uuid, 'M')
+      .then(async data =>
+        await Promise.all(data.map(async item => {
+          try {
+            const message = JSON.parse(item.message);
+            const msg = JSON.parse(tools.decryptUTF(message.msg, recvPriv));
+            const bundles = await Cert.getBundles(msg.id, 'I');
+            const sendPub = bundles[0].message.pk;
+            const verified = tools.verify(msg.root, message.sign, sendPub);
+            /* TODO: signature verification */
+            if (verified) {
+              return {
+                id: msg.id,
+                root: msg.root,
+                sideKey: msg.sideKey,
+              };
+            }
+          } catch (err) {
+            console.log(err);
+          }
+        }))
+      );
     console.log('Fetched roots:', roots);
     const messages = {};
     const contacts = this.contactStore.findOnly({ id: uuid }).contacts;
@@ -187,13 +195,16 @@ class mam {
     const root = Mam.getRoot(state);
     const sideKey = state.channel.side_key;
     // console.log(root)
-    const packet = {
+    const info = {
       id: params.sender,
       root,
       /* TODO: find proper key length */
       sideKey,
-      /* TODO: Signature is too large */
-      //    signature: tools.sign(root, senderPrivateKey)
+    };
+    const enc = tools.encrypt(JSON.stringify(info), receiverPublicKey);
+    const packet = {
+      msg: enc,
+      sign: tools.sign(root, senderPrivateKey)
     };
 
     if (debug) {
@@ -202,8 +213,7 @@ class mam {
       console.log(`len:${JSON.stringify(packet).length}`);
     }
 
-    const enc = tools.encrypt(JSON.stringify(packet), receiverPublicKey);
-    const tx = await Cert.attach(enc, params.receiver, 'M', null);
+    const tx = await Cert.attach(JSON.stringify(packet), params.receiver, 'M', null);
   }
 
 
