@@ -17,12 +17,7 @@ import ClaimList from '../components/ClaimList';
 import MessageList from '../components/MessageList';
 
 import formDataUtils from '../utils/formDataUtils';
-import {
-  fetchUserInfo,
-  fetchClaims,
-  fetchMamMessages,
-  createClaim,
-} from '../utils/tangleidAPI';
+import tangleid from '../utils/tangleidSetup';
 
 class UserPage extends Component {
   constructor() {
@@ -40,7 +35,7 @@ class UserPage extends Component {
     this.handleSetUser = this.handleSetUser.bind(this);
   }
   componentDidMount() {
-    fetchUserInfo(this.props.id)
+    tangleid.api.fetchUserInfo(this.props.id)
       .then((user) => {
         this.setState({ user });
       });
@@ -50,14 +45,14 @@ class UserPage extends Component {
   }
 
   reloadClaims() {
-    fetchClaims(this.props.id)
+    tangleid.api.fetchClaims(this.props.id)
       .then((claims) => {
         this.setState({ claims });
       });
   }
 
   reloadMamMessages() {
-    fetchMamMessages(this.props.id)
+    tangleid.api.fetchMamMessages(this.props.id)
       .then((messages) => {
         this.setState({ mamMessages: messages });
       }).catch((error) => {
@@ -72,7 +67,7 @@ class UserPage extends Component {
     const values = formDataUtils.convertToObject(formData);
     event.target.reset();
 
-    createClaim(this.props.id, values)
+    tangleid.api.createClaim(this.props.id, values)
       .then((claimHash) => {
         console.log(claimHash);
         this.reloadClaims();
