@@ -2,6 +2,51 @@ const crypto = require('crypto');
 const tools = require('./tools.js');
 const iota = require('./iotaSetup.js');
 
+// IOTA - Attach your transfer to the tangle
+const find = async (query) => {
+  const p = new Promise((res, rej) => {
+    iota.api.findTransactions(query, (e, s) => {
+      if (e) return rej(e);
+      res(s);
+    });
+  });
+  return p;
+};
+
+// IOTA - Attach your transfer to the tangle
+const sendTransfer = async (seed, transfers) => {
+  const p = new Promise((res, rej) => {
+    console.log('Attaching to Tangle');
+    iota.api.sendTransfer(seed, 6, 15, transfers, (e, s) => {
+      if (e) return rej(e);
+      res(s);
+    });
+  });
+  return p;
+};
+
+// IOTA - Attach your transfer to the tangle
+const getTransactions = async (hashes) => {
+  const p = new Promise((res, rej) => {
+    iota.api.getTransactionsObjects(hashes, (e, s) => {
+      if (e) return rej(e);
+      res(s);
+    });
+  });
+  return p;
+};
+
+// IOTA - Generate an Address
+const generateAddress = async (seed) => {
+  const p = new Promise((res, rej) => {
+    iota.api.getNewAddress(seed, { index: 0 }, (e, s) => {
+      if (e) return rej(e);
+      res(s);
+    });
+  });
+  return p;
+};
+
 const attach = async (packet, uuid, type, seed) => {
   // Create random seed
   const transSeed = seed || tools.seedGen(81);
@@ -46,57 +91,12 @@ const getBundles = async (uuid, type) => {
   return messages;
 };
 
-// IOTA - Generate an Address
-const generateAddress = async (seed) => {
-  const p = new Promise((res, rej) => {
-    iota.api.getNewAddress(seed, { index: 0 }, (e, s) => {
-      if (e) return rej(e);
-      res(s);
-    });
-  });
-  return p;
-};
-
-// IOTA - Attach your transfer to the tangle
-const sendTransfer = async (seed, transfers) => {
-  const p = new Promise((res, rej) => {
-    console.log('Attaching to Tangle');
-    iota.api.sendTransfer(seed, 6, 15, transfers, (e, s) => {
-      if (e) return rej(e);
-      res(s);
-    });
-  });
-  return p;
-};
-
-// IOTA - Attach your transfer to the tangle
-const find = async (query) => {
-  const p = new Promise((res, rej) => {
-    iota.api.findTransactions(query, (e, s) => {
-      if (e) return rej(e);
-      res(s);
-    });
-  });
-  return p;
-};
-
-// IOTA - Attach your transfer to the tangle
-const getTransactions = async (hashes) => {
-  const p = new Promise((res, rej) => {
-    iota.api.getTransactionsObjects(hashes, (e, s) => {
-      if (e) return rej(e);
-      res(s);
-    });
-  });
-  return p;
-};
-
 
 module.exports = {
+  find,
+  sendTransfer,
+  getTransactions,
+  generateAddress,
   attach,
   getBundles,
-  generateAddress,
-  sendTransfer,
-  find,
-  getTransactions,
 };
