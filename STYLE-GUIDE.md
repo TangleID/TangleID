@@ -1,12 +1,14 @@
-## Style Guide
+# Style Guide
 
-Most of our coding style is following the [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript),
-but some of the rules are changed for the following reason.
+## Overview
+
+TangleID defers to [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript)
+with the following exceptions or extra manner.
 
 ### Allow the unary operators ++ and --
 
-Since we are using semicolons instead of ASI, it would be fine to use
-++ and -- operators without any side effect.
+Since we are using semicolons instead of ASI, it would be straightforward to use
+`++` and `--` operators without side effects.
 
 ```javascript
 var foo = 0;
@@ -22,11 +24,12 @@ for (i = 0; i < l; i++) {
 
 ## Code example
 
-### Writing the React Component
+### React Components
+
 Class-based components are preferable over the ones in pure function,
 because the former can use Lifecycle methods and state.
 
-Here is the class-based component example:
+Here is a class-based React component example:
 ```javascript
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
@@ -92,5 +95,4 @@ MyCounterComponent.propTypes = {
 };
 
 export default MyCounterComponent;
-
 ```
