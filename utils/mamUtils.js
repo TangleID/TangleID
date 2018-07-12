@@ -53,7 +53,7 @@ class mam {
     const messages = [];
 
     await Mam.fetch(initRoot, 'restricted', sideKey, (trytes) => {
-      const data = JSON.parse(iota.utils.fromTrytes(tryte));
+      const data = JSON.parse(iota.utils.fromTrytes(trytes));
       data.fromSelf = true;
       messages.push(data); /* data wrapped message and other things */
     });
