@@ -4,7 +4,7 @@ import configureStore from '../store/configureStore';
 import Layout from '../layouts/material/Main';
 import UserList from '../components/UserList';
 
-import { fetchUserList } from '../utils/tangleidAPI';
+import tangleid from '../utils/tangleidSetup';
 
 class UsersPage extends Component {
   constructor() {
@@ -15,7 +15,7 @@ class UsersPage extends Component {
   }
 
   componentDidMount() {
-    fetchUserList().then((userList) => {
+    tangleid.api.fetchUserList().then((userList) => {
       this.setState({ userList });
     });
   }
