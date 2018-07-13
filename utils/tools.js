@@ -1,6 +1,11 @@
 const forge = require('node-forge');
 const crypto = require('crypto');
 
+const d64 = data => forge.util.decode64(data);
+const e64 = data => forge.util.encode64(data);
+const dUTF = data => forge.util.decodeUtf8(data);
+const eUTF = data => forge.util.encodeUtf8(data);
+
 const keypair = () => {
   const rsa = forge.pki.rsa;
   const keypair = rsa.generateKeyPair({ bits: 2048, e: 0x10001 });
@@ -71,16 +76,11 @@ const generateInitialPacket = (uuid, msg, sig, pk) => ({
   id: uuid,
 });
 
-
-const d64 = data => forge.util.decode64(data);
-
-const e64 = data => forge.util.encode64(data);
-
-const dUTF = data => forge.util.decodeUtf8(data);
-
-const eUTF = data => forge.util.encodeUtf8(data);
-
 module.exports = {
+  d64,
+  e64,
+  dUTF,
+  eUTF,
   keypair,
   seedGen,
   uuid,
@@ -91,8 +91,4 @@ module.exports = {
   decryptUTF,
   generatePacket,
   generateInitialPacket,
-  d64,
-  e64,
-  dUTF,
-  eUTF,
 };
