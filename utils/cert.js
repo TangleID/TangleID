@@ -2,7 +2,12 @@ const crypto = require('crypto');
 const tools = require('./tools.js');
 const iota = require('./iotaSetup.js');
 
-// IOTA - Attach your transfer to the tangle
+/**
+ * Find the transaction by the query object.
+ *
+ * @param {Object} query - Object List of transaction hashes. e.g. {'hashes': ['ABCD']}
+ * @returns {Promise} Promise object represents list of all the transaction hash.
+ */
 const find = async (query) => {
   const p = new Promise((res, rej) => {
     iota.api.findTransactions(query, (e, s) => {
@@ -13,7 +18,13 @@ const find = async (query) => {
   return p;
 };
 
-// IOTA - Attach your transfer to the tangle
+/**
+ * Broadcasts and stores the transactions locally.
+ *
+ * @param {string} seed - Tryte-encoded seed will be used for signing and picking inputs.
+ * @param {Array} transfers - Array of transfer objects.
+ * @returns {Promise} Promise object represents array of the transfer.
+ */
 const sendTransfer = async (seed, transfers) => {
   const p = new Promise((res, rej) => {
     console.log('Attaching to Tangle');
@@ -25,7 +36,13 @@ const sendTransfer = async (seed, transfers) => {
   return p;
 };
 
-// IOTA - Attach your transfer to the tangle
+/**
+ * Get entire transaction objects for a list of transaction hashes.
+ *
+ * @function getTransactions
+ * @param {Array} hashes - List of transaction hashes.
+ * @returns {Promise} Promise object represents list of all the transaction objects.
+ */
 const getTransactions = async (hashes) => {
   const p = new Promise((res, rej) => {
     iota.api.getTransactionsObjects(hashes, (e, s) => {
@@ -36,6 +53,13 @@ const getTransactions = async (hashes) => {
   return p;
 };
 
+/**
+ * Generates a new address from a seed and returns the address.
+ *
+ * @function generateAddress
+ * @param {number} seed - The security options. It can be 1, 2, 3.
+ * @returns {Promise} Promise object represents the new address.
+ */
 // IOTA - Generate an Address
 const generateAddress = async (seed) => {
   const p = new Promise((res, rej) => {
@@ -47,6 +71,7 @@ const generateAddress = async (seed) => {
   return p;
 };
 
+// IOTA - Attach a transaction to the tangle
 const attach = async (packet, uuid, type, seed) => {
   // Create random seed
   const transSeed = seed || tools.seedGen(81);
