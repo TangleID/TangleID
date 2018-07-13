@@ -125,7 +125,6 @@ class mam {
         })));
     console.log('Fetched roots:', roots);
     const messages = {};
-    const { contacts } = this.contactStore.findOnly({ id: uuid });
 
     /* TODO: filter messages in contact */
     // var contactRoots = roots.filter(msg => msg.id in contacts)
@@ -170,9 +169,6 @@ class mam {
     if (recvPub.length !== 1) { console.log('error: Get initial claim failed'); }
     recvPub = recvPub[0].message.pk;
 
-    const sendPriv = this.accountStore.findOnly({ id: params.sender }).sk;
-
-
     const msg = JSON.stringify(packet);
     const trytes = iota.utils.toTrytes(msg);
     const message = Mam.create(mamState, trytes);
@@ -185,7 +181,7 @@ class mam {
       console.log('length: ', message.payload.length);
     }
 
-    const tx = await Mam.attach(message.payload, message.address);
+    await Mam.attach(message.payload, message.address);
     console.log('sendMamMsg finished');
   }
 
@@ -231,7 +227,7 @@ class mam {
       console.log(`len:${JSON.stringify(packet).length}`);
     }
 
-    const tx = await Cert.attach(JSON.stringify(packet), params.receiver, 'M', null);
+    await Cert.attach(JSON.stringify(packet), params.receiver, 'M', null);
   }
 
 
