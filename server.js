@@ -101,11 +101,11 @@ app.prepare()
       return app.render(req, res, actualPage, queryParams);
     });
 
-    server.get('/claims/info/:hash_txn', (req, res) => {
-      const actualPage = '/claims/info';
-      const queryParams = { hash_txn: req.params.hash_txn };
-      return app.render(req, res, actualPage, queryParams);
-    });
+    server.get('/claims/info/:transactionHash', (req, res) => {
+      const actualPage = '/claims/info'
+      const queryParams = { transactionHash: req.params.transactionHash }
+      return app.render(req, res, actualPage, queryParams)
+    })
 
 
     server.get('*', (req, res) => {
