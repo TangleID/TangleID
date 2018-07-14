@@ -24,40 +24,38 @@ const seedGen = (length) => {
   return result;
 };
 
-const uuid = () => {
-  return seedGen(26);
-};
+const uuid = () => seedGen(26);
 
 const sign = (msg, sk) => {
   sk = forge.pki.privateKeyFromPem(sk);
   const md = forge.md.sha256.create();
   md.update(msg);
   return e64(sk.sign(md));
-}
+};
 
 const verify = (msg, sign, pk) => {
   pk = forge.pki.publicKeyFromPem(pk);
   const md = forge.md.sha256.create();
   md.update(msg);
   return pk.verify(md.digest().bytes(), d64(sign));
-}
+};
 
 // Encrypt data for transmit
 const encrypt = (msg, pk) => {
   pk = forge.pki.publicKeyFromPem(pk);
   return e64(pk.encrypt(msg));
-}
+};
 
 // Decrypt data
 const decryptUTF = (msg, sk) => {
   sk = forge.pki.privateKeyFromPem(sk);
   return eUTF(sk.decrypt(d64(msg)));
-}
+};
 
 const decrypt64 = (msg, sk) => {
   sk = forge.pki.privateKeyFromPem(sk);
   return e64(sk.decrypt(d64(msg)));
-}
+};
 
 
 // Create

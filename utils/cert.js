@@ -1,4 +1,3 @@
-const crypto = require('crypto');
 const tools = require('./tools.js');
 const iota = require('./iotaSetup.js');
 

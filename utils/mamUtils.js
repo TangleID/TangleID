@@ -87,15 +87,15 @@ class mam {
 
   getRecoveryProps(params) {
     /* make it restart from first root */
-    let store = this.contactStore.findOnly({ id: params.sender });
-    let receiver = store.contacts[params.receiver];
+    const store = this.contactStore.findOnly({ id: params.sender });
+    const receiver = store.contacts[params.receiver];
     const mamState = deepCopy(receiver.activateMamState);
     mamState.channel.start = 0;
     Mam.create(mamState, 'INITIALMESSAGE');
 
     return {
       initRoot: mamState.channel.next_root,
-      sideKey: mamState.channel.side_key
+      sideKey: mamState.channel.side_key,
     };
   }
 
@@ -104,7 +104,7 @@ class mam {
     const recvPriv = this.accountStore.findOnly({ id: uuid }).sk;
     const roots = await Cert.getBundles(uuid, 'M')
       .then(async data =>
-        await Promise.all(data.map(async item => {
+        await Promise.all(data.map(async (item) => {
           try {
             const message = JSON.parse(item.message);
             const msg = JSON.parse(tools.decryptUTF(message.msg, recvPriv));
@@ -122,11 +122,10 @@ class mam {
           } catch (err) {
             console.log(err);
           }
-        }))
-      );
+        })));
     console.log('Fetched roots:', roots);
     const messages = {};
-    const contacts = this.contactStore.findOnly({ id: uuid }).contacts;
+    const { contacts } = this.contactStore.findOnly({ id: uuid });
 
     /* TODO: filter messages in contact */
     // var contactRoots = roots.filter(msg => msg.id in contacts)
@@ -137,9 +136,7 @@ class mam {
     // console.log('local:', localmsg)
 
     await Promise.all(contactRoots.map(async (tx) => {
-      const id = tx.id;
-      const root = tx.root;
-      const sideKey = tx.sideKey;
+      const { id, root, sideKey } = tx;
       messages[id] = [];
 
       /* fetch from tangle */
@@ -225,7 +222,7 @@ class mam {
     const enc = tools.encrypt(JSON.stringify(info), receiverPublicKey);
     const packet = {
       msg: enc,
-      sign: tools.sign(root, senderPrivateKey)
+      sign: tools.sign(root, senderPrivateKey),
     };
 
     if (debug) {
