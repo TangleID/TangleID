@@ -26,35 +26,35 @@ const seedGen = (length) => {
 
 const generateUuid = () => seedGen(26);
 
-const sign = (msg, sk) => {
-  sk = forge.pki.privateKeyFromPem(sk);
+const sign = (msg, privateKeyPem) => {
+  const privateKey = forge.pki.privateKeyFromPem(privateKeyPem);
   const md = forge.md.sha256.create();
   md.update(msg);
-  return e64(sk.sign(md));
+  return e64(privateKey.sign(md));
 };
 
-const verify = (msg, signature, pk) => {
-  pk = forge.pki.publicKeyFromPem(pk);
+const verify = (msg, signature, publicKeyPem) => {
+  const publicKey = forge.pki.publicKeyFromPem(publicKeyPem);
   const md = forge.md.sha256.create();
   md.update(msg);
-  return pk.verify(md.digest().bytes(), d64(signature));
+  return publicKey.verify(md.digest().bytes(), d64(signature));
 };
 
 // Encrypt data for transmit
-const encrypt = (msg, pk) => {
-  pk = forge.pki.publicKeyFromPem(pk);
-  return e64(pk.encrypt(msg));
+const encrypt = (msg, publicKeyPem) => {
+  const publicKey = forge.pki.publicKeyFromPem(publicKeyPem);
+  return e64(publicKey.encrypt(msg));
 };
 
 // Decrypt data
-const decryptUTF = (msg, sk) => {
-  sk = forge.pki.privateKeyFromPem(sk);
-  return eUTF(sk.decrypt(d64(msg)));
+const decryptUTF = (msg, privateKeyPem) => {
+  const privateKey = forge.pki.privateKeyFromPem(privateKeyPem);
+  return eUTF(privateKey.decrypt(d64(msg)));
 };
 
-const decrypt64 = (msg, sk) => {
-  sk = forge.pki.privateKeyFromPem(sk);
-  return e64(sk.decrypt(d64(msg)));
+const decrypt64 = (msg, privateKeyPem) => {
+  const privateKey = forge.pki.privateKeyFromPem(privateKeyPem);
+  return e64(privateKey.decrypt(d64(msg)));
 };
 
 
