@@ -6,7 +6,7 @@ const e64 = data => forge.util.encode64(data);
 const dUTF = data => forge.util.decodeUtf8(data);
 const eUTF = data => forge.util.encodeUtf8(data);
 
-const keypair = () => {
+const generateKeyPair = () => {
   const rsa = forge.pki.rsa;
   const keypair = rsa.generateKeyPair({ bits: 2048, e: 0x10001 });
   const pk = e64(forge.pki.publicKeyToPem(keypair.publicKey));
@@ -24,7 +24,7 @@ const seedGen = (length) => {
   return result;
 };
 
-const uuid = () => seedGen(26);
+const generateUuid = () => seedGen(26);
 
 const sign = (msg, sk) => {
   sk = forge.pki.privateKeyFromPem(sk);
@@ -33,11 +33,11 @@ const sign = (msg, sk) => {
   return e64(sk.sign(md));
 };
 
-const verify = (msg, sign, pk) => {
+const verify = (msg, signature, pk) => {
   pk = forge.pki.publicKeyFromPem(pk);
   const md = forge.md.sha256.create();
   md.update(msg);
-  return pk.verify(md.digest().bytes(), d64(sign));
+  return pk.verify(md.digest().bytes(), d64(signature));
 };
 
 // Encrypt data for transmit
@@ -79,9 +79,9 @@ module.exports = {
   e64,
   dUTF,
   eUTF,
-  keypair,
+  generateKeyPair,
   seedGen,
-  uuid,
+  generateUuid,
   sign,
   verify,
   encrypt,
