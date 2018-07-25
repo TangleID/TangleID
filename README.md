@@ -64,12 +64,13 @@ configure the swarm node host in advance.
 
 Default host-specific configurations:
 ```
-IRI_HOST=http://node.deviceproof.org:14265
+IRI_HOST=http://node1.puyuma.org:14266
 SWARM_HOST=http://node2.puyuma.org:8000
 API_HOST=http://localhost:3000/api
 ```
 
-You can modify these entries in file `.env` accordingly.
+You can modify these entries in file `.env` accordingly,
+but please note that the default environment runs on testnet.
 
 ### Run TangleID
 
