@@ -45,12 +45,6 @@ app.prepare()
       });
     });
 
-    /* temporary workaround */
-    server.post('/api/createIdentity', async (req, res) => {
-      await mam.createIdentity(req.body);
-      return res.send('Success');
-    });
-
     server.post('/api/updateLocalAccount', (req, res) => {
       console.log('storageUpdate');
       mam.accountUpdate(req.body);
@@ -102,10 +96,10 @@ app.prepare()
     });
 
     server.get('/claims/info/:transactionHash', (req, res) => {
-      const actualPage = '/claims/info'
-      const queryParams = { transactionHash: req.params.transactionHash }
-      return app.render(req, res, actualPage, queryParams)
-    })
+      const actualPage = '/claims/info';
+      const queryParams = { transactionHash: req.params.transactionHash };
+      return app.render(req, res, actualPage, queryParams);
+    });
 
 
     server.get('*', (req, res) => {

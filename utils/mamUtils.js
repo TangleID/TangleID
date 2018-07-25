@@ -285,13 +285,6 @@ class mam {
     this.contactStore.update(store);
   }
 
-  /* temporary workaround */
-  async createIdentity(packet) {
-    packet = deepCopy(packet);
-    delete packet.sk;
-    await Cert.attach(packet, packet.uuid, 'I');
-  }
-
   accountUpdate(account) {
     this.accountStore.insert(account);
     this.contactStore.insert({

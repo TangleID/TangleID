@@ -5,10 +5,10 @@ import withRedux from 'next-redux-wrapper';
 
 import configureStore from '../../store/configureStore';
 import fetchKeyPairs from '../../actions/fetchKeyPairs';
-import createNewIdentity from '../../actions/createIdentity';
 import updateLocalAccount from '../../actions/updateLocalAccount';
 import Layout from '../../layouts/material/Main';
 import NewUserForm from '../../components/NewUserForm';
+import tangleid from '../../utils/tangleidSetup';
 
 const generateUUID = () => {
   const validChar = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ9';
@@ -21,12 +21,15 @@ const NewUserPage = (props) => {
   const { sk, pk } = props.keyPairs;
   const uuid = generateUUID();
   const handleSubmit = (values) => {
-    const params = Object.assign({ sk, pk, uuid }, values);
-    props.createNewIdentity(params);
-    const account = {
-      claim: values, id: uuid, sk, pk,
-    };
-    props.updateLocalAccount(account);
+    const params = Object.assign({ pk }, values);
+    tangleid.api.createIdentity(uuid, params)
+      .then((txHash) => {
+        console.log('Identity created:', txHash);
+        const account = {
+          claim: values, id: uuid, sk, pk,
+        };
+        props.updateLocalAccount(account);
+      });
   };
   return (
     <Layout>
@@ -43,7 +46,6 @@ const NewUserPage = (props) => {
 
 NewUserPage.propTypes = {
   keyPairs: PropTypes.object,
-  createNewIdentity: PropTypes.func,
   updateLocalAccount: PropTypes.func,
 };
 
@@ -54,7 +56,6 @@ NewUserPage.getInitialProps = async (context) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  createNewIdentity: bindActionCreators(createNewIdentity, dispatch),
   updateLocalAccount: bindActionCreators(updateLocalAccount, dispatch),
 });
 
