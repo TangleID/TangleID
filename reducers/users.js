@@ -10,9 +10,6 @@ import {
   RSA_KEY_PAIRS_REQUEST,
   RSA_KEY_PAIRS_SUCCESS,
   RSA_KEY_PAIRS_FAILURE,
-  NEW_IDENTITY_REQUEST,
-  NEW_IDENTITY_SUCCESS,
-  NEW_IDENTITY_FAILURE,
   FETCH_CLAIMS_REQUEST,
   FETCH_CLAIMS_FAILURE,
   FETCH_CLAIMS_SUCCESS,
@@ -46,7 +43,6 @@ const keyPairs = (state = {}, action) => {
 const isLoading = (state = false, action) => {
   switch (action.type) {
     case CREATE_CLAIM_REQUEST:
-    case NEW_IDENTITY_REQUEST:
     case FETCH_CLAIMS_REQUEST:
     case RSA_KEY_PAIRS_REQUEST:
     case OFF_TANGLE_USERS_REQUEST:
@@ -62,8 +58,6 @@ const isLoading = (state = false, action) => {
     case RSA_KEY_PAIRS_FAILURE:
     case CHECK_TANGLE_USERS_SUCCESS:
     case CHECK_TANGLE_USERS_FAILURE:
-    case NEW_IDENTITY_SUCCESS:
-    case NEW_IDENTITY_FAILURE:
     case FETCH_CLAIMS_SUCCESS:
     case FETCH_CLAIMS_FAILURE:
     case CREATE_CLAIM_SUCCESS:
@@ -153,10 +147,6 @@ const messages = (state = [], action) => {
 
 const isRegister = (state = false, action) => {
   switch (action.type) {
-    case NEW_IDENTITY_SUCCESS:
-      return true;
-    case NEW_IDENTITY_FAILURE:
-      return false;
     case CLOSE_LOGIN_DIALOG:
       return false;
     default:
