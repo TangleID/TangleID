@@ -1,7 +1,4 @@
 const express = require('express');
-const httpProxy = require('http-proxy');
-
-const proxy = httpProxy.createProxyServer();
 const next = require('next');
 
 const port = parseInt(process.env.PORT, 10) || 3000;
@@ -24,13 +21,8 @@ app.prepare()
   .then(() => asyncInit())
   .then(() => {
     const server = express();
+
     server.use(express.json());
-
-    // forward request to the swarm-node that implement the full-feature TangleID API
-    server.all('/api/proxy/*', (req, res) => {
-      proxy.web(req, res, { target: process.env.SWARM_HOST });
-    });
-
 
     server.get('/', (req, res) => {
       const actualPage = '/users';
