@@ -10,12 +10,12 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-import Login from '../actions/Login';
+import tangleid from '../utils/tangleidSetup';
 import closeLoginDialog from '../actions/closeLoginDialog';
 
 const createHandlers = (dispatch) => {
   const onClick = (data) => {
-    dispatch(Login(data));
+    dispatch(tangleid.api.login(data));
   };
 
   return {
