@@ -4,10 +4,10 @@ import { bindActionCreators } from 'redux';
 import withRedux from 'next-redux-wrapper';
 
 import configureStore from '../../store/configureStore';
-import fetchKeyPairs from '../../actions/fetchKeyPairs';
 import updateLocalAccount from '../../actions/updateLocalAccount';
 import Layout from '../../layouts/material/Main';
 import NewUserForm from '../../components/NewUserForm';
+import createKeyPair from '../../utils/createKeyPair';
 import tangleid from '../../utils/tangleidSetup';
 
 const generateUUID = () => {
@@ -18,7 +18,8 @@ const generateUUID = () => {
 };
 
 const NewUserPage = (props) => {
-  const { sk, pk } = props.keyPairs;
+  const keyPairs = createKeyPair();
+  const { sk, pk } = keyPairs;
   const uuid = generateUUID();
   const handleSubmit = (values) => {
     const params = Object.assign({ pk }, values);
@@ -35,7 +36,7 @@ const NewUserPage = (props) => {
     <Layout>
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         <NewUserForm
-          keyPairs={props.keyPairs}
+          keyPairs={keyPairs}
           uuid={uuid}
           handleSubmit={handleSubmit}
         />
@@ -45,13 +46,11 @@ const NewUserPage = (props) => {
 };
 
 NewUserPage.propTypes = {
-  keyPairs: PropTypes.object,
   updateLocalAccount: PropTypes.func,
 };
 
 NewUserPage.getInitialProps = async (context) => {
-  const { store, isServer } = context;
-  await store.dispatch(fetchKeyPairs());
+  const { isServer } = context;
   return { isServer };
 };
 
@@ -59,13 +58,6 @@ const mapDispatchToProps = dispatch => ({
   updateLocalAccount: bindActionCreators(updateLocalAccount, dispatch),
 });
 
-const mapStateToProps = (state) => {
-  const { keyPairs, isLoading } = state.users;
-  return {
-    isLoading,
-    keyPairs,
-  };
-};
-
+const mapStateToProps = state => state;
 
 export default withRedux(configureStore, mapStateToProps, mapDispatchToProps)(NewUserPage);

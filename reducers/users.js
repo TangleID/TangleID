@@ -7,9 +7,6 @@ import {
   CHECK_TANGLE_USERS_REQUEST,
   CHECK_TANGLE_USERS_SUCCESS,
   CHECK_TANGLE_USERS_FAILURE,
-  RSA_KEY_PAIRS_REQUEST,
-  RSA_KEY_PAIRS_SUCCESS,
-  RSA_KEY_PAIRS_FAILURE,
   FETCH_CLAIMS_REQUEST,
   FETCH_CLAIMS_FAILURE,
   FETCH_CLAIMS_SUCCESS,
@@ -31,20 +28,10 @@ import {
   CLOSE_LOGIN_DIALOG,
 } from '../constants';
 
-const keyPairs = (state = {}, action) => {
-  switch (action.type) {
-    case RSA_KEY_PAIRS_SUCCESS:
-      return action.response;
-    default:
-      return state;
-  }
-};
-
 const isLoading = (state = false, action) => {
   switch (action.type) {
     case CREATE_CLAIM_REQUEST:
     case FETCH_CLAIMS_REQUEST:
-    case RSA_KEY_PAIRS_REQUEST:
     case OFF_TANGLE_USERS_REQUEST:
     case CHECK_TANGLE_USERS_REQUEST:
     case LOGIN_REQUEST:
@@ -54,8 +41,6 @@ const isLoading = (state = false, action) => {
       return true;
     case OFF_TANGLE_USERS_SUCCESS:
     case OFF_TANGLE_USERS_FAILURE:
-    case RSA_KEY_PAIRS_SUCCESS:
-    case RSA_KEY_PAIRS_FAILURE:
     case CHECK_TANGLE_USERS_SUCCESS:
     case CHECK_TANGLE_USERS_FAILURE:
     case FETCH_CLAIMS_SUCCESS:
@@ -111,7 +96,6 @@ const localList = (state = [], action) => {
 
 const error = (state = null, action) => {
   switch (action.type) {
-    case RSA_KEY_PAIRS_FAILURE:
     case OFF_TANGLE_USERS_FAILURE:
     case CHECK_TANGLE_USERS_FAILURE:
     case FETCH_CLAIMS_FAILURE:
@@ -166,7 +150,6 @@ const isLogin = (state = false, action) => {
 };
 
 const reducer = combineReducers({
-  keyPairs,
   localList,
   offTangleData,
   validData,

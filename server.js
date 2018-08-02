@@ -9,8 +9,6 @@ const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
-const transformToQRCode = require('./utils/transformToQRCode');
-const createKeyPair = require('./utils/createKeyPair');
 const MamUtils = require('./utils/mamUtils');
 
 let mam;
@@ -35,14 +33,6 @@ app.prepare()
     server.get('/', (req, res) => {
       const actualPage = '/users';
       return app.render(req, res, actualPage);
-    });
-
-    server.get('/api/keyPairs', async (req, res) => {
-      const { sk, pk } = createKeyPair();
-      const [skImg, pkImg] = await Promise.all([sk, pk].map(transformToQRCode));
-      return res.send({
-        sk, skImg, pk, pkImg,
-      });
     });
 
     server.post('/api/updateLocalAccount', (req, res) => {
