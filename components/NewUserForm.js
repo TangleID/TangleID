@@ -52,7 +52,7 @@ class NewUserForm extends Component {
 
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               <TextField
-                name="firstName"
+                name="first_name"
                 label="first name"
                 margin="normal"
               />
@@ -60,7 +60,7 @@ class NewUserForm extends Component {
 
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               <TextField
-                name="lastName"
+                name="last_name"
                 label="last name"
                 margin="normal"
               />
@@ -88,7 +88,7 @@ class NewUserForm extends Component {
 
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               <TextField
-                name="profilePicture"
+                name="profile_picture"
                 label="Profile picture (optional)"
                 margin="normal"
               />
