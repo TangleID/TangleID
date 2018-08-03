@@ -4,9 +4,6 @@ import {
   OFF_TANGLE_USERS_REQUEST,
   OFF_TANGLE_USERS_SUCCESS,
   OFF_TANGLE_USERS_FAILURE,
-  FETCH_CLAIMS_REQUEST,
-  FETCH_CLAIMS_FAILURE,
-  FETCH_CLAIMS_SUCCESS,
   CREATE_CLAIM_REQUEST,
   CREATE_CLAIM_FAILURE,
   CREATE_CLAIM_SUCCESS,
@@ -28,7 +25,6 @@ import {
 const isLoading = (state = false, action) => {
   switch (action.type) {
     case CREATE_CLAIM_REQUEST:
-    case FETCH_CLAIMS_REQUEST:
     case OFF_TANGLE_USERS_REQUEST:
     case LOGIN_REQUEST:
     case UPDATE_LOCAL_ACCOUNT_REQUEST:
@@ -37,8 +33,6 @@ const isLoading = (state = false, action) => {
       return true;
     case OFF_TANGLE_USERS_SUCCESS:
     case OFF_TANGLE_USERS_FAILURE:
-    case FETCH_CLAIMS_SUCCESS:
-    case FETCH_CLAIMS_FAILURE:
     case CREATE_CLAIM_SUCCESS:
     case CREATE_CLAIM_FAILURE:
     case LOGIN_FAILURE:
@@ -82,7 +76,6 @@ const localList = (state = [], action) => {
 const error = (state = null, action) => {
   switch (action.type) {
     case OFF_TANGLE_USERS_FAILURE:
-    case FETCH_CLAIMS_FAILURE:
     case CREATE_CLAIM_FAILURE:
     case LOGIN_FAILURE:
     case UPDATE_LOCAL_ACCOUNT_FAILURE:
@@ -97,7 +90,6 @@ const error = (state = null, action) => {
 const claims = (state = [], action) => {
   switch (action.type) {
     case CREATE_CLAIM_SUCCESS:
-    case FETCH_CLAIMS_SUCCESS:
       return [].concat(state, action.response);
     default:
       return state;
