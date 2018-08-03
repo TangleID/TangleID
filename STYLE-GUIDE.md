@@ -5,6 +5,37 @@
 TangleID defers to [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript)
 with the following exceptions or extra manner.
 
+### Require constructor names to begin with a capital letter
+
+Since the constructor functions are just regular functions, it is
+recommended to use thse uppercase specify constructors.
+
+```javascript
+// bad
+function person(options) {
+  this.name = options.name;
+}
+
+const bad = new person({
+  name: 'Alice',
+});
+
+// good
+class Person {
+  constructor(options) {
+    this.name = options.name;
+  }
+}
+
+const good = new Person({
+  name: 'Alice',
+});
+```
+
+#### Reference
+- [new-cap | ESLint](https://eslint.org/docs/rules/new-cap)
+- [new-cap | Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript#naming--PascalCase)
+
 ### Allow the unary operators ++ and --
 
 Since we are using semicolons instead of ASI, it would be straightforward to use
