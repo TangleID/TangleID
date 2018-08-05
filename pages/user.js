@@ -35,7 +35,7 @@ class UserPage extends Component {
     this.handleSetUser = this.handleSetUser.bind(this);
   }
   componentDidMount() {
-    tangleid.api.fetchUserInfo(this.props.id)
+    tangleid.local.fetchUserInfo(this.props.id)
       .then((user) => {
         this.setState({ user });
       });
@@ -52,7 +52,7 @@ class UserPage extends Component {
   }
 
   reloadMamMessages() {
-    tangleid.api.fetchMamMessages(this.props.id)
+    tangleid.local.fetchMamMessages(this.props.id)
       .then((messages) => {
         this.setState({ mamMessages: messages });
       }).catch((error) => {

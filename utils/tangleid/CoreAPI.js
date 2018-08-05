@@ -1,9 +1,4 @@
-function handleErrors(response) {
-  if (!response.ok) {
-    throw Error(response.statusText);
-  }
-  return response;
-}
+import handleErrors from './handleErrors';
 
 /**
  * Class provide the core API of TangleID.
@@ -15,31 +10,12 @@ class CoreAPI {
    * @param {string} settings.provider - An address that provide the TanlgeID API.
    */
   constructor(settings) {
-    this.provider_local = settings.provider_local;
-    this.provider_swarm = settings.provider_swarm;
-  }
-
-  fetchUserList() {
-    return fetch(`${this.provider_local}/fetchUserList`)
-      .then(handleErrors)
-      .then(response => response.json())
-      .catch((error) => {
-        console.error(error);
-      });
-  }
-
-  fetchUserInfo(uuid) {
-    return fetch(`${this.provider_local}/user/${uuid}`)
-      .then(handleErrors)
-      .then(response => response.json())
-      .catch((error) => {
-        console.error(error);
-      });
+    this.provider = settings.provider;
   }
 
   fetchClaims(uuid) {
     // forward request to Backend API
-    return fetch(`${this.provider_swarm}`, {
+    return fetch(`${this.provider}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
@@ -58,7 +34,7 @@ class CoreAPI {
 
   fetchClaimInfo(tansactionHash) {
     // forward request to Backend API
-    return fetch(`${this.provider_swarm}`, {
+    return fetch(`${this.provider}`, {
       method: 'POST',
       body: JSON.stringify({
         command: 'get_claim_info',
@@ -81,21 +57,6 @@ class CoreAPI {
       });
   }
 
-  fetchMamMessages(uuid) {
-    return fetch(`${this.provider_local}/mamFetch`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8',
-      },
-      body: JSON.stringify({ id: uuid }),
-    })
-      .then(handleErrors)
-      .then(response => response.json())
-      .catch((error) => {
-        console.error(error);
-      });
-  }
-
   createClaim(uuid, formValues) {
     const claim = Object.assign({
       command: 'new_claim',
@@ -108,7 +69,7 @@ class CoreAPI {
     }, formValues);
 
     // forward request to Backend API
-    return fetch(`${this.provider_swarm}`, {
+    return fetch(`${this.provider}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
@@ -135,7 +96,7 @@ class CoreAPI {
     }, formValues);
 
     // forward request to Backend API
-    return fetch(`${this.provider_swarm}`, {
+    return fetch(`${this.provider}`, {
       method: 'POST',
       body: JSON.stringify(claim),
       headers: {
@@ -150,7 +111,7 @@ class CoreAPI {
   }
 
   login(uuid) {
-    return fetch(`${this.provider_swarm}`, {
+    return fetch(`${this.provider}`, {
       method: 'POST',
       body: JSON.stringify({
         command: 'login',

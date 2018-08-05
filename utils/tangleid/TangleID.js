@@ -23,7 +23,6 @@ class TangleID {
     const namespace = extension.getNamespace();
     extension.setup(this.api);
     this[namespace] = extension;
-    console.log(this);
   }
 }
 

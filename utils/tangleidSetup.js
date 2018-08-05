@@ -1,8 +1,12 @@
 import TangleID from './tangleid/TangleID';
+import LocalExtension from './LocalExtension';
 
 const tangleid = new TangleID({
-  provider_local: process.env.API_HOST,
-  provider_swarm: process.env.SWARM_HOST,
+  provider: process.env.SWARM_HOST,
 });
+
+tangleid.use(new LocalExtension({
+  provider: process.env.API_HOST,
+}));
 
 export default tangleid;

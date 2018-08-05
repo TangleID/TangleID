@@ -15,7 +15,7 @@ class UsersPage extends Component {
   }
 
   componentDidMount() {
-    tangleid.api.fetchUserList().then((userList) => {
+    tangleid.local.fetchUserList().then((userList) => {
       this.setState({ userList });
     });
   }
