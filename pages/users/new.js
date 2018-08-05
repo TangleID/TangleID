@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import withRedux from 'next-redux-wrapper';
@@ -17,33 +17,48 @@ const generateUUID = () => {
   return ret;
 };
 
-const NewUserPage = (props) => {
-  const keyPairs = createKeyPair();
-  const { sk, pk } = keyPairs;
-  const uuid = generateUUID();
-  const handleSubmit = (values) => {
-    const params = Object.assign({ pk }, values);
-    tangleid.api.createIdentity(uuid, params)
+class NewUserPage extends Component {
+  constructor() {
+    super();
+    const uuid = generateUUID();
+    const keyPairs = createKeyPair();
+
+    this.state = {
+      uuid, keyPairs,
+    };
+
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleSubmit(values) {
+    const params = Object.assign({ pk: this.state.keyPairs.pk }, values);
+    tangleid.api.createIdentity(this.state.uuid, params)
       .then((txHash) => {
         console.log('Identity created:', txHash);
         const account = {
-          claim: values, id: uuid, sk, pk,
+          claim: values,
+          id: this.state.uuid,
+          sk: this.state.keyPairs.sk,
+          pk: this.state.keyPairs.pk,
         };
-        props.updateLocalAccount(account);
+        this.props.updateLocalAccount(account);
       });
-  };
-  return (
-    <Layout>
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <NewUserForm
-          keyPairs={keyPairs}
-          uuid={uuid}
-          handleSubmit={handleSubmit}
-        />
-      </div>
-    </Layout>
-  );
-};
+  }
+
+  render() {
+    return (
+      <Layout>
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <NewUserForm
+            keyPairs={this.state.keyPairs}
+            uuid={this.state.uuid}
+            handleSubmit={this.handleSubmit}
+          />
+        </div>
+      </Layout>
+    );
+  }
+}
 
 NewUserPage.propTypes = {
   updateLocalAccount: PropTypes.func,
