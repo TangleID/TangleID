@@ -148,6 +148,21 @@ class CoreAPI {
         console.error(error);
       });
   }
+
+  login(uuid) {
+    return fetch(`${this.provider_swarm}`, {
+      method: 'POST',
+      body: JSON.stringify({
+        command: 'login',
+        uuid,
+      }),
+    })
+      .then(handleErrors)
+      .then(response => response.text())
+      .catch((error) => {
+        console.error(error);
+      });
+  }
 }
 
 export default CoreAPI;
