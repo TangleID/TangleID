@@ -13,9 +13,6 @@ import {
   UPDATE_LOCAL_ACCOUNT_REQUEST,
   UPDATE_LOCAL_ACCOUNT_FAILURE,
   UPDATE_LOCAL_ACCOUNT_SUCCESS,
-  FETCH_LOCAL_ACCOUNT_REQUEST,
-  FETCH_LOCAL_ACCOUNT_FAILURE,
-  FETCH_LOCAL_ACCOUNT_SUCCESS,
   FETCH_MAM_MESSAGES_REQUEST,
   FETCH_MAM_MESSAGES_FAILURE,
   FETCH_MAM_MESSAGES_SUCCESS,
@@ -28,7 +25,6 @@ const isLoading = (state = false, action) => {
     case OFF_TANGLE_USERS_REQUEST:
     case LOGIN_REQUEST:
     case UPDATE_LOCAL_ACCOUNT_REQUEST:
-    case FETCH_LOCAL_ACCOUNT_REQUEST:
     case FETCH_MAM_MESSAGES_REQUEST:
       return true;
     case OFF_TANGLE_USERS_SUCCESS:
@@ -39,8 +35,6 @@ const isLoading = (state = false, action) => {
     case LOGIN_SUCCESS:
     case UPDATE_LOCAL_ACCOUNT_FAILURE:
     case UPDATE_LOCAL_ACCOUNT_SUCCESS:
-    case FETCH_LOCAL_ACCOUNT_FAILURE:
-    case FETCH_LOCAL_ACCOUNT_SUCCESS:
     case FETCH_MAM_MESSAGES_SUCCESS:
     case FETCH_MAM_MESSAGES_FAILURE:
       return false;
@@ -64,22 +58,12 @@ const offTangleData = (state = [], action) => {
   }
 };
 
-const localList = (state = [], action) => {
-  switch (action.type) {
-    case FETCH_LOCAL_ACCOUNT_SUCCESS:
-      return action.response;
-    default:
-      return state;
-  }
-};
-
 const error = (state = null, action) => {
   switch (action.type) {
     case OFF_TANGLE_USERS_FAILURE:
     case CREATE_CLAIM_FAILURE:
     case LOGIN_FAILURE:
     case UPDATE_LOCAL_ACCOUNT_FAILURE:
-    case FETCH_LOCAL_ACCOUNT_FAILURE:
     case FETCH_MAM_MESSAGES_FAILURE:
       return action.error;
     default:
@@ -126,7 +110,6 @@ const isLogin = (state = false, action) => {
 };
 
 const reducer = combineReducers({
-  localList,
   offTangleData,
   isLoading,
   claims,
