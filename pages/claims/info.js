@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import withRedux from 'next-redux-wrapper';
 import configureStore from '../../store/configureStore';
-import Layout from '../../layouts/material/Main';
+import DrawerLayout from '../../layouts/DrawerLayout';
 
 import tangleid from '../../utils/tangleidSetup';
 
@@ -24,7 +24,7 @@ class ShowClaimPage extends Component {
 
   render() {
     return (
-      <Layout>
+      <DrawerLayout>
         {
           this.state.claim
             ?
@@ -41,7 +41,7 @@ class ShowClaimPage extends Component {
             : <p>No claim detail.</p>
         }
 
-      </Layout>
+      </DrawerLayout>
     );
   }
 }

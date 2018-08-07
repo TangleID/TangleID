@@ -10,7 +10,7 @@ import Send from '@material-ui/icons/Send';
 
 import configureStore from '../store/configureStore';
 import createMamMessage from '../actions/createMamMessage';
-import Layout from '../layouts/material/Main';
+import DrawerLayout from '../layouts/DrawerLayout';
 
 import UserProfile from '../components/UserProfile';
 import ClaimList from '../components/ClaimList';
@@ -95,7 +95,7 @@ class UserPage extends Component {
 
   render() {
     return (
-      <Layout>
+      <DrawerLayout>
         {
           this.state.user
             ? <UserProfile user={this.state.user} />
@@ -163,7 +163,7 @@ class UserPage extends Component {
           </Button>
         </div>
 
-      </Layout>
+      </DrawerLayout>
     );
   }
 }

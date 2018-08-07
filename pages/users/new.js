@@ -5,7 +5,7 @@ import withRedux from 'next-redux-wrapper';
 
 import configureStore from '../../store/configureStore';
 import updateLocalAccount from '../../actions/updateLocalAccount';
-import Layout from '../../layouts/material/Main';
+import DrawerLayout from '../../layouts/DrawerLayout';
 import NewUserForm from '../../components/NewUserForm';
 import createKeyPair from '../../utils/createKeyPair';
 import tangleid from '../../utils/tangleidSetup';
@@ -47,7 +47,7 @@ class NewUserPage extends Component {
 
   render() {
     return (
-      <Layout>
+      <DrawerLayout>
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <NewUserForm
             keyPairs={this.state.keyPairs}
@@ -55,7 +55,7 @@ class NewUserPage extends Component {
             handleSubmit={this.handleSubmit}
           />
         </div>
-      </Layout>
+      </DrawerLayout>
     );
   }
 }
