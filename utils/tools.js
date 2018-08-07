@@ -7,11 +7,11 @@ const dUTF = data => forge.util.decodeUtf8(data);
 const eUTF = data => forge.util.encodeUtf8(data);
 
 const generateKeyPair = () => {
-  const rsa = forge.pki.rsa;
-  const keypair = rsa.generateKeyPair({ bits: 2048, e: 0x10001 });
-  const pk = forge.pki.publicKeyToPem(keypair.publicKey);
-  const sk = forge.pki.privateKeyToPem(keypair.privateKey);
-  return { sk, pk };
+  const keypair = forge.pki.rsa.generateKeyPair({ bits: 2048, e: 0x10001 });
+  return {
+    pk: forge.pki.publicKeyToPem(keypair.publicKey),
+    sk: forge.pki.privateKeyToPem(keypair.privateKey),
+  };
 };
 
 const seedGen = (length) => {
