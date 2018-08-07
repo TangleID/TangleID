@@ -9,8 +9,8 @@ const eUTF = data => forge.util.encodeUtf8(data);
 const generateKeyPair = () => {
   const rsa = forge.pki.rsa;
   const keypair = rsa.generateKeyPair({ bits: 2048, e: 0x10001 });
-  const pk = e64(forge.pki.publicKeyToPem(keypair.publicKey));
-  const sk = e64(forge.pki.privateKeyToPem(keypair.privateKey));
+  const pk = forge.pki.publicKeyToPem(keypair.publicKey);
+  const sk = forge.pki.privateKeyToPem(keypair.privateKey);
   return { sk, pk };
 };
 

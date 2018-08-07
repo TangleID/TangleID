@@ -7,7 +7,7 @@ import configureStore from '../../store/configureStore';
 import updateLocalAccount from '../../actions/updateLocalAccount';
 import Layout from '../../layouts/material/Main';
 import NewUserForm from '../../components/NewUserForm';
-import createKeyPair from '../../utils/createKeyPair';
+import { generateKeyPair } from '../../utils/tools';
 import tangleid from '../../utils/tangleidSetup';
 
 const generateUUID = () => {
@@ -21,7 +21,7 @@ class NewUserPage extends Component {
   constructor() {
     super();
     const uuid = generateUUID();
-    const keyPairs = createKeyPair();
+    const keyPairs = generateKeyPair();
 
     this.state = {
       uuid, keyPairs,
