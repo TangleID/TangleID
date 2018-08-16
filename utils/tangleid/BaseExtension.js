@@ -12,14 +12,6 @@ class BaseExtension {
   }
 
   /**
-   * Setup the extension when extension is registed.
-   * @param {api} api - The CoreAPI of the TangleID.
-   */
-  setup(api) {
-    this.api = api;
-  }
-
-  /**
    * Return the namespace of the extension.
    * @return {string} - The namespace of the extension.
    */
