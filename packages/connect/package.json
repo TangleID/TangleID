@@ -1,0 +1,24 @@
+{
+  "name": "@tangleid/connect",
+  "version": "1.0.1",
+  "description": "TangleID connect",
+  "author": "TangleID Developers",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Skip tests\" && exit 0",
+    "build": "babel src -d lib"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TangleID/tangleid-core/tree/master/packages/connect"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.1.2",
+    "qrcode": "^1.2.2",
+    "socket.io-client": "^2.1.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

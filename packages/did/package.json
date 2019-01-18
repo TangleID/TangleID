@@ -1,0 +1,27 @@
+{
+  "name": "@tangleid/did",
+  "version": "1.0.0",
+  "description": "TangleID DID register and resolver",
+  "author": "TangleID Developers",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "jest",
+    "build": "babel src -d lib"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TangleID/tangleid-core/tree/master/packages/did"
+  },
+  "dependencies": {
+    "base-x": "^3.0.4",
+    "buffer": "^5.2.0",
+    "did-resolver": "0.0.4",
+    "js-sha3": "^0.8.0",
+    "mam.tools.js": "^0.5.1",
+    "tic.api.js": "git+https://github.com/cr0ssing/tic.api.js.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
