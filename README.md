@@ -15,10 +15,12 @@ For more detail, please visit the [TangleID website](https://tangleid.github.io/
 
 ### Bootstrap your environments
 
- 1. Fork this repository
+1. Clone this repository.
+```shell
+$ git clone git@github.com:TangleID/tangleid-core.git
+```
 
- 2. Clone the repository
-
+2. Install the dependency packages.
 ```shell
 $ npm run init
 ```
