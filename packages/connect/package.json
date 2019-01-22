@@ -1,6 +1,6 @@
 {
   "name": "@tangleid/connect",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "TangleID connect",
   "author": "TangleID Developers",
   "main": "lib/index.js",
