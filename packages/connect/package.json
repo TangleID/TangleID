@@ -6,7 +6,8 @@
   "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Skip tests\" && exit 0",
-    "build": "babel src -d lib"
+    "build": "babel src -d lib",
+    "docs": "jsdoc2md --no-cache --plugin dmd-clear -t README.template --files './src/**/*.js' > README.md"
   },
   "license": "MIT",
   "repository": {

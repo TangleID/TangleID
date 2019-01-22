@@ -4,7 +4,8 @@
   "scripts": {
     "init": "npm i && lerna bootstrap",
     "test": "lerna exec -- npm run test",
-    "build": "lerna exec -- npm run build"
+    "build": "lerna exec -- npm run build",
+    "docs": "lerna exec -- npm run docs"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.2",
@@ -12,8 +13,10 @@
     "@babel/plugin-transform-runtime": "^7.1.0",
     "@babel/preset-env": "^7.1.0",
     "babel-core": "^7.0.0-bridge.0",
+    "dmd-clear": "^0.1.2",
     "husky": "^1.3.1",
     "jest": "^23.6.0",
+    "jsdoc-to-markdown": "^4.0.1",
     "lerna": "^3.3.0",
     "lint-staged": "^7.3.0",
     "prettier": "^1.14.3"

@@ -1,3 +1,4 @@
+/** @module connect */
 import openSocket from 'socket.io-client';
 
 import QrCodeHandler from './QrCodeHandler';
@@ -8,6 +9,11 @@ class Connect {
     this.uiHandler = new QrCodeHandler();
   }
 
+  /**
+   * Request for the necessary credentials from `TangleID Client`.
+   * @method requestCredentials
+   * @return {Promise} Promise object represents the credentials that given by cleint app.
+   */
   requestCredentials() {
     return new Promise((resolve, reject) => {
       this.socket = openSocket(this.provider, {
