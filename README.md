@@ -38,5 +38,6 @@ $ npm run init
  ```
 
 ## Licensing
+
 TangleID is freely redistributable under the MIT License. Use of this source
 code is governed by a MIT-style license that can be found in the `LICENSE` file.
