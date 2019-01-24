@@ -36,9 +36,8 @@ tangleID
 
 ## API Reference
 
-    <a name="module_connect..requestCredentials"></a>
-
-### *connect*~requestCredentials()
-Request for the necessary credentials from `TangleID Client`.
-
-**Returns**: <code>Promise</code> - Promise object represents the credentials that given by cleint app.  
+{{#module name="connect"~}}
+    {{>body~}}
+        {{>member-index~}}
+        {{>members~}}
+{{/module~}}

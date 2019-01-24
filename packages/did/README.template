@@ -1,0 +1,46 @@
+# @tangleid/did
+
+Utilities for Decentralized Identifiers(DIDs) registration and resolve.
+
+## Installation
+
+Install using [npm](https://www.npmjs.org/):
+
+```shell
+npm install @tangleid/did
+```
+
+or using [yarn](https://yarnpkg.com/):
+
+```shell
+yarn add @tangleid/did
+```
+
+## Quick Start
+
+### Register DID
+
+```javascript
+const { register } = require('@tangleid/did');
+
+const seed = 'THISISTHESEEDOFTHETICACCOUNTANDISHOULDNOTGIVEITTOANYBODYELSE';
+const result = await register(seed, '0x2');
+```
+
+### Resolve DID Document
+
+```javascript
+const { resolver } = require('@tangleid/did');
+
+const did =
+  'did:tangleid:MoWYKbBfezWbsTkYAngUu523F8YQgHfARhWWsTFSN2U45eAMpsSx3DnrV4SyZHCFuyDqjvQdg7';
+let didDoc = await resolver(result.did);
+```
+
+## API Reference
+
+{{#module name="did"~}}
+{{>body~}}
+{{>member-index~}}
+{{>members~}}
+{{/module~}}

@@ -37,6 +37,10 @@ $ npm run init
  $ npm run build
  ```
 
+ ### Updating documentation
+
+ The documentation is generated from the [`JSDoc`](http://usejsdoc.org) annotations. To update the documentation running `npm run docs` from the root directory.
+
 ## Licensing
 
 TangleID is freely redistributable under the MIT License. Use of this source
