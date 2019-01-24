@@ -9,7 +9,7 @@ TangleID contains the following components:
  - @tangleid/connect: Allow you interact with TangleID Client.
  - @tangleid/did: Decentralized Identifiers(DIDs) Register/Resolver
 
-For more detail, please visit the [TangleID website](https://tangleid.github.io/#/).
+For more detail, please visit the [TangleID website](https://tangleid.github.io/).
 
 ## Contributing
 
@@ -17,7 +17,7 @@ For more detail, please visit the [TangleID website](https://tangleid.github.io/
 
 1. Clone this repository.
 ```shell
-$ git clone git@github.com:TangleID/tangleid-core.git
+$ git clone https://github.com/TangleID/tangleid-core
 ```
 
 2. Install the dependency packages.
