@@ -6,6 +6,7 @@
   "main": "lib/index.js",
   "typings": "typings",
   "scripts": {
+    "lint": "tslint",
     "test": "jest",
     "build": "tsc",
     "docs": "jsdoc2md --no-cache --plugin dmd-clear -t README.template --files './lib/**/*.js' > README.md"
