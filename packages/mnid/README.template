@@ -1,0 +1,34 @@
+# @tangleid/mnid
+
+Utilities for Multi Network Identifier (MNID).
+
+## Installation
+
+Install using [npm](https://www.npmjs.org/):
+
+```shell
+npm install @tangleid/mnid
+```
+
+or using [yarn](https://yarnpkg.com/):
+
+```shell
+yarn add @tangleid/mnid
+```
+
+## Network Identifiers
+
+Used to describe which Tangle network interacts.
+
+| Identitier | Network        |
+| ---------- | -------------- |
+| 0x1        | Tangle Mainnet |
+| 0x2        | Tangle Devnet  |
+
+## API Reference
+
+{{#module name="mnid"~}}
+{{>body~}}
+{{>member-index~}}
+{{>members~}}
+{{/module~}}

@@ -1,4 +1,4 @@
-import { encodeToMnid, decodeFromMnid } from '../src/mnid';
+import { encodeToMnid, decodeFromMnid } from '../src';
 
 const NETWORK = '0x1';
 const ADDRESS =
