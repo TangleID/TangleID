@@ -19,8 +19,9 @@
     "buffer": "^5.2.0",
     "did-resolver": "0.0.4",
     "js-sha3": "^0.8.0",
-    "mam.tools.js": "^0.5.1",
     "mam.client.js": "git+https://git@github.com/iotaledger/mam.client.js.git",
+    "mam.tools.js": "^0.5.1",
+    "node-forge": "^0.8.2",
     "tic.api.js": "git+https://github.com/cr0ssing/tic.api.js.git"
   },
   "publishConfig": {

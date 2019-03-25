@@ -24,7 +24,8 @@ yarn add @tangleid/did
 const { register } = require('@tangleid/did');
 
 const seed = 'THISISTHESEEDOFTHETICACCOUNTANDISHOULDNOTGIVEITTOANYBODYELSE';
-const { did, document, seed } = await register({ seed, network: '0x1' });
+const publicKey = '-----BEGIN PUBLIC KEY-----//..-----END PUBLIC KEY-----'
+const { did, document, seed } = await register({ seed, network: '0x1', publicKey });
 ```
 
 ### Resolve DID Document
