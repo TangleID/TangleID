@@ -10,7 +10,7 @@ var TRYTE = '9ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 var tryte = require('base-x')(TRYTE);
 
 function checksum(payload) {
-  return new Buffer(sha3_256(Buffer.concat(payload)), 'hex').slice(0, 4);
+  return Buffer.from(sha3_256(Buffer.concat(payload)), 'hex').slice(0, 4);
 }
 
 function encode({ network, address }) {
