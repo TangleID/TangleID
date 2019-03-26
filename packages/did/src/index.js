@@ -1,6 +1,4 @@
 const register = require('./register');
 const resolver = require('./resolver');
 
-const DIDUtils = { register, resolver };
-
-export { DIDUtils };
+export { register, resolver };
