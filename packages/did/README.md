@@ -25,19 +25,6 @@ const { register } = require('@tangleid/did');
 
 const seed = 'THISISTHESEEDOFTHETICACCOUNTANDISHOULDNOTGIVEITTOANYBODYELSE';
 const result = await register(seed, '0x2');
-/*
-{
-  did:
-    'did:tangleid:MoWYKbBfezWbsTkYAngUu523F8YQgHfARhWWsTFSN2U45eAMpsSx3DnrV4SyZHCFuyDqjvQdg7',
-  masterRoot:
-    'OMEDQKSVKAFHEX9OSTBZLFBGXNMSUO9LEUFFCDTOSIJXCQMNFIHDCKHMUJCYPXGXXMPLHIAMLXBFAZADA',
-  password: 'THISISTHESEEDOFTHETICACCOUNTANDISHOULDNOTGIVEITTOANYBODYELSE',
-  profileRoot:
-    'YMGVIKHFZIGUVANVHIUAKJUTPAZKBBLATTCOPJJAQPIKNUNYCKKHHHSUULSBYJVXDXDGUJKMGSIVZSPPI',
-  contactsRoot:
-    'PUZSASSTMBDGPPYJJEZZODAIFWBMIMPMBLWNMOHWVUQHVSAHEKO9LHUSFUZYJZ9DNKLU9MF9FOYXEWLTK'
-}
-*/
 ```
 
 ### Resolve DID Document
@@ -55,30 +42,32 @@ let didDoc = await resolver(result.did);
 
 * [did](#module_did)
 
-    * [~register(seed, network)](#module_did..register)
+    * [~register(seed, network, registry)](#module_did..register)
 
-    * [~resolver(did)](#module_did..resolver)
+    * [~resolver(did, registry)](#module_did..resolver)
 
 
 <a name="module_did..register"></a>
 
-### *did*~register(seed, network)
+### *did*~register(seed, network, registry)
 
 | Param | Type | Description |
 | --- | --- | --- |
 | seed | <code>String</code> | The seed for the master channel. |
 | network | <code>String</code> | The network identitfer. Mainnet: '0x1', Testnet: '0x2'. |
+| registry | [<code>IdenityRegistry</code>](#IdenityRegistry) | The registry used to maintain the identity. |
 
 Register the TangleID DID(Decentralized Identifier) on the IOTA/Tangle.
 
 **Returns**: <code>Promise</code> - Promise object represents the register result.  
 <a name="module_did..resolver"></a>
 
-### *did*~resolver(did)
+### *did*~resolver(did, registry)
 
 | Param | Type | Description |
 | --- | --- | --- |
 | did | <code>String</code> | The DID to be resolved. |
+| registry | [<code>IdenityRegistry</code>](#IdenityRegistry) | The registry used to maintain the identity. |
 
 Resolve the DID Document from the DID(Decentralized Identifier).
 

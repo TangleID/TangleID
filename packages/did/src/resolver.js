@@ -1,25 +1,17 @@
 /** @module did */
-const tic = require('tic.api.js');
-
-const { decodeFromDid } = require('./mnid');
-
-const { getIota } = require('./providers');
+const IdenityRegistry = require('./IdenityRegistry');
 
 /**
  * Resolve the DID Document from the DID(Decentralized Identifier).
  * @method resolver
  * @param {String} did - The DID to be resolved.
+ * @param {IdenityRegistry} registry - The registry used to maintain the identity.
  * @return {Promise} - Promise object represents the {@link https://w3c-ccg.github.io/did-spec/#did-documents DID Document}.
  */
-const resolver = async did => {
-  const { network, address } = decodeFromDid(did);
+const resolver = async (did, registry = new IdenityRegistry()) => {
+  const document = await registry.fetch(did);
 
-  const channelRoots = await tic.getChannelRoots(address);
-
-  const iota = getIota(network);
-  const profile = await tic.profile.get(channelRoots.profile, iota);
-
-  return profile;
+  return document;
 };
 
 module.exports = resolver;
