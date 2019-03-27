@@ -10,15 +10,12 @@ jest.mock(
   { virtual: true }
 );
 
-describe('Register and Resolve DID Document', () => {
-  it('Create DID document', async () => {
+describe('Idenity registration', () => {
+  it('resolved document MUST be same as published document', async () => {
     const seed = 'THISISTHESEEDOFTHETICACCOUNTANDISHOULDNOTGIVEITTOANYBODYELSE';
+    const { did, document } = await register(seed, '0x2');
+    const resolved = await resolver(did);
 
-    const result = await register(seed, '0x2');
-    let didDoc = await resolver(result.did);
-    expect(didDoc).toEqual({
-      '@context': 'https://w3id.org/did/v1',
-      id: result.did
-    });
+    expect(resolved).toEqual(document);
   });
 });
