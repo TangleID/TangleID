@@ -24,7 +24,7 @@ yarn add @tangleid/did
 const { register } = require('@tangleid/did');
 
 const seed = 'THISISTHESEEDOFTHETICACCOUNTANDISHOULDNOTGIVEITTOANYBODYELSE';
-const result = await register(seed, '0x1');
+const { did, document, seed } = await register({ seed, network: '0x1' });
 ```
 
 ### Resolve DID Document
@@ -51,20 +51,21 @@ Used to describe which Tangle network interacts.
 
 * [did](#module_did)
 
-    * [~register(seed, network, registry)](#module_did..register)
+    * [~register([options])](#module_did..register)
 
     * [~resolver(did, registry)](#module_did..resolver)
 
 
 <a name="module_did..register"></a>
 
-### *did*~register(seed, network, registry)
+### *did*~register([options])
 
-| Param | Type | Description |
-| --- | --- | --- |
-| seed | <code>String</code> | The seed for the master channel. |
-| network | <code>String</code> | The network identitfer. |
-| registry | [<code>IdenityRegistry</code>](#IdenityRegistry) | The registry used to maintain the identity. |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| [options] | <code>Object</code> |  | Registration options |
+| [options.seed] | <code>string</code> | <code>&quot;mamClient.generateSeed()&quot;</code> | The seed for the master channel. |
+| [options.network] | <code>string</code> | <code>&quot;0x1&quot;</code> | The network identitfer. |
+| [options.registry] | [<code>IdenityRegistry</code>](#IdenityRegistry) | <code>new IdenityRegistry()</code> | The registry used to maintain the identity. |
 
 Register the TangleID DID(Decentralized Identifier) on the IOTA/Tangle.
 
