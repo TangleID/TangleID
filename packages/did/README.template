@@ -18,13 +18,13 @@ yarn add @tangleid/did
 
 ## Quick Start
 
-### Register DID
+### Register Identity to Mainnet
 
 ```javascript
 const { register } = require('@tangleid/did');
 
 const seed = 'THISISTHESEEDOFTHETICACCOUNTANDISHOULDNOTGIVEITTOANYBODYELSE';
-const result = await register(seed, '0x2');
+const result = await register(seed, '0x1');
 ```
 
 ### Resolve DID Document
