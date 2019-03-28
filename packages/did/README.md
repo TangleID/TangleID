@@ -37,6 +37,15 @@ const did =
 let didDoc = await resolver(result.did);
 ```
 
+## Network Identifiers
+
+Used to describe which Tangle network interacts.
+
+| Identitier | Network        |
+| ---------- | -------------- |
+| 0x1        | Tangle Mainnet |
+| 0x2        | Tangle Devnet  |
+
 ## API Reference
 
 
@@ -54,7 +63,7 @@ let didDoc = await resolver(result.did);
 | Param | Type | Description |
 | --- | --- | --- |
 | seed | <code>String</code> | The seed for the master channel. |
-| network | <code>String</code> | The network identitfer. Mainnet: '0x1', Testnet: '0x2'. |
+| network | <code>String</code> | The network identitfer. |
 | registry | [<code>IdenityRegistry</code>](#IdenityRegistry) | The registry used to maintain the identity. |
 
 Register the TangleID DID(Decentralized Identifier) on the IOTA/Tangle.

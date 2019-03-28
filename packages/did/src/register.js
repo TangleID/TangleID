@@ -5,7 +5,7 @@ const IdenityRegistry = require('./IdenityRegistry');
  * Register the TangleID DID(Decentralized Identifier) on the IOTA/Tangle.
  * @method register
  * @param {String} seed - The seed for the master channel.
- * @param {String} network - The network identitfer. Mainnet: '0x1', Testnet: '0x2'.
+ * @param {String} network - The network identitfer.
  * @param {IdenityRegistry} registry - The registry used to maintain the identity.
  * @return {Promise} Promise object represents the register result.
  */
