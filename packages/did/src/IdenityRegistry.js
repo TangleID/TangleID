@@ -44,7 +44,7 @@ class IdenityRegistry {
 
   /**
    * Publish the DID document to the Tangle MAM channel with specific network.
-   * @param {string} network - The network identitfer. Mainnet: '0x1', Testnet: '0x2'.
+   * @param {string} network - The network identitfer.
    * @param {string} seed - The seed of the MAM channel.
    * @returns {Promise} Promise object represents the result. The result conatains DID `did` and DID document `document`.
    */

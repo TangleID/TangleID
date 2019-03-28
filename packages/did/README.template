@@ -37,6 +37,15 @@ const did =
 let didDoc = await resolver(result.did);
 ```
 
+## Network Identifiers
+
+Used to describe which Tangle network interacts.
+
+| Identitier | Network        |
+| ---------- | -------------- |
+| 0x1        | Tangle Mainnet |
+| 0x2        | Tangle Devnet  |
+
 ## API Reference
 
 {{#module name="did"~}}
