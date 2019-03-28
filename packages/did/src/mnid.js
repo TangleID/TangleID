@@ -15,7 +15,7 @@ function checksum(payload) {
 
 function encode({ network, address }) {
   const payload = [
-    new Buffer('01', 'hex'),
+    Buffer.from('01', 'hex'),
     hex.decode(network.slice(2)),
     tryte.decode(address.slice(0, 81))
   ];
