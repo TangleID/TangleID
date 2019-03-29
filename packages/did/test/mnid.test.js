@@ -1,4 +1,4 @@
-import { encode, decode } from '../src/mnid';
+import { encodeToMnid, decodeFromMnid } from '../src/mnid';
 
 const NETWORK = '0x1';
 const ADDRESS =
@@ -8,12 +8,12 @@ const MNID =
 
 describe('MNID encoding module', () => {
   it('encode network identifier and address to MNID', () => {
-    const encoded = encode({ network: NETWORK, address: ADDRESS });
+    const encoded = encodeToMnid({ network: NETWORK, address: ADDRESS });
     expect(encoded).toEqual(MNID);
   });
 
   it('decode MNID to network identifier and address', () => {
-    const { network, address } = decode(MNID);
+    const { network, address } = decodeFromMnid(MNID);
     expect(network).toEqual(NETWORK);
     expect(address).toEqual(ADDRESS);
   });
