@@ -24,7 +24,8 @@ yarn add @tangleid/did
 const { register } = require('@tangleid/did');
 
 const seed = 'THISISTHESEEDOFTHETICACCOUNTANDISHOULDNOTGIVEITTOANYBODYELSE';
-const { did, document, seed } = await register({ seed, network: '0x1' });
+const publicKey = '-----BEGIN PUBLIC KEY-----//..-----END PUBLIC KEY-----'
+const { did, document, seed } = await register({ seed, network: '0x1', publicKey });
 ```
 
 ### Resolve DID Document
@@ -65,6 +66,7 @@ Used to describe which Tangle network interacts.
 | [options] | <code>Object</code> |  | Registration options |
 | [options.seed] | <code>string</code> | <code>&quot;mamClient.generateSeed()&quot;</code> | The seed for the master channel. |
 | [options.network] | <code>string</code> | <code>&quot;0x1&quot;</code> | The network identitfer. |
+| [options.publicKey] | <code>String</code> \| <code>Array.&lt;string&gt;</code> | <code>[]</code> | PEM-formatted public Key. |
 | [options.registry] | [<code>IdenityRegistry</code>](#IdenityRegistry) | <code>new IdenityRegistry()</code> | The registry used to maintain the identity. |
 
 Register the TangleID DID(Decentralized Identifier) on the IOTA/Tangle.

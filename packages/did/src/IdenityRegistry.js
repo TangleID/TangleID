@@ -2,6 +2,7 @@ const tic = require('tic.api.js');
 const mamClient = require('mam.tools.js');
 
 const { encodeToDid, decodeFromDid } = require('./mnid');
+const { generatePublicKeys } = require('./did');
 
 const DEFAULT_PROVIDERS = {
   '0x1': 'https://nodes.thetangle.org:443',
@@ -46,15 +47,20 @@ class IdenityRegistry {
    * Publish the DID document to the Tangle MAM channel with specific network.
    * @param {string} network - The network identitfer.
    * @param {string} seed - The seed of the MAM channel.
+   * @param {string[]} publicKeys - PEM-formatted public Keys.
    * @returns {Promise} Promise object represents the result. The result conatains DID `did` and DID document `document`.
    */
-  publish = async (network, seed) => {
+  publish = async (network, seed, publicKeys = []) => {
     const ticClient = await this.getTicClient(network, seed);
     const did = encodeToDid({ network, address: ticClient.masterRoot });
     const document = {
       '@context': 'https://w3id.org/did/v1',
       id: did
     };
+
+    if (publicKeys.length > 0) {
+      document.publicKey = generatePublicKeys(did, publicKeys);
+    }
 
     await tic.profile.putInfo(ticClient.profile, document);
 

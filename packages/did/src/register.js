@@ -8,15 +8,18 @@ const IdenityRegistry = require('./IdenityRegistry');
  * @param {Object} [options] Registration options
  * @param {string} [options.seed = mamClient.generateSeed()] - The seed for the master channel.
  * @param {string} [options.network = 0x1] - The network identitfer.
+ * @param {String|string[]} [options.publicKey = []] - PEM-formatted public Key.
  * @param {IdenityRegistry} [options.registry = new IdenityRegistry()] - The registry used to maintain the identity.
  * @return {Promise} Promise object represents the register result.
  */
 const register = async ({
   seed = mamClient.generateSeed(),
   network = '0x1',
+  publicKey = [],
   registry = new IdenityRegistry()
 }) => {
-  const { did, document } = await registry.publish(network, seed);
+  const publicKeys = Array.isArray(publicKey) ? publicKey : [publicKey];
+  const { did, document } = await registry.publish(network, seed, publicKeys);
   return {
     did,
     seed,
