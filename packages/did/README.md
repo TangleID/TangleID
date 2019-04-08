@@ -24,14 +24,52 @@ yarn add @tangleid/did
 const { register } = require('@tangleid/did');
 
 const seed = 'THISISTHESEEDOFTHETICACCOUNTANDISHOULDNOTGIVEITTOANYBODYELSE';
-const publicKey = '-----BEGIN PUBLIC KEY-----//..-----END PUBLIC KEY-----'
+const publicKey = '-----BEGIN PUBLIC KEY-----//..-----END PUBLIC KEY-----';
 const { did, document, seed } = await register({ seed, network: '0x1', publicKey });
+```
+
+#### Register Identity with Specific Nodes
+
+```javascript
+import { register, IdenityRegistry } from '@tangleid/did';
+const seed = 'THISISTHESEEDOFTHETICACCOUNTANDISHOULDNOTGIVEITTOANYBODYELSE';
+const publicKey = '-----BEGIN PUBLIC KEY-----//..-----END PUBLIC KEY-----';
+const registry = new IdenityRegistry({
+  providers: {
+    '0x1': 'https://nodes.thetangle.org:443',
+    '0x2': 'https://nodes.devnet.thetangle.org:443',
+  },
+});
+
+const { did, document, seed } = await register({
+  seed,
+  network: '0x1',
+  publicKey,
+  registry,
+});
 ```
 
 ### Resolve DID Document
 
 ```javascript
 const { resolver } = require('@tangleid/did');
+
+const did =
+  'did:tangleid:MoWYKbBfezWbsTkYAngUu523F8YQgHfARhWWsTFSN2U45eAMpsSx3DnrV4SyZHCFuyDqjvQdg7';
+let didDoc = await resolver(result.did);
+```
+
+#### Resolve DID Document with Specific Nodes
+
+```javascript
+const { resolver, IdenityRegistry } = require('@tangleid/did');
+
+const registry = new IdenityRegistry({
+  providers: {
+    '0x1': 'https://nodes.thetangle.org:443',
+    '0x2': 'https://nodes.devnet.thetangle.org:443',
+  },
+});
 
 const did =
   'did:tangleid:MoWYKbBfezWbsTkYAngUu523F8YQgHfARhWWsTFSN2U45eAMpsSx3DnrV4SyZHCFuyDqjvQdg7';
@@ -84,3 +122,6 @@ Register the TangleID DID(Decentralized Identifier) on the IOTA/Tangle.
 Resolve the DID Document from the DID(Decentralized Identifier).
 
 **Returns**: <code>Promise</code> - - Promise object represents the [DID Document](https://w3c-ccg.github.io/did-spec/#did-documents).  
+```
+
+```
