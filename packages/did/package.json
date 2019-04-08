@@ -1,6 +1,6 @@
 {
   "name": "@tangleid/did",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "TangleID DID register and resolver",
   "author": "TangleID Developers",
   "main": "lib/index.js",
