@@ -74,8 +74,8 @@ class IdenityRegistry {
    */
   fetch = async did => {
     const { network, address } = decodeFromDid(did);
-    const channelRoots = await tic.getChannelRoots(address);
     const iota = await this.getIota(network);
+    const channelRoots = await tic.getChannelRoots(address, iota);
     const profile = await tic.profile.get(channelRoots.profile, iota);
 
     return profile;
