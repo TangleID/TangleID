@@ -15,6 +15,7 @@
     "url": "https://github.com/TangleID/tangleid-core/tree/master/packages/did"
   },
   "dependencies": {
+    "@babel/runtime": "^7.4.2",
     "base-x": "^3.0.4",
     "buffer": "^5.2.0",
     "did-resolver": "0.0.4",
