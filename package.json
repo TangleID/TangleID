@@ -1,12 +1,15 @@
 {
   "name": "root",
   "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
-    "init": "npm i && lerna bootstrap",
-    "test": "lerna exec -- npm run test",
-    "build": "lerna exec -- npm run build",
-    "docs": "lerna exec -- npm run docs",
-    "audit": "npm audit && lerna exec -- npm audit"
+    "init": "yarn install && lerna bootstrap",
+    "test": "lerna exec -- yarn run test",
+    "build": "lerna exec -- yarn run build",
+    "docs": "lerna exec -- yarn run docs",
+    "audit": "yarn audit && lerna exec -- yarn audit"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.2",

@@ -22,24 +22,24 @@ $ git clone https://github.com/TangleID/tangleid-core
 
 2. Install the dependency packages.
 ```shell
-$ npm run init
+$ yarn run init
 ```
 
  ### Running tests
 
  ```shell
- $ npm run test
+ $ yarn run test
  ```
 
  ### Build the packages
 
  ```shell
- $ npm run build
+ $ yarn run build
  ```
 
  ### Updating documentation
 
- The documentation is generated from the [`JSDoc`](http://usejsdoc.org) annotations. To update the documentation running `npm run docs` from the root directory.
+ The documentation is generated from the [`JSDoc`](http://usejsdoc.org) annotations. To update the documentation running `yarn run docs` from the root directory.
 
 ## Licensing
 
