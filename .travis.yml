@@ -2,6 +2,6 @@ language: node_js
 node_js:
   - node
 install:
-  - npm run init
+  - yarn run init
 script:
-  - npm run test
+  - yarn run test
