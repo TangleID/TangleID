@@ -1,8 +1,7 @@
 const tic = require('tic.api.js');
 const mamClient = require('mam.tools.js');
 
-const { encodeToDid, decodeFromDid } = require('./mnid');
-const { generatePublicKeys } = require('./did');
+const { encodeToDid, decodeFromDid, generatePublicKeys } = require('./did');
 
 const DEFAULT_PROVIDERS = {
   '0x1': 'https://nodes.thetangle.org:443',

@@ -8,6 +8,7 @@
 TangleID contains the following components:
  - @tangleid/connect: Allow you interact with TangleID Client.
  - @tangleid/did: Decentralized Identifiers(DIDs) Register/Resolver
+ - @tangleid/mnid: Utilities for generating Multi Network Identifier (MNID)
 
 For more detail, please visit the [TangleID website](https://tangleid.github.io/).
 

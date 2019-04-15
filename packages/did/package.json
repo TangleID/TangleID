@@ -16,10 +16,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.4.2",
-    "base-x": "^3.0.4",
-    "buffer": "^5.2.0",
+    "@tangleid/mnid": "1.1.1",
     "did-resolver": "0.0.4",
-    "js-sha3": "^0.8.0",
     "mam.client.js": "git+https://git@github.com/iotaledger/mam.client.js.git",
     "mam.tools.js": "git+https://github.com/TangleID/mam.tools.js.git#develop",
     "node-forge": "^0.8.2",
