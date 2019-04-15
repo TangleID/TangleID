@@ -1,0 +1,26 @@
+{
+  "extends": "tslint:latest",
+  "jsRules": {},
+  "linterOptions": {
+    "exclude": ["node_modules/**"]
+  },
+  "rules": {
+    "curly": true,
+    "semicolon": true,
+    "class-name": true,
+    "ordered-imports": false,
+    "object-literal-sort-keys": false,
+    "max-classes-per-file": false,
+    "member-access": false,
+    "quotemark": [true, "single", "jsx-double"],
+    "object-literal-key-quotes": [true, "as-needed"],
+    "arrow-parens": [true, "ban-single-arg-parens"],
+    "variable-name": [true, "ban-keywords", "allow-leading-underscore"],
+    "no-namespace": [true, "allow-declarations"],
+    "interface-over-type-literal": false,
+    "no-implicit-dependencies": false,
+    "no-submodule-imports": false,
+    "no-angle-bracket-type-assertion": false
+  },
+  "rulesDirectory": []
+}
