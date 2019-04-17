@@ -5,9 +5,9 @@
   "author": "TangleID Developers",
   "main": "lib/index.js",
   "scripts": {
-    "test": "jest",
-    "build": "babel src -d lib",
-    "docs": "jsdoc2md --no-cache --plugin dmd-clear -t README.template --files './src/**/*.js' > README.md"
+    "test": "jest -c ../../jest.config.js",
+    "build": "tsc",
+    "docs": "jsdoc2md --no-cache --plugin dmd-clear -t README.template --files './lib/**/*.js' > README.md"
   },
   "license": "MIT",
   "repository": {
@@ -15,7 +15,6 @@
     "url": "https://github.com/TangleID/tangleid-core/tree/master/packages/did"
   },
   "dependencies": {
-    "@babel/runtime": "^7.4.2",
     "@tangleid/mnid": "1.1.1",
     "did-resolver": "0.0.4",
     "mam.client.js": "git+https://git@github.com/iotaledger/mam.client.js.git",

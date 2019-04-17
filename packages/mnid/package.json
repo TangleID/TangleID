@@ -3,11 +3,11 @@
   "version": "1.1.1",
   "description": "Utilities for generating Multi Network Identifier (MNID)",
   "author": "TangleID Developers",
-  "main": "lib/index.js",
-  "typings": "typings",
+  "main": "lib/mnid/src/index.js",
+  "typings": "typings/mnid/src",
   "scripts": {
     "lint": "tslint",
-    "test": "jest",
+    "test": "jest -c ../../jest.config.js",
     "build": "tsc",
     "docs": "jsdoc2md --no-cache --plugin dmd-clear -t README.template --files './lib/**/*.js' > README.md"
   },

@@ -1,8 +1,11 @@
+/* tslint:disable */
 const mock = require('mam.tools.js/test/mamMock');
 const { log } = require('mam.tools.js/lib/logger');
+/* tslint:enable */
 
-const { register, resolver } = require('../src/index');
-const { generateKeyPair } = require('./utils');
+import { register, resolver } from '../src/index';
+import { generateKeyPair } from './utils';
+import { DidDocument } from '../../types';
 
 // disable mam.tools.js console logging
 log.silent = true;
@@ -12,10 +15,13 @@ jest.mock(
   () => {
     return mock;
   },
-  { virtual: true }
+  { virtual: true },
 );
 
-let publicKey, did, document, resolved;
+let publicKey: string;
+let did: string;
+let document: DidDocument;
+let resolved: DidDocument;
 
 beforeAll(async () => {
   const keypair = generateKeyPair();
@@ -23,7 +29,7 @@ beforeAll(async () => {
 
   const result = await register({
     network: '0x1',
-    publicKey
+    publicKey,
   });
   did = result.did;
   document = result.document;
