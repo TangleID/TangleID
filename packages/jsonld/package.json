@@ -1,0 +1,23 @@
+{
+  "name": "@tangleid/jsonld",
+  "version": "1.0.2",
+  "description": "Utilities for processing JSON-LD format",
+  "author": "TangleID Developers",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "jest -c ../../jest.config.js",
+    "build": "tsc",
+    "docs": "tsc && jsdoc2md --no-cache --plugin dmd-clear -t README.template --files './lib/**/*.js' > README.md"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TangleID/TangleID"
+  },
+  "dependencies": {
+    "jsonld": "^1.6.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

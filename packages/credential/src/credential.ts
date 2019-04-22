@@ -1,5 +1,5 @@
 /** @module credential */
-import { CREDENTIAL_CONTEXT_URL } from './contexts';
+import { CREDENTIAL_CONTEXT_URL } from '../../contexts';
 import {
   CredentialMetadata,
   ContextArray,
