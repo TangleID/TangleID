@@ -29,3 +29,21 @@ export type PublicKeyMeta = {
 };
 
 export type PrivateKeyPem = string;
+
+/* Credentials */
+export type CredentialSubject = {
+  id: string;
+};
+
+export type CredentialMetadata = {
+  id?: string;
+  type?: string[];
+  issuer?: string;
+  issuanceDate?: string;
+};
+
+/** JSON-LD */
+export type ContextArray = string[];
+export type ContextTypeAlias = {
+  [index: string]: string;
+};
