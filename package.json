@@ -7,7 +7,7 @@
   "scripts": {
     "init": "yarn install && lerna bootstrap",
     "lint": "tslint --force --format verbose ./packages/*/src/**/*.ts",
-    "test": "yarn run build && lerna exec -- yarn run test",
+    "test": "lerna exec -- yarn run test",
     "docs": "yarn run build && lerna exec -- yarn run docs",
     "clean": "lerna exec --parallel -- rimraf lib typings",
     "build": "yarn run clean && lerna exec -- yarn run build",
@@ -21,6 +21,7 @@
     "@babel/preset-env": "^7.1.0",
     "@types/jest": "^23.3.13",
     "@types/node": "^11.11.4",
+    "@types/node-forge": "^0.8.2",
     "babel-core": "^7.0.0-bridge.0",
     "dmd-clear": "^0.1.2",
     "husky": "^1.3.1",

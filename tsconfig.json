@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "types": ["node", "jest"],
+    "lib": ["dom", "es2015"],
+    "noImplicitThis": true,
+    "strict": true,
+    "declaration": true,
+    "sourceMap": true,
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "paths": {
+      "@tangleid/*": ["./packages/*/src"]
+    }
+  }
+}

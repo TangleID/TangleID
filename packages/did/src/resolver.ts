@@ -1,6 +1,7 @@
 /** @module did */
-const IdenityRegistry = require('./IdenityRegistry');
+import IdenityRegistry from './IdenityRegistry';
 
+import { Did } from '../../types';
 /**
  * Resolve the DID Document from the DID(Decentralized Identifier).
  * @method resolver
@@ -8,10 +9,10 @@ const IdenityRegistry = require('./IdenityRegistry');
  * @param {IdenityRegistry} registry - The registry used to maintain the identity.
  * @return {Promise} - Promise object represents the {@link https://w3c-ccg.github.io/did-spec/#did-documents DID Document}.
  */
-const resolver = async (did, registry = new IdenityRegistry()) => {
+const resolver = async (did: Did, registry = new IdenityRegistry()) => {
   const document = await registry.fetch(did);
 
   return document;
 };
 
-module.exports = resolver;
+export default resolver;

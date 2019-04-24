@@ -1,7 +1,7 @@
-const { encodeToMnid, decodeFromMnid } = require('@tangleid/mnid');
-//@ts-ignore
+import { encodeToMnid, decodeFromMnid } from '@tangleid/mnid';
+// @ts-ignore
 import { parse } from 'did-resolver';
-
+import { Did, MnidModel, PublicKeyPem, PublicKeyMeta } from '../../types';
 /**
  * Encode TangleID DID with specific network and address.
  * @function encodeToDid
@@ -10,10 +10,10 @@ import { parse } from 'did-resolver';
  * @param {string} params.address - Address in 81-trytes format.
  * @returns {string} TangleID which follow the DID scheme {@link https://w3c-ccg.github.io/did-spec/#the-generic-did-scheme DID Document}.
  */
-const encodeToDid = ({ network, address }) => {
+export const encodeToDid = ({ network, address }: MnidModel): Did => {
   const mnid = encodeToMnid({
     network,
-    address
+    address,
   });
   const did = `did:tangleid:${mnid}`;
 
@@ -26,7 +26,7 @@ const encodeToDid = ({ network, address }) => {
  * @param {string} tangleid - TangleID which follow the DID scheme {@link https://w3c-ccg.github.io/did-spec/#the-generic-did-scheme DID Document}.
  * @returns {{network: string, address: string}}} The infromation of network and address.
  */
-const decodeFromDid = tangleid => {
+export const decodeFromDid = (tangleid: Did): MnidModel => {
   const parsed = parse(tangleid);
   const mamParsed = decodeFromMnid(parsed.id);
 
@@ -40,7 +40,10 @@ const decodeFromDid = tangleid => {
  * @param {string[]} publicKeyPems - PEM-formatted public Keys.
  * @returns {Object[]} Public keys
  */
-const generatePublicKeys = (controller, publicKeyPems) => {
+export const generatePublicKeys = (
+  controller: Did,
+  publicKeyPems: PublicKeyPem[],
+): PublicKeyMeta[] => {
   if (controller === undefined) {
     throw new Error('controller is not specified');
   }
@@ -49,16 +52,10 @@ const generatePublicKeys = (controller, publicKeyPems) => {
     throw new Error('publicKeyPems is not specified');
   }
 
-  return publicKeyPems.map((publicKeyPem, index) => ({
+  return publicKeyPems.map((publicKeyPem: PublicKeyPem, index) => ({
     id: `${controller}#keys-${index + 1}`,
     type: 'RsaVerificationKey2018',
     controller,
-    publicKeyPem
+    publicKeyPem,
   }));
-};
-
-module.exports = {
-  encodeToDid,
-  decodeFromDid,
-  generatePublicKeys
 };

@@ -1,6 +1,16 @@
 /** @module did */
-const mamClient = require('mam.tools.js');
-const IdenityRegistry = require('./IdenityRegistry');
+// @ts-ignore
+import * as mamClient from 'mam.tools.js';
+import IdenityRegistry from './IdenityRegistry';
+
+import { NetworkIdentifer, PublicKeyPem } from '../../types';
+
+type RegisterParams = {
+  seed?: string;
+  network?: NetworkIdentifer;
+  publicKey?: PublicKeyPem[] | string;
+  registry?: IdenityRegistry;
+};
 
 /**
  * Register the TangleID DID(Decentralized Identifier) on the IOTA/Tangle.
@@ -16,15 +26,15 @@ const register = async ({
   seed = mamClient.generateSeed(),
   network = '0x1',
   publicKey = [],
-  registry = new IdenityRegistry()
-}) => {
+  registry = new IdenityRegistry(),
+}: RegisterParams) => {
   const publicKeys = Array.isArray(publicKey) ? publicKey : [publicKey];
   const { did, document } = await registry.publish(network, seed, publicKeys);
   return {
     did,
     seed,
-    document
+    document,
   };
 };
 
-module.exports = register;
+export default register;

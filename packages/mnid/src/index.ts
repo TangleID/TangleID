@@ -3,7 +3,7 @@ import { Buffer } from 'buffer';
 import { sha3_256 } from 'js-sha3';
 // @ts-ignore
 import * as baseX from 'base-x';
-import { Payload, MnidModel, Mnid } from './types';
+import { Payload, MnidModel, Mnid } from '../../types';
 
 const BASE58 = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
 const base58 = baseX(BASE58);
