@@ -1,6 +1,7 @@
 # TangleID Core
 > TangleID JavaScript monorepo
 
+[![Build Status](https://travis-ci.org/TangleID/TangleID.svg?branch=develop)](https://travis-ci.org/TangleID/TangleID)
 ![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg) [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/)
 
 ## Getting Started
