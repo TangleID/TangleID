@@ -20,6 +20,12 @@ export type IriProviders = {
   [index: string]: string;
 };
 
+/* Crypto */
+export type RsaKeyPair = {
+  publicKeyPem: PublicKeyPem;
+  privateKeyPem: PrivateKeyPem;
+};
+
 export type PublicKeyPem = string;
 export type PublicKeyMeta = {
   id: string;

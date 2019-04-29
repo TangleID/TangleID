@@ -29,6 +29,12 @@ yarn add @tangleid/jsonld
 
     * [~canonize(input, [options])](#module_jsonld..canonize)
 
+    * [~generateRsaKeyPair([options])](#module_jsonld..generateRsaKeyPair)
+
+    * [~signRsaSignature(document, publicKey, privateKeyPem, [options])](#module_jsonld..signRsaSignature)
+
+    * [~verifyRsaSignature(document, [options])](#module_jsonld..verifyRsaSignature)
+
 
 <a name="module_jsonld..createDocumentLoader"></a>
 
@@ -102,3 +108,43 @@ unless the 'inputFormat' option is used. The output is an RDF dataset
 unless the 'format' option is used.
 
 **Returns**: <code>Promise.&lt;string&gt;</code> - a Promise that resolves to the normalized output.  
+<a name="module_jsonld..generateRsaKeyPair"></a>
+
+### *jsonld*~generateRsaKeyPair([options])
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [options] | <code>object</code> | Generate key pair options. |
+| [options.bits] | <code>number</code> | Key length. |
+
+Generate RSA key pair in PEM-formatted.
+
+**Returns**: <code>object</code> - RSA Key pair.  
+<a name="module_jsonld..signRsaSignature"></a>
+
+### *jsonld*~signRsaSignature(document, publicKey, privateKeyPem, [options])
+
+| Param | Type | Description |
+| --- | --- | --- |
+| document | <code>object</code> | JSON-LD document to be signed. |
+| publicKey | <code>PublicKeyMeta</code> | Public key metadata. |
+| privateKeyPem | <code>string</code> | PEM-formatted private key. |
+| [options] | <code>object</code> | Options for signing the document. |
+| [options.documentLoader] | <code>object</code> | Loader that retrieve external documents. |
+
+Sign JSON-LD document with RSA crypto suite.
+
+**Returns**: <code>Promise.&lt;object&gt;</code> - Promise object represents signed JSON-LD document.  
+<a name="module_jsonld..verifyRsaSignature"></a>
+
+### *jsonld*~verifyRsaSignature(document, [options])
+
+| Param | Type | Description |
+| --- | --- | --- |
+| document | <code>object</code> | JSON-LD document to be verify. |
+| [options] | <code>object</code> | Options for verifying the signature. |
+| [options.documentLoader] | <code>object</code> | Loader that retrieve external documents. |
+
+Verify JSON-LD document signature.
+
+**Returns**: <code>Promise.&lt;boolean&gt;</code> - Promise object represents verification result.  
