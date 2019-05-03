@@ -7,7 +7,7 @@
   "scripts": {
     "init": "yarn install --ignore-engines && lerna bootstrap",
     "lint": "tslint --force --format verbose ./packages/*/src/**/*.ts",
-    "test": "jest",
+    "test": "jest --verbose",
     "docs": "yarn run build && lerna exec -- yarn run docs",
     "clean": "lerna exec --parallel -- rimraf lib typings",
     "build": "yarn run clean && lerna exec -- yarn run build",
