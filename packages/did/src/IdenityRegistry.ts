@@ -65,7 +65,8 @@ export default class IdenityRegistry {
    * @param {string} network - The network identitfer.
    * @param {string} seed - The seed of the MAM channel.
    * @param {string[]} publicKeys - PEM-formatted public Keys.
-   * @returns {Promise} Promise object represents the result. The result conatains DID `did` and DID document `document`.
+   * @returns {Promise} Promise object represents the result. The result
+   *   conatains DID `did` and DID document `document`.
    */
   publish = async (
     network: NetworkIdentifer,
@@ -91,7 +92,8 @@ export default class IdenityRegistry {
   /**
    * Fetch DID document by DID.
    * @param {string} did - The DID of DID document.
-   * @returns {Promise<string>} Promise object represents the {@link https://w3c-ccg.github.io/did-spec/#did-documents DID Document}.
+   * @returns {Promise<string>} Promise object represents the
+   *   {@link https://w3c-ccg.github.io/did-spec/#did-documents DID Document}.
    */
   fetch = async (did: Did): Promise<DidDocument> => {
     const { network, address } = decodeFromDid(did);
