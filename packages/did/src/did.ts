@@ -8,7 +8,8 @@ import { Did, MnidModel, PublicKeyPem, PublicKeyMeta } from '../../types';
  * @param {object} params - Encode parameters.
  * @param {string} params.network - Network identifier.
  * @param {string} params.address - Address in 81-trytes format.
- * @returns {string} TangleID which follow the DID scheme {@link https://w3c-ccg.github.io/did-spec/#the-generic-did-scheme DID Document}.
+ * @returns {string} TangleID which follow the DID scheme
+ *   @link https://w3c-ccg.github.io/did-spec/#the-generic-did-scheme DID Document}.
  */
 export const encodeToDid = ({ network, address }: MnidModel): Did => {
   const mnid = encodeToMnid({
@@ -23,7 +24,8 @@ export const encodeToDid = ({ network, address }: MnidModel): Did => {
 /**
  * Decode infromation of network and address from TangleID.
  * @function decodeFromDid
- * @param {string} tangleid - TangleID which follow the DID scheme {@link https://w3c-ccg.github.io/did-spec/#the-generic-did-scheme DID Document}.
+ * @param {string} tangleid - TangleID which follow the DID scheme
+ *   {@link https://w3c-ccg.github.io/did-spec/#the-generic-did-scheme DID Document}.
  * @returns {{network: string, address: string}}} The infromation of network and address.
  */
 export const decodeFromDid = (tangleid: Did): MnidModel => {

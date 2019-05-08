@@ -121,4 +121,5 @@ Register the TangleID DID(Decentralized Identifier) on the IOTA/Tangle.
 
 Resolve the DID Document from the DID(Decentralized Identifier).
 
-**Returns**: <code>Promise</code> - - Promise object represents the [DID Document](https://w3c-ccg.github.io/did-spec/#did-documents).  
+**Returns**: <code>Promise</code> - Promise object represents the
+  [DID Document](https://w3c-ccg.github.io/did-spec/#did-documents).  

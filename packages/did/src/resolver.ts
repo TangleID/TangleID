@@ -7,7 +7,8 @@ import { Did } from '../../types';
  * @method resolver
  * @param {String} did - The DID to be resolved.
  * @param {IdenityRegistry} registry - The registry used to maintain the identity.
- * @return {Promise} - Promise object represents the {@link https://w3c-ccg.github.io/did-spec/#did-documents DID Document}.
+ * @returns {Promise} Promise object represents the
+ *   {@link https://w3c-ccg.github.io/did-spec/#did-documents DID Document}.
  */
 const resolver = async (did: Did, registry = new IdenityRegistry()) => {
   const document = await registry.fetch(did);
