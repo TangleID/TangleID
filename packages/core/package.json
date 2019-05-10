@@ -1,0 +1,25 @@
+{
+  "name": "@tangleid/core",
+  "version": "1.1.1",
+  "description": "Core functionality to interact with TangleID",
+  "author": "TangleID Developers",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "jest -c ../../jest.config.js",
+    "build": "tsc",
+    "docs": "tsc && jsdoc2md --no-cache --plugin dmd-clear -t README.template --files './lib/**/*.js' > README.md"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TangleID/tangleid-core/tree/master/packages/core"
+  },
+  "dependencies": {
+    "@tangleid/did": "1.1.1",
+    "@tangleid/jsonld": "1.0.2",
+    "jsonld": "^1.6.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
