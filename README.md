@@ -4,14 +4,54 @@
 [![Build Status](https://travis-ci.org/TangleID/TangleID.svg?branch=develop)](https://travis-ci.org/TangleID/TangleID)
 ![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg) [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lernajs.io/)
 
-## Getting Started
+This is the TangleID JavaScript library, which allows you to do the following:
+- Registering and resolving [identifier](https://w3c-ccg.github.io/did-spec/)
+- Signing JSON-LD document, e.g. [Verifiable Credentials](https://w3c.github.io/vc-data-model/)
+- Verifying JSON-LD document signature
 
-TangleID contains the following components:
- - @tangleid/connect: Allow you interact with TangleID Client.
- - @tangleid/did: Decentralized Identifiers(DIDs) Register/Resolver
- - @tangleid/mnid: Utilities for generating Multi Network Identifier (MNID)
+For more use cases, please visit the [TangleID website](https://tangleid.github.io/).
 
-For more detail, please visit the [TangleID website](https://tangleid.github.io/).
+## Installing the library
+
+To install the TangleID library and its dependencies, you can use one of the following options:
+
+Install using [npm](https://www.npmjs.org/):
+
+```shell
+npm install @tangleid/core
+```
+
+or using [yarn](https://yarnpkg.com/):
+
+```shell
+yarn add @tangleid/core
+```
+
+## Getting started
+
+To register/resolve the identifier, do the following:
+
+```javascript
+import { composeAPI } from '@tangleid/core';
+
+const tid = composeAPI({
+  providers: {
+    // mainnet IRI
+    '0x1': 'http://node.deviceproof.org:14265',
+    // devnet IRI
+    '0x2': 'https://nodes.devnet.thetangle.org:443',
+  },
+});
+
+const { seed, did, document } = await tid.registerIdentity({
+  network: '0x1',
+  publicKey,
+});
+
+const resolved = await tid.resolveIdentity(did);
+```
+
+The API Reference can be found in [here](packages/core#api-reference).
 
 ## Contributing
 
@@ -19,7 +59,7 @@ For more detail, please visit the [TangleID website](https://tangleid.github.io/
 
 1. Clone this repository.
 ```shell
-$ git clone https://github.com/TangleID/tangleid-core
+$ git clone https://github.com/TangleID/TangleID
 ```
 
 2. Install the dependency packages.
