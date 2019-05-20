@@ -12,7 +12,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/TangleID/tangleid-core/tree/master/packages/core"
+    "url": "https://github.com/TangleID/TangleID"
   },
   "dependencies": {
     "@tangleid/did": "1.1.1",
