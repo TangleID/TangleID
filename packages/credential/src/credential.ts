@@ -31,7 +31,10 @@ export const generateCredential = ({
   context = [CREDENTIAL_CONTEXT_URL],
   alias = {},
 }: ComposeCredentialParams) => {
-  const contextMerged = [...context, alias];
+  let contextMerged: any = context;
+  if (Object.keys(alias).length > 0) {
+    contextMerged = [...context, alias];
+  }
 
   if (!metadata.type) {
     metadata.type = ['VerifiableCredential'];
