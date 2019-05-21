@@ -1,7 +1,7 @@
 {
   "name": "@tangleid/did",
   "version": "1.1.1",
-  "description": "TangleID DID register and resolver",
+  "description": "Utilities for the coding of decentralized identifiers",
   "author": "TangleID Developers",
   "main": "lib/index.js",
   "scripts": {

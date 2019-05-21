@@ -1,3 +1,4 @@
+/** @module did */
 import { encodeToMnid, decodeFromMnid } from '@tangleid/mnid';
 // @ts-ignore
 import { parse } from 'did-resolver';
