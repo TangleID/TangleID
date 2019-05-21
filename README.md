@@ -36,19 +36,19 @@ import { composeAPI } from '@tangleid/core';
 
 const tid = composeAPI({
   providers: {
-    // mainnet IRI
+    // mainnet
     '0x1': 'http://node.deviceproof.org:14265',
-    // devnet IRI
+    // devnet
     '0x2': 'https://nodes.devnet.thetangle.org:443',
   },
 });
 
-const { seed, did, document } = await tid.registerIdentity({
+const { seed, did, document } = await tid.registerIdentifier({
   network: '0x1',
   publicKey,
 });
 
-const resolved = await tid.resolveIdentity(did);
+const resolved = await tid.resolveIdentifier(did);
 ```
 
 The API Reference can be found in [here](packages/core#api-reference).
