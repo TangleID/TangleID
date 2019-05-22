@@ -11,7 +11,8 @@
     "docs": "yarn run build && lerna exec -- yarn run docs",
     "clean": "lerna exec --parallel -- rimraf lib typings",
     "build": "yarn run clean && lerna exec -- yarn run build",
-    "audit": "yarn audit && lerna exec -- yarn audit"
+    "audit": "yarn audit && lerna exec -- yarn audit",
+    "prettier": "prettier --single-quote --print-width 120 --trailing-comma es5 --write packages/**/*.ts"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.2",
@@ -33,6 +34,7 @@
     "rimraf": "^2.6.3",
     "ts-jest": "^24.0.2",
     "tslint": "^5.14.0",
+    "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.2.4"
   },
   "husky": {
@@ -41,8 +43,8 @@
     }
   },
   "lint-staged": {
-    "*.{js,json}": [
-      "prettier --single-quote --write",
+    "*.{js,json,ts}": [
+      "prettier --single-quote --print-width 120 --write",
       "git add"
     ]
   }

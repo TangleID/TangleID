@@ -1,5 +1,5 @@
 {
-  "extends": "tslint:latest",
+  "extends": ["tslint:latest", "tslint-config-prettier"],
   "jsRules": {},
   "linterOptions": {
     "exclude": ["node_modules/**"]
