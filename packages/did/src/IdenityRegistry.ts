@@ -3,7 +3,7 @@ import * as tic from 'tic.api.js';
 // @ts-ignore
 import * as mamClient from 'mam.tools.js';
 
-import { encodeToDid, decodeFromDid, generatePublicKeys } from './did';
+import { encodeToDid, decodeFromDid, createMetaPublicKeys } from './did';
 import {
   Seed,
   Did,
@@ -81,7 +81,7 @@ export default class IdenityRegistry {
     };
 
     if (publicKeys.length > 0) {
-      document.publicKey = generatePublicKeys(did, publicKeys);
+      document.publicKey = createMetaPublicKeys(did, publicKeys);
     }
 
     await tic.profile.putInfo(ticClient.profile, document);
