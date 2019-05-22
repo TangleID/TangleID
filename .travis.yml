@@ -5,4 +5,4 @@ install:
   - yarn run init
 script:
   - yarn run lint
-  - yarn run test
+  - yarn run test:coverage
