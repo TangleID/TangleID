@@ -36,13 +36,13 @@ export const decodeFromDid = (tangleid: Did): MnidModel => {
 };
 
 /**
- * Generate public keys from PEM-formatted public Keys.
- * @function generatePublicKeys
+ * Create metadata of public keys from PEM-formatted public Keys.
+ * @function createMetaPublicKeys
  * @param {string} controller - DID of the controller.
  * @param {string[]} publicKeyPems - PEM-formatted public Keys.
  * @returns {Object[]} Public keys
  */
-export const generatePublicKeys = (
+export const createMetaPublicKeys = (
   controller: Did,
   publicKeyPems: PublicKeyPem[],
 ): PublicKeyMeta[] => {
