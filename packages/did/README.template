@@ -18,7 +18,7 @@ yarn add @tangleid/did
 
 ## Quick Start
 
-### Register Identity to Mainnet
+### Register Decentralized Identifier for Digital Identity
 
 ```javascript
 const { register } = require('@tangleid/did');
@@ -28,7 +28,7 @@ const publicKey = '-----BEGIN PUBLIC KEY-----//..-----END PUBLIC KEY-----';
 const { did, document, seed } = await register({ seed, network: '0x1', publicKey });
 ```
 
-#### Register Identity with Specific Nodes
+#### Register Decentralized Identifier with Specific IOTA nodes
 
 ```javascript
 import { register, IdenityRegistry } from '@tangleid/did';

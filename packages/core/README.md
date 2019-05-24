@@ -1,7 +1,7 @@
 # @tangleid/core
 
 Core functionality to interact with TangleID. Includes methods for:
-- Registering and resolving identity
+- Registering and resolving identifier
 - Signing JSON-LD document
 - Verifying JSON-LD document signature
 
@@ -26,9 +26,9 @@ yarn add @tangleid/core
 
     * [.composeAPI([settings])](#module_core.composeAPI)
 
-    * [.registerIdentity(network, seed, publicKeys)](#module_core.registerIdentity)
+    * [.registerIdentifier(network, seed, publicKeys)](#module_core.registerIdentifier)
 
-    * [.resolveIdentity(did)](#module_core.resolveIdentity)
+    * [.resolveIdentifier(did)](#module_core.resolveIdentifier)
 
     * [.signRsaSignature(document, publicKey, privateKeyPem)](#module_core.signRsaSignature)
 
@@ -46,9 +46,9 @@ yarn add @tangleid/core
 
 Composes API object from it's components
 
-<a name="module_core.registerIdentity"></a>
+<a name="module_core.registerIdentifier"></a>
 
-### *core*.registerIdentity(network, seed, publicKeys)
+### *core*.registerIdentifier(network, seed, publicKeys)
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -60,9 +60,9 @@ Publish the DID document to the Tangle MAM channel with specific network.
 
 **Returns**: <code>Promise.&lt;object&gt;</code> - Promise object represents the result. The result
   conatains DID `did` and DID document `document`.  
-<a name="module_core.resolveIdentity"></a>
+<a name="module_core.resolveIdentifier"></a>
 
-### *core*.resolveIdentity(did)
+### *core*.resolveIdentifier(did)
 
 | Param | Type | Description |
 | --- | --- | --- |

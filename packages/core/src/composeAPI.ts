@@ -3,8 +3,8 @@ import { IriProviders } from '../../types';
 
 import { createDocumentLoader } from './jsonld/documentLoader';
 
-import { createRegisterIdentity } from './createRegisterIdentity';
-import { createResolveIdentity } from './createResolveIdentity';
+import { createRegisterIdentifier } from './createRegisterIdentifier';
+import { createResolveIdentifier } from './createResolveIdentifier';
 import { createSignRsaSignature } from './createSignRsaSignature';
 import { createVerifyRsaSignature } from './createVerifyRsaSignature';
 
@@ -29,8 +29,8 @@ export const composeAPI = (settings: Partial<Settings> = {}) => {
   const documentLoader = createDocumentLoader(idenityRegistry);
 
   return {
-    registerIdentity: createRegisterIdentity(idenityRegistry),
-    resolveIdentity: createResolveIdentity(idenityRegistry),
+    registerIdentifier: createRegisterIdentifier(idenityRegistry),
+    resolveIdentifier: createResolveIdentifier(idenityRegistry),
     signRsaSignature: createSignRsaSignature(documentLoader),
     verifyRsaSignature: createVerifyRsaSignature(documentLoader),
   };

@@ -1,7 +1,7 @@
 # @tangleid/core
 
 Core functionality to interact with TangleID. Includes methods for:
-- Registering and resolving identity
+- Registering and resolving identifier
 - Signing JSON-LD document
 - Verifying JSON-LD document signature
 
