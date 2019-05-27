@@ -2,8 +2,10 @@
 const mock = require('mam.tools.js/test/mamMock');
 const { log } = require('mam.tools.js/lib/logger');
 /* tslint:enable */
+// @ts-ignore
+import * as mamClient from 'mam.tools.js';
 
-import { register, resolver } from '../src/index';
+import { IdenityRegistry } from '../src';
 import { generateKeyPair } from './utils';
 import { DidDocument } from '../../types';
 
@@ -18,22 +20,20 @@ jest.mock(
   { virtual: true },
 );
 
-let publicKey: string;
+let publicKeys: string[];
 let did: string;
 let document: DidDocument;
 let resolved: DidDocument;
 
 beforeAll(async () => {
   const keypair = generateKeyPair();
-  publicKey = keypair.publicKey;
+  publicKeys = [keypair.publicKey];
 
-  const result = await register({
-    network: '0x1',
-    publicKey,
-  });
+  const registry = new IdenityRegistry();
+  const result = await registry.publish('0x1', mamClient.generateSeed(), publicKeys);
   did = result.did;
   document = result.document;
-  resolved = await resolver(did);
+  resolved = await registry.fetch(did);
 });
 
 describe('Idenity registration', () => {

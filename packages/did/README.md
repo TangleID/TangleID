@@ -1,6 +1,6 @@
 # @tangleid/did
 
-Utilities for Decentralized Identifiers(DIDs) registration and resolve.
+Utilities for the coding of decentralized identifiers.
 
 ## Installation
 
@@ -14,66 +14,6 @@ or using [yarn](https://yarnpkg.com/):
 
 ```shell
 yarn add @tangleid/did
-```
-
-## Quick Start
-
-### Register Decentralized Identifier for Digital Identity
-
-```javascript
-const { register } = require('@tangleid/did');
-
-const seed = 'THISISTHESEEDOFTHETICACCOUNTANDISHOULDNOTGIVEITTOANYBODYELSE';
-const publicKey = '-----BEGIN PUBLIC KEY-----//..-----END PUBLIC KEY-----';
-const { did, document, seed } = await register({ seed, network: '0x1', publicKey });
-```
-
-#### Register Decentralized Identifier with Specific IOTA nodes
-
-```javascript
-import { register, IdenityRegistry } from '@tangleid/did';
-const seed = 'THISISTHESEEDOFTHETICACCOUNTANDISHOULDNOTGIVEITTOANYBODYELSE';
-const publicKey = '-----BEGIN PUBLIC KEY-----//..-----END PUBLIC KEY-----';
-const registry = new IdenityRegistry({
-  providers: {
-    '0x1': 'https://nodes.thetangle.org:443',
-    '0x2': 'https://nodes.devnet.thetangle.org:443',
-  },
-});
-
-const { did, document, seed } = await register({
-  seed,
-  network: '0x1',
-  publicKey,
-  registry,
-});
-```
-
-### Resolve DID Document
-
-```javascript
-const { resolver } = require('@tangleid/did');
-
-const did =
-  'did:tangleid:MoWYKbBfezWbsTkYAngUu523F8YQgHfARhWWsTFSN2U45eAMpsSx3DnrV4SyZHCFuyDqjvQdg7';
-let didDoc = await resolver(result.did);
-```
-
-#### Resolve DID Document with Specific Nodes
-
-```javascript
-const { resolver, IdenityRegistry } = require('@tangleid/did');
-
-const registry = new IdenityRegistry({
-  providers: {
-    '0x1': 'https://nodes.thetangle.org:443',
-    '0x2': 'https://nodes.devnet.thetangle.org:443',
-  },
-});
-
-const did =
-  'did:tangleid:MoWYKbBfezWbsTkYAngUu523F8YQgHfARhWWsTFSN2U45eAMpsSx3DnrV4SyZHCFuyDqjvQdg7';
-let didDoc = await resolver(result.did);
 ```
 
 ## Network Identifiers
@@ -90,36 +30,47 @@ Used to describe which Tangle network interacts.
 
 * [did](#module_did)
 
-    * [~register([options])](#module_did..register)
+    * [~encodeToDid(params)](#module_did..encodeToDid)
 
-    * [~resolver(did, registry)](#module_did..resolver)
+    * [~decodeFromDid(tangleid)](#module_did..decodeFromDid)
+
+    * [~createMetaPublicKeys(controller, publicKeyPems)](#module_did..createMetaPublicKeys)
 
 
-<a name="module_did..register"></a>
+<a name="module_did..encodeToDid"></a>
 
-### *did*~register([options])
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| [options] | <code>Object</code> |  | Registration options |
-| [options.seed] | <code>string</code> | <code>&quot;mamClient.generateSeed()&quot;</code> | The seed for the master channel. |
-| [options.network] | <code>string</code> | <code>&quot;0x1&quot;</code> | The network identitfer. |
-| [options.publicKey] | <code>String</code> \| <code>Array.&lt;string&gt;</code> | <code>[]</code> | PEM-formatted public Key. |
-| [options.registry] | [<code>IdenityRegistry</code>](#IdenityRegistry) | <code>new IdenityRegistry()</code> | The registry used to maintain the identity. |
-
-Register the TangleID DID(Decentralized Identifier) on the IOTA/Tangle.
-
-**Returns**: <code>Promise</code> - Promise object represents the register result.  
-<a name="module_did..resolver"></a>
-
-### *did*~resolver(did, registry)
+### *did*~encodeToDid(params)
+**Link**: https://w3c-ccg.github.io/did-spec/#the-generic-did-scheme DID Document}.  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| did | <code>String</code> | The DID to be resolved. |
-| registry | [<code>IdenityRegistry</code>](#IdenityRegistry) | The registry used to maintain the identity. |
+| params | <code>object</code> | Encode parameters. |
+| params.network | <code>string</code> | Network identifier. |
+| params.address | <code>string</code> | Address in 81-trytes format. |
 
-Resolve the DID Document from the DID(Decentralized Identifier).
+Encode TangleID DID with specific network and address.
 
-**Returns**: <code>Promise</code> - Promise object represents the
-  [DID Document](https://w3c-ccg.github.io/did-spec/#did-documents).  
+**Returns**: <code>string</code> - TangleID which follow the DID scheme  
+<a name="module_did..decodeFromDid"></a>
+
+### *did*~decodeFromDid(tangleid)
+
+| Param | Type | Description |
+| --- | --- | --- |
+| tangleid | <code>string</code> | TangleID which follow the DID scheme   [DID Document](https://w3c-ccg.github.io/did-spec/#the-generic-did-scheme). |
+
+Decode infromation of network and address from TangleID.
+
+**Returns**: <code>Object</code> - } The infromation of network and address.  
+<a name="module_did..createMetaPublicKeys"></a>
+
+### *did*~createMetaPublicKeys(controller, publicKeyPems)
+
+| Param | Type | Description |
+| --- | --- | --- |
+| controller | <code>string</code> | DID of the controller. |
+| publicKeyPems | <code>Array.&lt;string&gt;</code> | PEM-formatted public Keys. |
+
+Create metadata of public keys from PEM-formatted public Keys.
+
+**Returns**: <code>Array.&lt;Object&gt;</code> - Public keys  

@@ -1,5 +1,2 @@
-import register from './register';
-import resolver from './resolver';
-import IdenityRegistry from './IdenityRegistry';
-
-export { register, resolver, IdenityRegistry };
+export * from './did';
+export * from './IdenityRegistry';

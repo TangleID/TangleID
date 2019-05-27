@@ -27,7 +27,7 @@ type IdenityRegistryParams = {
  * it uses the master channel root to generate the Decentralized Identifier (DID)
  * and uses the profile channel to save the corresponding DID document.
  */
-export default class IdenityRegistry {
+export class IdenityRegistry {
   providers: IriProviders;
 
   /**
