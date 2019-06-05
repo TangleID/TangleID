@@ -4,14 +4,8 @@ import * as tic from 'tic.api.js';
 import * as mamClient from 'mam.tools.js';
 
 import { encodeToDid, decodeFromDid, createMetaPublicKeys } from './did';
-import {
-  Seed,
-  Did,
-  DidDocument,
-  IriProviders,
-  NetworkIdentifer,
-  PublicKeyPem,
-} from '../../types';
+import { Seed, Did, DidDocument, IriProviders, NetworkIdentifer, PublicKeyPem } from '../../types';
+import { isSeed, isDid } from 'packages/guards';
 
 const DEFAULT_PROVIDERS: IriProviders = {
   '0x1': 'https://nodes.thetangle.org:443',
@@ -68,11 +62,11 @@ export class IdenityRegistry {
    * @returns {Promise} Promise object represents the result. The result
    *   conatains DID `did` and DID document `document`.
    */
-  publish = async (
-    network: NetworkIdentifer,
-    seed: Seed,
-    publicKeys: PublicKeyPem[] = [],
-  ) => {
+  publish = async (network: NetworkIdentifer, seed: Seed, publicKeys: PublicKeyPem[] = []) => {
+    if (!isSeed(seed)) {
+      throw new Error('Invalid seed');
+    }
+
     const ticClient = await this.getTicClient(network, seed);
     const did = encodeToDid({ network, address: ticClient.masterRoot });
     const document: DidDocument = {
@@ -96,6 +90,10 @@ export class IdenityRegistry {
    *   {@link https://w3c-ccg.github.io/did-spec/#did-documents DID Document}.
    */
   fetch = async (did: Did): Promise<DidDocument> => {
+    if (!isDid(did)) {
+      throw new Error('Invalid DID');
+    }
+
     const { network, address } = decodeFromDid(did);
     const iota = await this.getIota(network);
     const channelRoots = await tic.getChannelRoots(address, iota);
