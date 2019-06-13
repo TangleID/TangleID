@@ -15,8 +15,8 @@
     "url": "https://github.com/TangleID/TangleID"
   },
   "dependencies": {
-    "jsonld": "^1.6.0",
-    "jsonld-signatures": "^4.1.1",
+    "jsonld": "^1.6.2",
+    "jsonld-signatures": "^4.2.0",
     "node-forge": "^0.8.2"
   },
   "publishConfig": {
