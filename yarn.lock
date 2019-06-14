@@ -2966,7 +2966,7 @@ crypto-js@^3.1.9-1:
   resolved "https://registry.yarnpkg.com/crypto-js/-/crypto-js-3.1.9-1.tgz#fda19e761fc077e01ffbfdc6e9fdfc59e8806cd8"
   integrity sha1-/aGedh/Ad+Af+/3G6f38WeiAbNg=
 
-crypto-ld@^3.0.0:
+crypto-ld@^3.5.2:
   version "3.5.2"
   resolved "https://registry.yarnpkg.com/crypto-ld/-/crypto-ld-3.5.2.tgz#4abe86891f2ccfe426e1b1f9d9e5bc5660bd9946"
   integrity sha512-iW1hNxG86hbLZQQ3ENQvhJoeN66qOvvgfP/TYCYjq6Ag+6nrg/uUXWI2lkmr6+ne/Fk69fLfTB6G1LKY2WiIjg==
@@ -5211,23 +5211,34 @@ jsonfile@^4.0.0:
   optionalDependencies:
     graceful-fs "^4.1.6"
 
-jsonld-signatures@^4.1.1:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/jsonld-signatures/-/jsonld-signatures-4.1.1.tgz#0fb5701dd7d58df98f45432b392062205acd5be2"
-  integrity sha512-6Z1rZlX82EN76c0VkpwvwLOtry3zL5TeiJvAVD5xUwNzwGsumrbrJEMlPXgOQ2InVnUflzFhZNiz+kw22QEJnQ==
+jsonld-signatures@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/jsonld-signatures/-/jsonld-signatures-4.2.0.tgz#ed4286d8a92093bc8fb0478cb89775f6a2d2ffbf"
+  integrity sha512-JKw5KS6DyjntdPFM43y9ygp3jrsft6LcKLca1I1EpWJbf2wR6KDlSTWCn0nUiJioJUD0vvdA8qsxOdNqMgVEtA==
   dependencies:
     base64url "^3.0.1"
     bitcore-message "github:CoMakery/bitcore-message#dist"
     bs58 "^4.0.1"
-    crypto-ld "^3.0.0"
-    jsonld "^1.5.1"
-    node-forge "^0.8.0"
+    crypto-ld "^3.5.2"
+    jsonld "^1.6.2"
+    node-forge "^0.8.3"
+    security-context "^3.0.1"
     serialize-error "^4.1.0"
 
-jsonld@^1.5.1, jsonld@^1.6.0:
+jsonld@^1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/jsonld/-/jsonld-1.6.0.tgz#faf968a35e47ababe5b79a0309ee67155a5a8832"
   integrity sha512-gtbEplGXOgSrD7fP0vCmZoYX35MIQqFrpiMfJkEs9KwT7+bNzEd9y9gAUK8SGYXIYJISQCWNU5/eSDPKKxXeHw==
+  dependencies:
+    rdf-canonize "^1.0.2"
+    request "^2.88.0"
+    semver "^5.6.0"
+    xmldom "0.1.19"
+
+jsonld@^1.6.2:
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/jsonld/-/jsonld-1.6.2.tgz#d81620dccf75fd7bc7501709eeec5da77ecc45e9"
+  integrity sha512-eMzFHqhF2kPMrMUjw8+Lz9IF1QkrxTOIfVndkP/OpuoZs31VdDtfDs8mLa5EOC/ROdemFTQGLdYPZbRtmMe2Yw==
   dependencies:
     rdf-canonize "^1.0.2"
     request "^2.88.0"
@@ -6014,6 +6025,11 @@ node-forge@^0.8.0, node-forge@^0.8.1, node-forge@^0.8.2:
   version "0.8.2"
   resolved "https://registry.yarnpkg.com/node-forge/-/node-forge-0.8.2.tgz#b4bcc59fb12ce77a8825fc6a783dfe3182499c5a"
   integrity sha512-mXQ9GBq1N3uDCyV1pdSzgIguwgtVpM7f5/5J4ipz12PKWElmPpVWLDuWl8iXmhysr21+WmX/OJ5UKx82wjomgg==
+
+node-forge@^0.8.3:
+  version "0.8.4"
+  resolved "https://registry.yarnpkg.com/node-forge/-/node-forge-0.8.4.tgz#d6738662b661be19e2711ef01aa3b18212f13030"
+  integrity sha512-UOfdpxivIYY4g5tqp5FNRNgROVNxRACUxxJREntJLFaJr1E0UEqFtUIk0F/jYx/E+Y6sVXd0KDi/m5My0yGCVw==
 
 node-gyp-build@^3.0.0:
   version "3.9.0"
@@ -7321,6 +7337,11 @@ sax@^1.2.4:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
   integrity sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==
+
+security-context@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/security-context/-/security-context-3.0.1.tgz#8011f8800d8d5dac9ee1412fd775e8d21aae1c79"
+  integrity sha512-PtFviu4z1rbtHhXjkyyK4EFDW8ydMAtPfGfUUlv3PfpsIURlZD2ge3hEOnYqqYGhq8dA9oj+cwaiqcROi/su4g==
 
 semver-compare@^1.0.0:
   version "1.0.0"
