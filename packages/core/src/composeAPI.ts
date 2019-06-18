@@ -1,7 +1,7 @@
 import { IdenityRegistry } from '@tangleid/did';
 import { IriProviders } from '../../types';
 
-import { createDocumentLoader } from './jsonld/documentLoader';
+import { DocumentLoader } from './jsonld/documentLoader';
 
 import { createRegisterIdentifier } from './createRegisterIdentifier';
 import { createResolveIdentifier } from './createResolveIdentifier';
@@ -26,12 +26,13 @@ export type Settings = {
  */
 export const composeAPI = (settings: Partial<Settings> = {}) => {
   const idenityRegistry = new IdenityRegistry({ providers: settings.providers });
-  const documentLoader = createDocumentLoader(idenityRegistry);
+  const documentLoader = new DocumentLoader(idenityRegistry);
+  const loader = documentLoader.loader();
 
   return {
     registerIdentifier: createRegisterIdentifier(idenityRegistry),
     resolveIdentifier: createResolveIdentifier(idenityRegistry),
-    signRsaSignature: createSignRsaSignature(documentLoader),
-    verifyRsaSignature: createVerifyRsaSignature(documentLoader),
+    signRsaSignature: createSignRsaSignature(loader),
+    verifyRsaSignature: createVerifyRsaSignature(loader),
   };
 };

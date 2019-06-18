@@ -8,35 +8,46 @@ type CachedDocuments = {
   [index: string]: any;
 };
 
-export const createDocumentLoader = (
-  registry: IdenityRegistry,
-  {
-    documents = {},
-  }: {
-    documents?: CachedDocuments;
-  } = {},
-) => {
-  return async (url: string) => {
-    const context = documents[url];
-    if (context !== undefined) {
-      return {
-        contextUrl: null,
-        documentUrl: url,
-        document: context,
-      };
-    }
+export class DocumentLoader {
+  registry: IdenityRegistry;
+  documents: CachedDocuments = {};
 
-    if (url.startsWith('did:tangle:')) {
-      const document = await registry.fetch(url);
-      return {
-        document,
-        documentUrl: url,
-        contextUrl: null,
-      };
-    }
+  constructor(registry: IdenityRegistry) {
+    this.registry = registry;
+  }
 
-    const result = await nodeDocumentLoader(url);
-    documents[url] = result.document;
-    return result;
-  };
-};
+  getDocuments() {
+    return this.documents;
+  }
+
+  setDocuments(documents: CachedDocuments) {
+    this.documents = { ...this.documents, ...documents };
+  }
+
+  loader() {
+    return async (url: string) => {
+      const context = this.documents[url];
+      if (context !== undefined) {
+        return {
+          contextUrl: null,
+          documentUrl: url,
+          document: context,
+        };
+      }
+
+      if (url.startsWith('did:tangle:')) {
+        const document = await this.registry.fetch(url);
+
+        return {
+          document,
+          documentUrl: url,
+          contextUrl: null,
+        };
+      }
+
+      const result = await nodeDocumentLoader(url);
+      this.documents[url] = result.document;
+      return result;
+    };
+  }
+}
