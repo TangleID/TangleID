@@ -85,3 +85,40 @@ export const canonize = async (doc: any, options: any = {}): Promise<string> => 
   // @ts-ignore
   return jsonld.canonize(doc, options);
 };
+
+/**
+ * Performs JSON-LD flattening.
+ * @param {object} input - the JSON-LD to flatten.
+ * @param {context} context - the context to use to compact the flattened output, or null.
+ * @param {object} [options = {}] - the options to use:
+ * @param {string} [options.base] - the base IRI to use.
+ * @param {context} [options.expandContext] - a context to expand with.
+ * @param {documentLoader} [options.documentLoader] - the document loader.
+ * @return {Promise<object>} Promise that resolves to the flattened output.
+ */
+export const flatten = async (input: object, context: any, options: object = {}): Promise<string> => {
+  // @ts-ignore
+  return jsonld.flatten(input, context, options);
+};
+
+/**
+ * Performs JSON-LD framing.
+ * @function frame
+ * @param {object} input - the JSON-LD input to frame.
+ * @param {object} frame - the JSON-LD frame to use.
+ * @param {object} [options = {}] - the framing options.
+ * @param {string} [options.base] - the base IRI to use.
+ * @param {context} [options.expandContext] - a context to expand with.
+ * @param {string} [options.embed = '@last'] - default @embed flag: '@last', '@always', '@never', '@link'
+ *   (default: '@last').
+ * @param {boolean} [options.explicit = false] - default @explicit flag (default: false).
+ * @param {boolean} [options.requireAll = true] - default @requireAll flag (default: true).
+ * @param {boolean} [options.omitDefault = false] - default @omitDefault flag (default: false).
+ * @param {documentLoader} [options.documentLoader] - the document loader.
+ * @return {Promise<object>} Promise that resolves to the framed output.
+ */
+// tslint:disable-next-line:no-shadowed-variable
+export const frame = async (input: object, frame: object, options: object = {}): Promise<string> => {
+  // @ts-ignore
+  return jsonld.frame(input, frame, options);
+};
