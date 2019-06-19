@@ -33,6 +33,8 @@ yarn add @tangleid/jsonld
 
     * [~frame(input, frame, [options])](#module_jsonld..frame)
 
+    * [~findNodeById(document, id)](#module_jsonld..findNodeById)
+
     * [~generateRsaKeyPair([options])](#module_jsonld..generateRsaKeyPair)
 
     * [~signRsaSignature(document, publicKey, privateKeyPem, [options])](#module_jsonld..signRsaSignature)
@@ -148,6 +150,18 @@ Performs JSON-LD flattening.
 Performs JSON-LD framing.
 
 **Returns**: <code>Promise.&lt;object&gt;</code> - Promise that resolves to the framed output.  
+<a name="module_jsonld..findNodeById"></a>
+
+### *jsonld*~findNodeById(document, id)
+
+| Param | Type | Description |
+| --- | --- | --- |
+| document | <code>object</code> | the JSON-LD document to find. |
+| id | <code>string</code> | String that specifies the ID value. |
+
+Returns the first node with the specified value of the ID attribute.
+
+**Returns**: <code>Promise.&lt;(object\|null)&gt;</code> - Promise that resolves to the node.  
 <a name="module_jsonld..generateRsaKeyPair"></a>
 
 ### *jsonld*~generateRsaKeyPair([options])
