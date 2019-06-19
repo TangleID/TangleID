@@ -34,6 +34,10 @@ Used to describe which Tangle network interacts.
 
     * [~decodeFromDid(tangleid)](#module_did..decodeFromDid)
 
+    * [~isDidUrl(url)](#module_did..isDidUrl)
+
+    * [~decodeFromDidUrl(url)](#module_did..decodeFromDidUrl)
+
     * [~createMetaPublicKeys(controller, publicKeyPems)](#module_did..createMetaPublicKeys)
 
 
@@ -62,6 +66,28 @@ Encode TangleID DID with specific network and address.
 Decode infromation of network and address from TangleID.
 
 **Returns**: <code>Object</code> - } The infromation of network and address.  
+<a name="module_did..isDidUrl"></a>
+
+### *did*~isDidUrl(url)
+
+| Param | Type | Description |
+| --- | --- | --- |
+| url | <code>string</code> | the URL to be checked. |
+
+Checks if given URL is a DID URL.
+
+**Returns**: <code>boolean</code> - The boolean that represent the url whether DID URL.  
+<a name="module_did..decodeFromDidUrl"></a>
+
+### *did*~decodeFromDidUrl(url)
+
+| Param | Type | Description |
+| --- | --- | --- |
+| url | <code>string</code> | the DID URL that will be decoded. |
+
+Decode information of the DID URL.
+
+**Returns**: <code>Object</code> - The information of the DID URL. [https://w3c-ccg.github.io/did-spec/#generic-did-syntax](https://w3c-ccg.github.io/did-spec/#generic-did-syntax)  
 <a name="module_did..createMetaPublicKeys"></a>
 
 ### *did*~createMetaPublicKeys(controller, publicKeyPems)
