@@ -88,6 +88,7 @@ export const canonize = async (doc: any, options: any = {}): Promise<string> => 
 
 /**
  * Performs JSON-LD flattening.
+ * @function flatten
  * @param {object} input - the JSON-LD to flatten.
  * @param {context} context - the context to use to compact the flattened output, or null.
  * @param {object} [options = {}] - the options to use:

@@ -29,6 +29,10 @@ yarn add @tangleid/jsonld
 
     * [~canonize(input, [options])](#module_jsonld..canonize)
 
+    * [~flatten(input, context, [options])](#module_jsonld..flatten)
+
+    * [~frame(input, frame, [options])](#module_jsonld..frame)
+
     * [~generateRsaKeyPair([options])](#module_jsonld..generateRsaKeyPair)
 
     * [~signRsaSignature(document, publicKey, privateKeyPem, [options])](#module_jsonld..signRsaSignature)
@@ -108,6 +112,42 @@ unless the 'inputFormat' option is used. The output is an RDF dataset
 unless the 'format' option is used.
 
 **Returns**: <code>Promise.&lt;string&gt;</code> - a Promise that resolves to the normalized output.  
+<a name="module_jsonld..flatten"></a>
+
+### *jsonld*~flatten(input, context, [options])
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| input | <code>object</code> |  | the JSON-LD to flatten. |
+| context | <code>context</code> |  | the context to use to compact the flattened output, or null. |
+| [options] | <code>object</code> | <code>{}</code> | the options to use: |
+| [options.base] | <code>string</code> |  | the base IRI to use. |
+| [options.expandContext] | <code>context</code> |  | a context to expand with. |
+| [options.documentLoader] | <code>documentLoader</code> |  | the document loader. |
+
+Performs JSON-LD flattening.
+
+**Returns**: <code>Promise.&lt;object&gt;</code> - Promise that resolves to the flattened output.  
+<a name="module_jsonld..frame"></a>
+
+### *jsonld*~frame(input, frame, [options])
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| input | <code>object</code> |  | the JSON-LD input to frame. |
+| frame | <code>object</code> |  | the JSON-LD frame to use. |
+| [options] | <code>object</code> | <code>{}</code> | the framing options. |
+| [options.base] | <code>string</code> |  | the base IRI to use. |
+| [options.expandContext] | <code>context</code> |  | a context to expand with. |
+| [options.embed] | <code>string</code> | <code>&quot;&#x27;@last&#x27;&quot;</code> | default @embed flag: '@last', '@always', '@never', '@link'   (default: '@last'). |
+| [options.explicit] | <code>boolean</code> | <code>false</code> | default @explicit flag (default: false). |
+| [options.requireAll] | <code>boolean</code> | <code>true</code> | default @requireAll flag (default: true). |
+| [options.omitDefault] | <code>boolean</code> | <code>false</code> | default @omitDefault flag (default: false). |
+| [options.documentLoader] | <code>documentLoader</code> |  | the document loader. |
+
+Performs JSON-LD framing.
+
+**Returns**: <code>Promise.&lt;object&gt;</code> - Promise that resolves to the framed output.  
 <a name="module_jsonld..generateRsaKeyPair"></a>
 
 ### *jsonld*~generateRsaKeyPair([options])
