@@ -96,7 +96,7 @@ export const canonize = async (doc: any, options: any = {}): Promise<string> => 
  * @param {documentLoader} [options.documentLoader] - the document loader.
  * @return {Promise<object>} Promise that resolves to the flattened output.
  */
-export const flatten = async (input: object, context: any, options: object = {}): Promise<string> => {
+export const flatten = async (input: object, context: any, options: object = {}): Promise<object> => {
   // @ts-ignore
   return jsonld.flatten(input, context, options);
 };
@@ -118,7 +118,7 @@ export const flatten = async (input: object, context: any, options: object = {})
  * @return {Promise<object>} Promise that resolves to the framed output.
  */
 // tslint:disable-next-line:no-shadowed-variable
-export const frame = async (input: object, frame: object, options: object = {}): Promise<string> => {
+export const frame = async (input: object, frame: object, options: object = {}): Promise<object> => {
   // @ts-ignore
   return jsonld.frame(input, frame, options);
 };
