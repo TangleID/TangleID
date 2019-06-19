@@ -17,7 +17,7 @@ export const encodeToDid = ({ network, address }: MnidModel): Did => {
     network,
     address,
   });
-  const did = `did:tangleid:${mnid}`;
+  const did = `did:tangle:${mnid}`;
 
   return did;
 };

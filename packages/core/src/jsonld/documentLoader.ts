@@ -26,7 +26,7 @@ export const createDocumentLoader = (
       };
     }
 
-    if (url.startsWith('did:tangleid:')) {
+    if (url.startsWith('did:tangle:')) {
       const document = await registry.fetch(url);
       return {
         document,

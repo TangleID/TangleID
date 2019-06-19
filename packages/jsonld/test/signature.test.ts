@@ -22,7 +22,7 @@ describe('signing credential', () => {
       id: 'https://example.com/i/alice/keys/1',
       type: 'RsaVerificationKey2018',
       controller:
-        'did:tangleid:MoWYKbBfezWbsTkYAngUu523F8YQgHfARhWWsTFSN2U45eAMpsSx3DnrV4SyZHCFuyDqjvQdg7',
+        'did:tangle:MoWYKbBfezWbsTkYAngUu523F8YQgHfARhWWsTFSN2U45eAMpsSx3DnrV4SyZHCFuyDqjvQdg7',
       publicKeyPem,
     };
 
