@@ -3,6 +3,9 @@ import { encodeToMnid, decodeFromMnid } from '@tangleid/mnid';
 // @ts-ignore
 import { parse } from 'did-resolver';
 import { Did, MnidModel, PublicKeyPem, PublicKeyMeta } from '../../types';
+
+const DID_URL_REGEX = /^did:(?<method>[a-z0-9]+):(?<idstring>[A-Za-z0-9\.\-_]+)(?:#(?<fragment>.*))?$/;
+
 /**
  * Encode TangleID DID with specific network and address.
  * @function encodeToDid
@@ -34,6 +37,39 @@ export const decodeFromDid = (tangleid: Did): MnidModel => {
   const mamParsed = decodeFromMnid(parsed.id);
 
   return mamParsed;
+};
+
+/**
+ * Checks if given URL is a DID URL.
+ * @function isDidUrl
+ * @param {string} url - the URL to be checked.
+ * @return {boolean} The boolean that represent the url whether DID URL.
+ */
+export const isDidUrl = (url: string): boolean => {
+  return DID_URL_REGEX.test(url);
+};
+
+/**
+ * Decode information of the DID URL.
+ * @function decodeFromDidUrl
+ * @param {string} url - the DID URL that will be decoded.
+ * @return {{did: string, method: string, idstring: string, fragment: string | null}}
+ *   The information of the DID URL. {@link https://w3c-ccg.github.io/did-spec/#generic-did-syntax}
+ */
+export const decodeFromDidUrl = (url: string) => {
+  const matches = DID_URL_REGEX.exec(url);
+  if (matches === null) {
+    throw new Error('Invalid DID URL');
+  }
+
+  const [, method, idstring, fragment] = matches;
+
+  return {
+    did: `did:${method}:${idstring}`,
+    method,
+    idstring,
+    fragment: fragment || null,
+  };
 };
 
 /**
