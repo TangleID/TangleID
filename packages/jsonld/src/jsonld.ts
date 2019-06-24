@@ -123,3 +123,29 @@ export const frame = async (input: object, frame: object, options: object = {}):
   // @ts-ignore
   return jsonld.frame(input, frame, options);
 };
+
+/**
+ * Returns the first node with the specified value of the ID attribute.
+ * @function findNodeById
+ * @param {object} document - the JSON-LD document to find.
+ * @param {string} id - String that specifies the ID value.
+ * @return {Promise<object|null>} Promise that resolves to the node.
+ */
+export const findNodeById = async (document: object, id: string): Promise<object | null> => {
+  const flattened: { [index: string]: any } = await flatten(document, {});
+
+  if (!flattened.hasOwnProperty('@graph')) {
+    throw new Error('@graph property does not exist in the flattened document');
+  }
+
+  const graph = flattened['@graph'] as Array<{ [index: string]: any }>;
+  const node = graph.find(element => {
+    return element['@id'] === id;
+  });
+
+  if (node === undefined) {
+    return null;
+  }
+
+  return node;
+};
