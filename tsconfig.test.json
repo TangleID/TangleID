@@ -7,6 +7,9 @@
     "declaration": true,
     "sourceMap": true,
     "moduleResolution": "node",
-    "baseUrl": "."
+    "baseUrl": ".",
+    "paths": {
+      "@tangleid/*": ["./packages/*/src"]
+    }
   }
 }
