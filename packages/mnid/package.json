@@ -8,7 +8,7 @@
   "scripts": {
     "lint": "tslint",
     "test": "jest -c ../../jest.config.js",
-    "build": "tsc",
+    "build": "tsc -p tsconfig.release.json",
     "docs": "jsdoc2md --no-cache --plugin dmd-clear -t README.template --files './lib/**/*.js' > README.md"
   },
   "license": "MIT",
