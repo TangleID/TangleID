@@ -4,6 +4,7 @@
   "description": "Utilities for the coding of decentralized identifiers",
   "author": "TangleID Developers",
   "main": "lib/index.js",
+  "typings": "typings/did/src",
   "scripts": {
     "test": "jest -c ../../jest.config.js",
     "build": "tsc",
