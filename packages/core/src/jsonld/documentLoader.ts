@@ -1,4 +1,5 @@
-import { IdenityRegistry } from '@tangleid/did';
+import { IdenityRegistry, decodeFromDidUrl, isDidUrl } from '@tangleid/did';
+import { findNodeById } from '@tangleid/jsonld';
 // @ts-ignore
 import * as jsonld from 'jsonld';
 // @ts-ignore
@@ -35,14 +36,24 @@ export class DocumentLoader {
         };
       }
 
-      if (url.startsWith('did:tangle:')) {
-        const document = await this.registry.fetch(url);
+      if (isDidUrl(url)) {
+        const decoded = decodeFromDidUrl(url);
+        if (decoded != null && decoded.method === 'tangle') {
+          let document = (await this.registry.fetch(decoded.did)) as object;
 
-        return {
-          document,
-          documentUrl: url,
-          contextUrl: null,
-        };
+          if (decoded.fragment) {
+            const node = await findNodeById(document, url);
+            if (node !== null) {
+              document = node;
+            }
+          }
+
+          return {
+            document,
+            documentUrl: url,
+            contextUrl: null,
+          };
+        }
       }
 
       const result = await nodeDocumentLoader(url);
