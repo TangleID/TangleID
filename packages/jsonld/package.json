@@ -4,6 +4,7 @@
   "description": "Utilities for processing JSON-LD format",
   "author": "TangleID Developers",
   "main": "lib/index.js",
+  "typings": "typings/jsonld/src",
   "scripts": {
     "test": "jest -c ../../jest.config.js",
     "build": "tsc",
