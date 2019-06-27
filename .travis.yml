@@ -6,3 +6,4 @@ install:
 script:
   - yarn run lint
   - yarn run test:coverage
+  - yarn run build
