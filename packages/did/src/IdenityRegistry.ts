@@ -76,12 +76,13 @@ export class IdenityRegistry {
     const ticClient = await this.getTicClient(network, seed);
     const did = encodeToDid({ network, address: ticClient.masterRoot });
     const document: DidDocument = {
-      '@context': 'https://w3id.org/did/v1',
+      '@context': ['https://w3id.org/did/v1', 'https://w3id.org/security/v2'],
       id: did,
     };
 
     if (publicKeys.length > 0) {
       document.publicKey = createMetaPublicKeys(did, publicKeys);
+      document.assertionMethod = document.publicKey.map(publicKey => publicKey.id);
     }
 
     await tic.profile.putInfo(ticClient.profile, document);

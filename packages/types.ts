@@ -1,8 +1,9 @@
 export type Seed = string;
 export type Did = string;
 export type DidDocument = {
-  '@context': string;
+  '@context': string | string[];
   id: Did;
+  assertionMethod?: string[];
   publicKey?: PublicKeyMeta[];
 };
 
