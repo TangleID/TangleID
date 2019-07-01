@@ -3,7 +3,7 @@
   "version": "1.1.1",
   "description": "Core functionality to interact with TangleID",
   "author": "TangleID Developers",
-  "main": "lib/index.js",
+  "main": "lib/core/src/index.js",
   "typings": "typings/core/src",
   "scripts": {
     "test": "jest -c ../../jest.config.js",

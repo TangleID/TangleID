@@ -3,7 +3,7 @@
   "version": "1.0.2",
   "description": "Utilities for processing JSON-LD format",
   "author": "TangleID Developers",
-  "main": "lib/index.js",
+  "main": "lib/jsonld/src/index.js",
   "typings": "typings/jsonld/src",
   "scripts": {
     "test": "jest -c ../../jest.config.js",
