@@ -3,7 +3,7 @@
   "version": "1.1.1",
   "description": "Utilities for the coding of decentralized identifiers",
   "author": "TangleID Developers",
-  "main": "lib/index.js",
+  "main": "lib/did/src/index.js",
   "typings": "typings/did/src",
   "scripts": {
     "test": "jest -c ../../jest.config.js",
