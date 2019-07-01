@@ -1,6 +1,6 @@
 {
   "name": "@tangleid/core",
-  "version": "1.1.1",
+  "version": "1.2.0-rc.1",
   "description": "Core functionality to interact with TangleID",
   "author": "TangleID Developers",
   "main": "lib/index.js",
@@ -16,8 +16,8 @@
     "url": "https://github.com/TangleID/TangleID"
   },
   "dependencies": {
-    "@tangleid/did": "1.1.1",
-    "@tangleid/jsonld": "1.0.2",
+    "@tangleid/did": "^1.2.0-rc.1",
+    "@tangleid/jsonld": "^1.2.0-rc.1",
     "jsonld": "^1.6.0"
   },
   "publishConfig": {

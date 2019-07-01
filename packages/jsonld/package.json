@@ -1,6 +1,6 @@
 {
   "name": "@tangleid/jsonld",
-  "version": "1.0.2",
+  "version": "1.2.0-rc.1",
   "description": "Utilities for processing JSON-LD format",
   "author": "TangleID Developers",
   "main": "lib/index.js",
