@@ -1,9 +1,9 @@
 {
   "name": "@tangleid/core",
-  "version": "1.2.0-rc.1",
+  "version": "1.2.0-rc.2",
   "description": "Core functionality to interact with TangleID",
   "author": "TangleID Developers",
-  "main": "lib/index.js",
+  "main": "lib/core/src/index.js",
   "typings": "typings/core/src",
   "scripts": {
     "test": "jest -c ../../jest.config.js",
@@ -16,8 +16,8 @@
     "url": "https://github.com/TangleID/TangleID"
   },
   "dependencies": {
-    "@tangleid/did": "^1.2.0-rc.1",
-    "@tangleid/jsonld": "^1.2.0-rc.1",
+    "@tangleid/did": "^1.2.0-rc.2",
+    "@tangleid/jsonld": "^1.2.0-rc.2",
     "jsonld": "^1.6.0"
   },
   "publishConfig": {
