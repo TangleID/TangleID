@@ -1,7 +1,9 @@
 language: node_js
 node_js:
-  - node
+  - lts/*
 install:
-  - npm run init
+  - yarn run init
 script:
-  - npm run test
+  - yarn run lint
+  - yarn run test:coverage
+  - yarn run build

@@ -1,0 +1,28 @@
+# @tangleid/core
+
+Core functionality to interact with TangleID. Includes methods for:
+- Registering and resolving identifier
+- Signing JSON-LD document
+- Verifying JSON-LD document signature
+
+## Installation
+
+Install using [npm](https://www.npmjs.org/):
+
+```shell
+npm install @tangleid/core
+```
+
+or using [yarn](https://yarnpkg.com/):
+
+```shell
+yarn add @tangleid/core
+```
+
+## API Reference
+
+{{#module name="core"~}}
+{{>body~}}
+{{>member-index~}}
+{{>members~}}
+{{/module~}}

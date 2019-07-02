@@ -1,10 +1,10 @@
 {
-  "name": "@tangleid/did",
+  "name": "@tangleid/core",
   "version": "1.2.0-rc.1",
-  "description": "Utilities for the coding of decentralized identifiers",
+  "description": "Core functionality to interact with TangleID",
   "author": "TangleID Developers",
   "main": "lib/index.js",
-  "typings": "typings/did/src",
+  "typings": "typings/core/src",
   "scripts": {
     "test": "jest -c ../../jest.config.js",
     "build": "tsc -p tsconfig.release.json",
@@ -16,12 +16,9 @@
     "url": "https://github.com/TangleID/TangleID"
   },
   "dependencies": {
-    "@tangleid/mnid": "^1.2.0-rc.1",
-    "did-resolver": "0.0.4",
-    "mam.client.js": "git+https://git@github.com/iotaledger/mam.client.js.git",
-    "mam.tools.js": "git+https://github.com/TangleID/mam.tools.js.git#develop",
-    "node-forge": "^0.8.2",
-    "tic.api.js": "git+https://github.com/TangleID/tic.api.js.git#develop"
+    "@tangleid/did": "^1.2.0-rc.1",
+    "@tangleid/jsonld": "^1.2.0-rc.1",
+    "jsonld": "^1.6.0"
   },
   "publishConfig": {
     "access": "public"

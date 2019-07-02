@@ -1,0 +1,27 @@
+{
+  "name": "@tangleid/mnid",
+  "version": "1.2.0-rc.1",
+  "description": "Utilities for generating Multi Network Identifier (MNID)",
+  "author": "TangleID Developers",
+  "main": "lib/mnid/src/index.js",
+  "typings": "typings/mnid/src",
+  "scripts": {
+    "lint": "tslint",
+    "test": "jest -c ../../jest.config.js",
+    "build": "tsc -p tsconfig.release.json",
+    "docs": "yarn run build && jsdoc2md --no-cache --plugin dmd-clear -t README.template --files './lib/**/*.js' > README.md"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TangleID/TangleID"
+  },
+  "dependencies": {
+    "base-x": "^3.0.4",
+    "buffer": "^5.2.0",
+    "js-sha3": "^0.8.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

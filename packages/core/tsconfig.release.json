@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "outDir": "lib",
+    "declarationDir": "typings"
+  },
+  "include": ["src"],
+  "extends": "../../tsconfig.release"
+}

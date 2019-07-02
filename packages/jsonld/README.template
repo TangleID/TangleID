@@ -1,0 +1,25 @@
+# @tangleid/jsonld
+
+Utilities for processing JSON-LD format.
+
+## Installation
+
+Install using [npm](https://www.npmjs.org/):
+
+```shell
+npm install @tangleid/jsonld
+```
+
+or using [yarn](https://yarnpkg.com/):
+
+```shell
+yarn add @tangleid/jsonld
+```
+
+## API Reference
+
+{{#module name="jsonld"~}}
+{{>body~}}
+{{>member-index~}}
+{{>members~}}
+{{/module~}}

@@ -1,12 +1,18 @@
 {
   "name": "root",
   "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
-    "init": "npm i && lerna bootstrap",
-    "test": "lerna exec -- npm run test",
-    "build": "lerna exec -- npm run build",
-    "docs": "lerna exec -- npm run docs",
-    "audit": "npm audit && lerna exec -- npm audit"
+    "init": "yarn install --ignore-engines && lerna bootstrap",
+    "lint": "tslint --format verbose ./packages/*/src/**/*.ts",
+    "test": "jest",
+    "test:coverage": "jest --verbose --coverage",
+    "docs": "lerna exec -- yarn run docs",
+    "clean": "lerna exec --parallel -- rimraf lib typings",
+    "build": "yarn run clean && lerna exec -- yarn run build",
+    "audit": "yarn audit && lerna exec -- yarn audit"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.2",
@@ -14,6 +20,9 @@
     "@babel/plugin-proposal-class-properties": "^7.4.0",
     "@babel/plugin-transform-runtime": "^7.1.0",
     "@babel/preset-env": "^7.1.0",
+    "@types/jest": "^23.3.13",
+    "@types/node": "^11.11.4",
+    "@types/node-forge": "^0.8.2",
     "babel-core": "^7.0.0-bridge.0",
     "dmd-clear": "^0.1.2",
     "husky": "^1.3.1",
@@ -21,7 +30,11 @@
     "jsdoc-to-markdown": "^4.0.1",
     "lerna": "^3.13.1",
     "lint-staged": "^7.3.0",
-    "prettier": "^1.14.3"
+    "prettier": "^1.14.3",
+    "rimraf": "^2.6.3",
+    "ts-jest": "^24.0.2",
+    "tslint": "^5.14.0",
+    "typescript": "^3.2.4"
   },
   "husky": {
     "hooks": {

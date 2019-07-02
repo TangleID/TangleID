@@ -1,19 +1,19 @@
-# @tangleid/did
+# @tangleid/mnid
 
-Utilities for the coding of decentralized identifiers.
+Utilities for Multi Network Identifier (MNID).
 
 ## Installation
 
 Install using [npm](https://www.npmjs.org/):
 
 ```shell
-npm install @tangleid/did
+npm install @tangleid/mnid
 ```
 
 or using [yarn](https://yarnpkg.com/):
 
 ```shell
-yarn add @tangleid/did
+yarn add @tangleid/mnid
 ```
 
 ## Network Identifiers
@@ -27,7 +27,7 @@ Used to describe which Tangle network interacts.
 
 ## API Reference
 
-{{#module name="did"~}}
+{{#module name="mnid"~}}
 {{>body~}}
 {{>member-index~}}
 {{>members~}}
