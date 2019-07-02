@@ -1,6 +1,6 @@
 {
   "name": "@tangleid/did",
-  "version": "1.2.0-rc.1",
+  "version": "1.2.0-rc.2",
   "description": "Utilities for the coding of decentralized identifiers",
   "author": "TangleID Developers",
   "main": "lib/did/src/index.js",
@@ -16,7 +16,7 @@
     "url": "https://github.com/TangleID/TangleID"
   },
   "dependencies": {
-    "@tangleid/mnid": "^1.2.0-rc.1",
+    "@tangleid/mnid": "^1.2.0-rc.2",
     "did-resolver": "0.0.4",
     "mam.client.js": "git+https://git@github.com/iotaledger/mam.client.js.git",
     "mam.tools.js": "git+https://github.com/TangleID/mam.tools.js.git#develop",
