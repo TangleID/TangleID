@@ -1,7 +1,6 @@
 /** @module did */
 import { encodeToMnid, decodeFromMnid } from '@tangleid/mnid';
 // @ts-ignore
-import { parse } from 'did-resolver';
 import { Did, MnidModel, PublicKeyPem, PublicKeyMeta } from '../../types';
 
 const DID_URL_REGEX = /^did:(?<method>[a-z0-9]+):(?<idstring>[A-Za-z0-9\.\-_]+)(?:#(?<fragment>.*))?$/;
@@ -33,8 +32,13 @@ export const encodeToDid = ({ network, address }: MnidModel): Did => {
  * @returns {{network: string, address: string}}} The infromation of network and address.
  */
 export const decodeFromDid = (tangleid: Did): MnidModel => {
-  const parsed = parse(tangleid);
-  const mamParsed = decodeFromMnid(parsed.id);
+  const decoded = decodeFromDidUrl(tangleid);
+  if (decoded == null) {
+    throw new Error('Invalid DID');
+  }
+
+  const { idstring } = decoded;
+  const mamParsed = decodeFromMnid(idstring);
 
   return mamParsed;
 };

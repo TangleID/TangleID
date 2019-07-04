@@ -17,7 +17,6 @@
   },
   "dependencies": {
     "@tangleid/mnid": "^1.2.0",
-    "did-resolver": "0.0.4",
     "mam.client.js": "git+https://git@github.com/iotaledger/mam.client.js.git",
     "mam.tools.js": "git+https://github.com/TangleID/mam.tools.js.git#develop",
     "node-forge": "^0.8.2",
