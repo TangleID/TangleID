@@ -2,6 +2,7 @@ import { IdenityRegistry, decodeFromDidUrl, isDidUrl } from '@tangleid/did';
 import { findNodeById } from '@tangleid/jsonld';
 // @ts-ignore
 import * as jsonld from 'jsonld';
+import UniversalResolver from '../resolver/UniversalResolver';
 // @ts-ignore
 const nodeDocumentLoader = jsonld.documentLoaders.node();
 
@@ -12,9 +13,19 @@ type CachedDocuments = {
 export class DocumentLoader {
   registry: IdenityRegistry;
   documents: CachedDocuments = {};
+  private universalResolver: UniversalResolver | null;
 
   constructor(registry: IdenityRegistry) {
     this.registry = registry;
+    this.universalResolver = null;
+  }
+
+  setUniversalResolver(universalResolver: UniversalResolver) {
+    this.universalResolver = universalResolver;
+  }
+
+  getniversalResolver() {
+    return this.universalResolver;
   }
 
   getDocuments() {
@@ -25,40 +36,49 @@ export class DocumentLoader {
     this.documents = { ...this.documents, ...documents };
   }
 
-  loader() {
-    return async (url: string) => {
-      const context = this.documents[url];
-      if (context !== undefined) {
-        return {
-          contextUrl: null,
-          documentUrl: url,
-          document: context,
-        };
-      }
+  async resolveDocument(url: string): Promise<any> {
+    const decoded = decodeFromDidUrl(url);
+    // use the document loader if given URL is not DID URL
+    if (decoded == null) {
+      const result = await nodeDocumentLoader(url);
+      return result.document;
+    }
 
-      if (isDidUrl(url)) {
-        const decoded = decodeFromDidUrl(url);
-        if (decoded != null && decoded.method === 'tangle') {
-          let document = (await this.registry.fetch(decoded.did)) as object;
-
-          if (decoded.fragment) {
-            const node = await findNodeById(document, url);
-            if (node !== null) {
-              document = node;
-            }
-          }
-
-          return {
-            document,
-            documentUrl: url,
-            contextUrl: null,
-          };
+    if (decoded.method === 'tangle') {
+      let document = (await this.registry.fetch(decoded.did)) as object;
+      if (decoded.fragment) {
+        const node = await findNodeById(document, url);
+        if (node !== null) {
+          document = node;
         }
       }
 
-      const result = await nodeDocumentLoader(url);
-      this.documents[url] = result.document;
-      return result;
+      return document;
+    }
+
+    if (this.universalResolver === null) {
+      throw new Error('Cound not resolve document: No univseral resolver available.');
+    }
+
+    const resolved = await this.universalResolver.resolve(decoded.did);
+
+    return resolved.didDocument;
+  }
+
+  loader() {
+    return async (url: string) => {
+      let document = this.documents[url];
+      // resolve the document if it is not in the cache
+      if (document === undefined) {
+        document = await this.resolveDocument(url);
+        this.documents[url] = document;
+      }
+
+      return {
+        document,
+        contextUrl: null,
+        documentUrl: url,
+      };
     };
   }
 }

@@ -7,9 +7,11 @@ import { createRegisterIdentifier } from './createRegisterIdentifier';
 import { createResolveIdentifier } from './createResolveIdentifier';
 import { createSignRsaSignature } from './createSignRsaSignature';
 import { createVerifyRsaSignature } from './createVerifyRsaSignature';
+import UniversalResolver from './resolver/UniversalResolver';
 
 export type Settings = {
   providers?: IriProviders;
+  universalResolver: UniversalResolver;
 };
 
 /**
@@ -29,7 +31,19 @@ export const composeAPI = (settings: Partial<Settings> = {}) => {
   const documentLoader = new DocumentLoader(idenityRegistry);
   const loader = documentLoader.loader();
 
+  const setUniversalResolver = (universalResolver: UniversalResolver) => {
+    if (!(universalResolver instanceof UniversalResolver)) {
+      throw new Error('Invalid universal resolver');
+    }
+    documentLoader.setUniversalResolver(universalResolver);
+  };
+
+  if (settings.universalResolver) {
+    setUniversalResolver(settings.universalResolver);
+  }
+
   return {
+    setUniversalResolver,
     registerIdentifier: createRegisterIdentifier(idenityRegistry),
     resolveIdentifier: createResolveIdentifier(idenityRegistry),
     signRsaSignature: createSignRsaSignature(loader),
