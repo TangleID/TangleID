@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "jsonld": "^1.6.2",
-    "jsonld-signatures": "^4.2.0",
+    "jsonld-signatures": "^4.2.1",
     "node-forge": "^0.8.2"
   },
   "publishConfig": {

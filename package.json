@@ -5,7 +5,7 @@
     "packages/*"
   ],
   "scripts": {
-    "init": "yarn install --ignore-engines && lerna bootstrap",
+    "init": "yarn install && lerna bootstrap",
     "lint": "tslint --format verbose ./packages/*/src/**/*.ts",
     "test": "jest",
     "test:coverage": "jest --verbose --coverage",
