@@ -8,7 +8,8 @@
   "scripts": {
     "test": "jest -c ../../jest.config.js",
     "build": "tsc -p tsconfig.release.json",
-    "docs": "yarn run build && jsdoc2md --no-cache --plugin dmd-clear -t README.template --files './lib/**/*.js' > README.md"
+    "docs": "yarn run build && jsdoc2md --no-cache --plugin dmd-clear -t README.template --files './lib/**/*.js' > README.md",
+    "browserify": "browserify src/index.ts -p [ tsify --noImplicitAny ] > bundle.js"
   },
   "license": "MIT",
   "repository": {
