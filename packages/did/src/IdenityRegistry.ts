@@ -8,15 +8,15 @@ import {
   Seed,
   Did,
   DidDocument,
-  IriProvider,
+  TangleProvider,
   NetworkIdentifer,
   PublicKeyPem,
 } from '../../types';
 
-const DEFAULT_PROVIDER: IriProvider = 'https://tangle.puyuma.org';
+const DEFAULT_PROVIDER: TangleProvider = 'https://tangle.puyuma.org';
 
 type IdenityRegistryParams = {
-  provider?: IriProvider;
+  provider?: TangleProvider;
 };
 
 /**
@@ -25,7 +25,7 @@ type IdenityRegistryParams = {
  * and uses the profile channel to save the corresponding DID document.
  */
 export class IdenityRegistry {
-  provider: IriProvider;
+  provider: TangleProvider;
 
   /**
    * @constructor

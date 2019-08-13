@@ -2,10 +2,10 @@ import { IdenityRegistry } from '@tangleid/did';
 import { signRsaSignature, verifyRsaSignature } from '@tangleid/jsonld';
 import { DocumentLoader } from './jsonld/documentLoader';
 
-import { IriProvider, Seed, Did, PublicKeyMeta, PrivateKeyPem, PublicKeyPem } from '../../types';
+import { TangleProvider, Seed, Did, PublicKeyMeta, PrivateKeyPem, PublicKeyPem } from '../../types';
 
 export type Settings = {
-  provider?: IriProvider;
+  provider?: TangleProvider;
 };
 
 export class CoreAPI {

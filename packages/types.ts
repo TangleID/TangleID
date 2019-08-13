@@ -17,7 +17,7 @@ export type MnidModel = {
   address: Address;
 };
 
-export type IriProvider = string;
+export type TangleProvider = string;
 
 /* Crypto */
 export type RsaKeyPair = {
