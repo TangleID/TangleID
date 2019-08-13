@@ -26,7 +26,7 @@ yarn add @tangleid/core
 
     * [.composeAPI([settings])](#module_core.composeAPI)
 
-    * [.registerIdentifier(network, seed, publicKeys)](#module_core.registerIdentifier)
+    * [.registerIdentifier(seed, publicKeys)](#module_core.registerIdentifier)
 
     * [.resolveIdentifier(did)](#module_core.resolveIdentifier)
 
@@ -48,15 +48,14 @@ Composes API object from it's components
 
 <a name="module_core.registerIdentifier"></a>
 
-### *core*.registerIdentifier(network, seed, publicKeys)
+### *core*.registerIdentifier(seed, publicKeys)
 
 | Param | Type | Description |
 | --- | --- | --- |
-| network | <code>string</code> | The network identitfer. |
 | seed | <code>string</code> | The seed of the MAM channel. |
 | publicKeys | <code>Array.&lt;string&gt;</code> | PEM-formatted public Keys. |
 
-Publish the DID document to the Tangle MAM channel with specific network.
+Publish the DID document to the MAM channel with specific Tangle network.
 
 **Returns**: <code>Promise.&lt;object&gt;</code> - Promise object represents the result. The result
   conatains DID `did` and DID document `document`.  
