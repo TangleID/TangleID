@@ -15,8 +15,8 @@ export const createRegisterIdentifier = (registry: IdenityRegistry) => {
    * @returns {Promise<object>} Promise object represents the result. The result
    *   conatains DID `did` and DID document `document`.
    */
-  return async (network: NetworkIdentifer, seed: Seed, publicKeys: PublicKeyPem[] = []) => {
-    const didDocument = await registry.publish(network, seed, publicKeys);
+  return async (seed: Seed, publicKeys: PublicKeyPem[] = []) => {
+    const didDocument = await registry.publish(seed, publicKeys);
 
     return didDocument;
   };

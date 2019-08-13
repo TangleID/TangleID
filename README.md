@@ -35,16 +35,10 @@ To register/resolve the identifier, do the following:
 import { composeAPI } from '@tangleid/core';
 
 const tid = composeAPI({
-  providers: {
-    // mainnet
-    '0x1': 'http://node.deviceproof.org:14265',
-    // devnet
-    '0x2': 'https://nodes.devnet.thetangle.org:443',
-  },
+  provider: 'https://tangle.puyuma.org',
 });
 
 const { seed, did, document } = await tid.registerIdentifier({
-  network: '0x1',
   publicKey,
 });
 

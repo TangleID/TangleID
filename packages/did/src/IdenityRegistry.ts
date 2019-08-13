@@ -8,18 +8,15 @@ import {
   Seed,
   Did,
   DidDocument,
-  IriProviders,
+  IriProvider,
   NetworkIdentifer,
   PublicKeyPem,
 } from '../../types';
 
-const DEFAULT_PROVIDERS: IriProviders = {
-  '0x1': 'https://nodes.thetangle.org:443',
-  '0x2': 'https://nodes.devnet.thetangle.org:443',
-};
+const DEFAULT_PROVIDER: IriProvider = 'https://tangle.puyuma.org';
 
 type IdenityRegistryParams = {
-  providers?: IriProviders;
+  provider?: IriProvider;
 };
 
 /**
@@ -28,23 +25,18 @@ type IdenityRegistryParams = {
  * and uses the profile channel to save the corresponding DID document.
  */
 export class IdenityRegistry {
-  providers: IriProviders;
+  provider: IriProvider;
 
   /**
    * @constructor
-   * @param {object} [params.providers = DEFAULT_PROVIDERS] - The IRI node providers in differenct network.
+   * @param {object} [params.provider = DEFAULT_PROVIDER] - Uri of IRI node.
    */
   constructor(params: IdenityRegistryParams = {}) {
-    this.providers = params.providers || DEFAULT_PROVIDERS;
-  }
-
-  getProvider = (network: NetworkIdentifer) => {
-    return this.providers[network];
+    this.provider = params.provider || DEFAULT_PROVIDER;
   }
 
   getIota = (network: NetworkIdentifer) => {
-    const provider = this.getProvider(network);
-    mamClient.setProvider(provider);
+    mamClient.setProvider(this.provider);
     const iota = mamClient.getIota();
 
     return iota;
@@ -62,17 +54,16 @@ export class IdenityRegistry {
 
   /**
    * Publish the DID document to the Tangle MAM channel with specific network.
-   * @param {string} network - The network identitfer.
    * @param {string} seed - The seed of the MAM channel.
    * @param {string[]} publicKeys - PEM-formatted public Keys.
    * @returns {Promise} Promise object represents the result. The result
    *   conatains DID `did` and DID document `document`.
    */
   publish = async (
-    network: NetworkIdentifer,
     seed: Seed,
     publicKeys: PublicKeyPem[] = [],
   ) => {
+    const network = '0x1';
     const ticClient = await this.getTicClient(network, seed);
     const did = encodeToDid({ network, address: ticClient.masterRoot });
     const document: DidDocument = {

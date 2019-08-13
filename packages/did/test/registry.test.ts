@@ -30,7 +30,7 @@ beforeAll(async () => {
   publicKeys = [keypair.publicKey];
 
   const registry = new IdenityRegistry();
-  const result = await registry.publish('0x1', mamClient.generateSeed(), publicKeys);
+  const result = await registry.publish(mamClient.generateSeed(), publicKeys);
   did = result.did;
   document = result.document;
   resolved = await registry.fetch(did);

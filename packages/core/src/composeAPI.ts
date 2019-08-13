@@ -1,5 +1,5 @@
 import { IdenityRegistry } from '@tangleid/did';
-import { IriProviders } from '../../types';
+import { IriProvider } from '../../types';
 
 import { DocumentLoader } from './jsonld/documentLoader';
 
@@ -9,7 +9,7 @@ import { createSignRsaSignature } from './createSignRsaSignature';
 import { createVerifyRsaSignature } from './createVerifyRsaSignature';
 
 export type Settings = {
-  providers?: IriProviders;
+  provider?: IriProvider;
 };
 
 /**
@@ -20,12 +20,12 @@ export type Settings = {
  * @memberof module:core
  *
  * @param {object} [settings={}] - Connection settings
- * @param {object} [params.providers] - The IRI node providers in differenct network.
+ * @param {object} [params.provider] - Uri of IRI node.
  *
  * @return {API}
  */
 export const composeAPI = (settings: Partial<Settings> = {}) => {
-  const idenityRegistry = new IdenityRegistry({ providers: settings.providers });
+  const idenityRegistry = new IdenityRegistry({ provider: settings.provider });
   const documentLoader = new DocumentLoader(idenityRegistry);
   const loader = documentLoader.loader();
 

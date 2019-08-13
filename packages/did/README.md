@@ -16,15 +16,6 @@ or using [yarn](https://yarnpkg.com/):
 yarn add @tangleid/did
 ```
 
-## Network Identifiers
-
-Used to describe which Tangle network interacts.
-
-| Identitier | Network        |
-| ---------- | -------------- |
-| 0x1        | Tangle Mainnet |
-| 0x2        | Tangle Devnet  |
-
 ## API Reference
 
 

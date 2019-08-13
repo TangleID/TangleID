@@ -20,13 +20,11 @@ jest.mock(
 describe('@tangleid/core', () => {
   it('register identifier and generate a verifiable credential', async () => {
     const tid = composeAPI({
-      providers: {
-        '0x1': 'http://node.deviceproof.org:14265',
-      },
+      provider: 'https://tangle.puyuma.org',
     });
 
     const seed = generateSeed();
-    const { document } = await tid.registerIdentifier('0x1', seed, [publicKeyPem]);
+    const { document } = await tid.registerIdentifier(seed, [publicKeyPem]);
 
     // @ts-ignore
     const publicKey = document.publicKey[0];
