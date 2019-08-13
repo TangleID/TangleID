@@ -42,7 +42,7 @@ yarn add @tangleid/core
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | [settings] | <code>object</code> | <code>{}</code> | Connection settings |
-| [params.providers] | <code>object</code> |  | The IRI node providers in differenct network. |
+| [params.provider] | <code>object</code> |  | Uri of IRI node. |
 
 Composes API object from it's components
 
