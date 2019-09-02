@@ -16,11 +16,9 @@
     "url": "https://github.com/TangleID/TangleID"
   },
   "dependencies": {
-    "@tangleid/mnid": "^1.2.0",
-    "mam.client.js": "git+https://git@github.com/iotaledger/mam.client.js.git",
+    "@iota/converter": "1.0.0-beta.21",
     "mam.tools.js": "git+https://github.com/TangleID/mam.tools.js.git#develop",
-    "node-forge": "^0.8.2",
-    "tic.api.js": "git+https://github.com/TangleID/tic.api.js.git#develop"
+    "node-forge": "^0.8.2"
   },
   "publishConfig": {
     "access": "public"

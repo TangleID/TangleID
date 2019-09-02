@@ -13,7 +13,7 @@ export class CoreAPI {
   private documentLoader: DocumentLoader;
 
   constructor(settings: Partial<Settings> = {}) {
-    this.registry = new IdenityRegistry({ provider: settings.provider });
+    this.registry = new IdenityRegistry(settings.provider);
     this.documentLoader = new DocumentLoader(this.registry);
   }
 
