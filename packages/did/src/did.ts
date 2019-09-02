@@ -1,46 +1,47 @@
 /** @module did */
-import { encodeToMnid, decodeFromMnid } from '@tangleid/mnid';
 // @ts-ignore
-import { Did, MnidModel, PublicKeyPem, PublicKeyMeta } from '../../types';
+import { Did, PublicKeyPem, PublicKeyMeta } from '../../types';
 
 const DID_URL_REGEX = /^did:(?<method>[a-z0-9]+):(?<idstring>[A-Za-z0-9\.\-_]+)(?:#(?<fragment>.*))?$/;
+const IDSTRING_REGEX = /^(?<channelRoot>[A-Z9]{81})_?$/;
 
 /**
- * Encode TangleID DID with specific network and address.
+ * Encode TangleID DID.
  * @function encodeToDid
- * @param {object} params - Encode parameters.
- * @param {string} params.network - Network identifier.
- * @param {string} params.address - Address in 81-trytes format.
+ * @param {object} channelRoot - Channel root of MAM message.
  * @returns {string} TangleID which follow the DID scheme
  *   @link https://w3c-ccg.github.io/did-spec/#the-generic-did-scheme DID Document}.
  */
-export const encodeToDid = ({ network, address }: MnidModel): Did => {
-  const mnid = encodeToMnid({
-    network,
-    address,
-  });
-  const did = `did:tangle:${mnid}`;
+export const encodeToDid = (channelRoot: string): Did => {
+  const did = `did:tangle:${channelRoot}_`;
 
   return did;
 };
 
 /**
- * Decode infromation of network and address from TangleID.
+ * Decode identifier infromation from TangleID DID.
  * @function decodeFromDid
  * @param {string} tangleid - TangleID which follow the DID scheme
  *   {@link https://w3c-ccg.github.io/did-spec/#the-generic-did-scheme DID Document}.
- * @returns {{network: string, address: string}}} The infromation of network and address.
+ * @returns {{method: string, idstring: string, fragment: string, channelRoot: string}}
+ *   The infromation of identifier.
  */
-export const decodeFromDid = (tangleid: Did): MnidModel => {
+export const decodeFromDid = (tangleid: Did) => {
   const decoded = decodeFromDidUrl(tangleid);
-  if (decoded == null) {
-    throw new Error('Invalid DID');
+  if (decoded.method !== 'tangle') {
+    throw new TypeError(`Unsupport method '${decoded.method}'`);
   }
 
-  const { idstring } = decoded;
-  const mamParsed = decodeFromMnid(idstring);
+  const matches = IDSTRING_REGEX.exec(decoded.idstring);
+  if (matches === null) {
+    throw new Error('Invalid idstring');
+  }
 
-  return mamParsed;
+  const [, channelRoot] = matches;
+  return {
+    ...decoded,
+    channelRoot,
+  };
 };
 
 /**

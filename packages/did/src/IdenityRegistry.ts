@@ -1,28 +1,17 @@
 // @ts-ignore
-import * as tic from 'tic.api.js';
-// @ts-ignore
 import * as mamClient from 'mam.tools.js';
+import { trytesToAscii } from '@iota/converter';
 
 import { encodeToDid, decodeFromDid, createMetaPublicKeys } from './did';
-import {
-  Seed,
-  Did,
-  DidDocument,
-  TangleProvider,
-  NetworkIdentifer,
-  PublicKeyPem,
-} from '../../types';
+import { Seed, Did, DidDocument, TangleProvider, PublicKeyPem } from '../../types';
 
+const FIRST_MESSAGE = '{}';
 const DEFAULT_PROVIDER: TangleProvider = 'https://tangle.puyuma.org';
 
-type IdenityRegistryParams = {
-  provider?: TangleProvider;
-};
-
 /**
- * An identity registry is based on the Trusted IOTA Contacts (TIC),
- * it uses the master channel root to generate the Decentralized Identifier (DID)
- * and uses the profile channel to save the corresponding DID document.
+ * An identity registry is based on the MAM channel, it uses the channel root
+ * of the first message to generate the Decentralized Identifier (DID), and
+ * store each revision of the DID document.
  */
 export class IdenityRegistry {
   provider: TangleProvider;
@@ -31,52 +20,50 @@ export class IdenityRegistry {
    * @constructor
    * @param {object} [params.provider = DEFAULT_PROVIDER] - Uri of IRI node.
    */
-  constructor(params: IdenityRegistryParams = {}) {
-    this.provider = params.provider || DEFAULT_PROVIDER;
-  }
-
-  getIota = (network: NetworkIdentifer) => {
-    mamClient.setProvider(this.provider);
-    const iota = mamClient.getIota();
-
-    return iota;
-  }
-
-  getTicClient = async (network: NetworkIdentifer, seed: Seed) => {
-    const iota = this.getIota(network);
-    let ticClient = await tic.init.fromMasterSeed({ masterSeed: seed, iota });
-    if (!ticClient.profile) {
-      ticClient = await tic.create.from({ seed, iota });
-    }
-
-    return ticClient;
+  constructor(provider: TangleProvider = DEFAULT_PROVIDER) {
+    this.provider = provider;
   }
 
   /**
-   * Publish the DID document to the Tangle MAM channel with specific network.
+   * Publish the DID document to the Tangle MAM channel.
    * @param {string} seed - The seed of the MAM channel.
    * @param {string[]} publicKeys - PEM-formatted public Keys.
    * @returns {Promise} Promise object represents the result. The result
    *   conatains DID `did` and DID document `document`.
    */
-  publish = async (
-    seed: Seed,
-    publicKeys: PublicKeyPem[] = [],
-  ) => {
-    const network = '0x1';
-    const ticClient = await this.getTicClient(network, seed);
-    const did = encodeToDid({ network, address: ticClient.masterRoot });
+  public async publish(seed: Seed, publicKeys: PublicKeyPem[] = []) {
+    const iota = mamClient.getIota(this.provider);
+
+    // create the MAM channel from seed.
+    const client = await mamClient.createMamFrom({
+      iota,
+      seed,
+      mode: 'public',
+    });
+
+    if (client.mam.channel.start !== 0) {
+      throw new Error('This identifier is already registered.');
+    }
+
+    // publish first message to MAM channel
+    const { root } = await mamClient.publish(FIRST_MESSAGE, client.mam, client.iota);
+
+    // encode DID with root of first message
+    const did = encodeToDid(root);
+
+    // generate corresponding DID document
     const document: DidDocument = {
       '@context': ['https://w3id.org/did/v1', 'https://w3id.org/security/v2'],
       id: did,
     };
-
     if (publicKeys.length > 0) {
       document.publicKey = createMetaPublicKeys(did, publicKeys);
       document.assertionMethod = document.publicKey.map(publicKey => publicKey.id);
     }
 
-    await tic.profile.putInfo(ticClient.profile, document);
+    // publish DID document to channel
+    const message = JSON.stringify(document);
+    await mamClient.publish(message, client.mam, client.iota);
 
     return { did, document };
   }
@@ -87,12 +74,27 @@ export class IdenityRegistry {
    * @returns {Promise<string>} Promise object represents the
    *   {@link https://w3c-ccg.github.io/did-spec/#did-documents DID Document}.
    */
-  fetch = async (did: Did): Promise<DidDocument> => {
-    const { network, address } = decodeFromDid(did);
-    const iota = await this.getIota(network);
-    const channelRoots = await tic.getChannelRoots(address, iota);
-    const profile = await tic.profile.get(channelRoots.profile, iota);
+  public async fetch(did: Did): Promise<DidDocument> {
+    // decode DID
+    const decoded = decodeFromDid(did);
 
-    return profile;
+    // use channel root to get messages
+    const iota = mamClient.getIota(this.provider);
+    const { messages } = await mamClient.getMessages(decoded.channelRoot, 'public', null, iota);
+    if (messages.length === 0) {
+      throw new Error('Could not find the corresponding DID document');
+    }
+
+    // check first message
+    const firstMessage = trytesToAscii(messages[0]);
+    if (firstMessage !== FIRST_MESSAGE) {
+      throw new Error(`Root message does not match: ${FIRST_MESSAGE}`);
+    }
+
+    // get latest message in the MAM channel
+    const index = messages.length - 1;
+    const document = JSON.parse(trytesToAscii(messages[index]));
+
+    return document;
   }
 }
