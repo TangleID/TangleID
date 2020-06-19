@@ -47,7 +47,7 @@ const resolved = await tid.resolveIdentifier(did);
 
 The API Reference can be found in [here](packages/core#api-reference).
 
-## Contributing
+## Developing
 
 ### Bootstrap your environments
 
@@ -61,19 +61,19 @@ $ git clone https://github.com/TangleID/TangleID
 $ yarn run init
 ```
 
- ### Running tests
+### Running tests
 
  ```shell
  $ yarn run test
  ```
 
- ### Build the packages
+### Build the packages
 
  ```shell
  $ yarn run build
  ```
 
- ### Updating documentation
+### Updating documentation
 
  The documentation is generated from the [`JSDoc`](http://usejsdoc.org) annotations. To update the documentation running `yarn run docs` from the root directory.
 
