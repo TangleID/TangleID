@@ -18,7 +18,7 @@
   "dependencies": {
     "@iota/converter": "1.0.0-beta.21",
     "mam.tools.js": "git+https://github.com/TangleID/mam.tools.js.git#develop",
-    "node-forge": "^0.10.0"
+    "node-forge": "^1.0.0"
   },
   "publishConfig": {
     "access": "public"
