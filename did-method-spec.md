@@ -1,5 +1,7 @@
 # TangleID DID Method Specification
 
+> :warning: **This implementation is now obsolete. Please check [IOTA DID Method Specification](https://wiki.iota.org/identity.rs/specs/did/iota_did_method_spec) instead.**
+
 ## About
 
 The TangleID DID method specification conforms to the requirements specified in the DID specification currently published by the W3C Credentials Community Group. For more information about DIDs and DID method specifications, please see the [DID Primer](https://github.com/WebOfTrustInfo/rwot5-boston/blob/master/topics-and-advance-readings/did-primer.md) and [DID Spec](https://w3c-ccg.github.io/did-spec/).
